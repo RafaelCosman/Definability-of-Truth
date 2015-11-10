@@ -198,9 +198,15 @@ In section~\ref{further-work}, we argue for weakening the reflection principle a
 
 \section{The Reflection Principle for Probabilistic Logic}
 \label{refl-cons}
+
+% TODO before finishing structural edits for this section
+%XXX [prob-log] Finish probabilistic stuff from [prob-log] 
+
 %%fakesubsection
 
 %XXX rewrite pre-intuitions part to be more sensible and motivated for average reader. Talk about how we dont really want to talk about truth here, but rather about probabilistic valuation. This is how/why eq \ref{truth-predicate-reflection} makes sense as the first thing to try.
+%XXX It seems like this requires the probabilistic research from the previous section
+%XXX [prob-log] Finish probabilistic stuff from [prob-log] 
 
 Usually, a language has sentences which are either true or false. Having introduced the concept of Gaifman coherence, we can describe languages in which sentences are assigned probabilities as opposed to truth values. We adopt the convention of referring to the probability of a sentence $\vp$ by using the symbol $\PP$, as in $\PP(\vp)=0$ means that the probability of $\vp$ is $0$. $\PP$ is a function from the language to the real interval $[0,1]$, not a symbol in the language. A specific distribution $\PP$ can be thought of as analogous to a model of the language. We will generally only be interested in Gaifman coherent $\PP$'s.
 
@@ -216,7 +222,8 @@ Modeling ourselves on the example of truth predicates, we could define the refle
 \forall \varphi \in L' \; \PP(\varphi) \iff \PP(\Pq{\vp}=1) = 1 
 \end{equation}
 
-This falls immediately to the liar's paradox. XXX more here? May not be needed?
+This falls immediately to the liar's paradox.
+%XXX more here? May not be needed?
 To overcome this challenge, we imagine $P$ as
 having access to \emph{arbitrarily precise} information about $\PP$,
 without having access to the exact values of $\PP$.
@@ -232,8 +239,8 @@ But this leads directly to a contradiction: if we define $G \leftrightarrow \Pq{
 \[ \Po{G} < 1 \iff \Po{\Pq{G} < 1} = 1 \iff \Po{G} = 1, \]
 which is a contradiction.
 
-XXX intuitions behind contradiction
-XXX add bit about how to get to next stage
+%XXX intuitions behind contradiction
+%XXX add bit about how to get to next stage
 
 \begin{definition}
 We say that $\PP$ is \emph{reflectively consistent} if it satisfies
@@ -250,7 +257,7 @@ Note that this is almost the reverse implication, except for the fact that it us
 Our goal is to show that starting from any consistent theory $T$
 we can obtain a reflectively consistent $\PP$ which assigns probability 1 to each sentence of $T$.
 
-%XXX FIX to either not refer to agents, or to motivate and explain that more earlier.
+%XXX FIX to not refer to agents (req. intro rewritten)
 
 The intuition behind the description ``reflective consistency''
 is that, when viewed as the state of an agent's beliefs, such a $\PP$ would not change upon further reflection.
@@ -466,6 +473,7 @@ Since $\PP(IRP)>\varepsilon$, it follows that $\PP(\Pq{\varphi}<1-\varepsilon)<1
 However, since the weakened inner reflection principle follows from the outer reflection principle and coherence, there trivially exist $\mathbb{P}$'s which assign positive probability to a version of the statement in the previous proposition modified to talk about the weakened inner reflection principle.
 \section{The Reflection Principle for Expectations}
 \label{refl-exp}
+%XXX check the exposition in this section (bottleneck: intro fix)
 %%fakesubsection purpose of this section
 We would like to be able to talk about expectations and random variables. In this section we develop one approach to this, introducing a reflection principle for expectations, $a < \EE[X] < b \implies \PP[a < E[X] < b] = 1$, and which assigns probability~1 to the proposition that $P$ is a coherent probability distribution which itself assigns probability~1 to the same proposition. 
 Along the way, we give a definition of ``coherent probability distribution'' as a probability distribution over a Stone space of complete theories (with its associated $\sigma$-algebra), which makes many new mathematical tools available to the study of our system.
@@ -653,6 +661,7 @@ By the way we defined it, $\mu$ clearly satisfies the modified reflection princi
 \subsection{The Procrastination Paradox}
 
 %XXX motivate this as we tried the obvious paradox and it output this. Change the description to something more philosophy?
+%XXX needs intro stuff done (prob-log)
 
 The support on nonstandard theories may seem suspicious, but it is not immediately obvious whether or not it causes problems in applications of the system. In this section, we show an analogue of a result about nonstandard theories of arithmetic called the \emph{procrastination paradox}~\cite{yudkowsky13}. 
 
@@ -694,6 +703,8 @@ By the previous theorem, $\PP[\exists k>n{:}\;\varphi(k)] = 1 > 1 - \epsilon_n$,
 These two results are not contradictory: They merely imply that~$\PP$ is supported on complete theories whose (nonstandard) models believe that the button gets pressed \emph{at some nonstandard time}, just as in the procrastination paradox for logical theories.
 \section{Further Work}
 \label{further-work}
+%XXX check this section. Maybe rewrite to be more in vein of new intro. (bottleneck: [prob-log])
+
 The impossibility results of sections \ref{refl-refl} and \ref{nonstandard-models} indicate that our reflection principle may be too strong.
 Most importantly, our $\mathbb{P}$'s can have only so much self knowledge.
 In order to devise a reflection principle which is simultaneously \emph{satisfied by $\PP$}
