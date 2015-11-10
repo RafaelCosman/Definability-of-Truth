@@ -112,32 +112,35 @@ We prove that there exist coherent probability distributions over sentences that
 \section{Introduction}
 
 % Need to answer before continuing editing this section [Rafael: this is where the most important bottleneck is. Write answers in comments or just implement directly in the relevant XXX (they are labeled with refs of the form [example-label])]
+
 %XXX [prob-log] What work has been done in probabilistic logic? What previous work do we motivate this from?
+
 %XXX [explicit-norms] What is the norm for such an explicit discussion of previous work? Keep, cut down, expand?
+
 %XXX [intro-sec-norms] Check the norms for splitting intros into such sections.
+
 %XXX [deeper-refs] pick two papers and more deeply investigate their connection to our paper; write the paragraphs for the background section.
 
-
 % XXX [prob-log] what work has been done in probabilistic logic before? Did you add papers to the list about this? Maybe there is a classic reference text that we could cite and be done (like Hajek is for fuzzy logic)?
+
 % add bits about probabilistic stuff here. Then draw analogy to truth values and stuff
 
-We wish to construct a probabilistic language which can represent its own sentences's probabilities, which we take as an analogue to the truth values of sentences.
+We wish to construct a probabilistic language which can represent its own sentences' probabilities, which we take as an analogue to the truth values of sentences.
 If we wished to express a theory's truth values within the theory,
-we might introduce a predicate $\True$ which acts on quoted sentences $\q{\varphi}$ and returns their truth value $\Tq{\varphi}$ (where $\q{\varphi}$ is a representation of $\varphi$ within the theory, for example its G\"{o}del number).
+we might introduce a predicate $\True$ which acts on encodings of sentences $\q{\varphi}$ and returns their truth value $\Tq{\varphi}$.
 
-To confirm that the predicate is actually a correct representation, we would like it to satisfy a formal correctness property:
+We would like this predicate it to satisfy a formal correctness property:
 \begin{equation}\label{truth-reflection}
 	\forall \varphi : \Tq{\varphi} \iff \varphi.
 \end{equation}
-Unfortunately, it is impossible for any expressive language to contain its own truth predicate $\True$.
-For if it did, we could consider the liar's sentence $G$ defined by the diagonalization
+Unfortunately, it is impossible for any expressive language to contain its own truth predicate, for if it did, we could consider the liar's sentence $G$ defined by the diagonalization
 \[G \iff \Tq{\neg{G}}.\]
 Combining this with property~\ref{truth-reflection}, we obtain:
-\[G \iff \Tq{\neg{G}} \iff \neg G,\]
-a contradiction. 
+\[G \iff \Tq{\neg{G}} \iff \neg G\]
+which is a contradiction. 
 
-In this work, we show that a probabilistic analogue succeeds where the truth predicate failed, proving that our construction is consistent and does not fall prey to the standard paradoxes.
-We also develop some additional results, showing that our construction extends to talking about expectations.
+In this work, we show that a probabilistic analogue succeeds where the truth predicate failed. We prove that our construction is consistent and does not fall prey to the standard paradoxes.
+
 %XXX expand this bit greatly to talk more about our actual results. The intro has a lot about truth predicates and background, but little about our construction
 %XXX maybe move the truth predicate discussion to the next subsection or cut it down
 % Note that this last bit is structurally sound except for expansion of probabilistic stuff, which requiers knowledge of probabilistic background, and maybe modifying the explicit discussion of the truth predicate.
@@ -147,21 +150,20 @@ We also develop some additional results, showing that our construction extends t
 
 %XXX do something with this: Hajek has shown that an analogue of this is true in the context of fuzzy logic \cite{hajek98}.
 
-Our work relies heavily on previous work done by Gaifman. In his 1964 paper, Gaifman introduces a set of coherence conditions for probabilities $\PP$ defined over languages containing arithmetic \cite{gaifman64}. We will refer to any function $\mathbb{P}$ as satisfying the \emph{Gaifman conditions} if it satisfies the following
+Much work has already been done on defining probability distributions over sentences. In his 1964 paper \cite{gaifman64}, Gaifman introduced a set of three conditions that imply all of the properties one would expect of a probability distribution. The three conditions are as follows: 
 \footnote{Gaifman's original formulation was:
 \begin{enumerate}
 \item If $\vdash \varphi$ and $\vdash \psi$ then $\PP(\varphi)=\PP(\p)$
 \item If $\vdash \neg (\varphi \wedge \phi)$ then $\PP(\varphi \vee \psi) = \PP(\varphi) + \PP(\psi)$
 \item $If \vdash \varphi$ then $\PP(\varphi) = 1$
 \end{enumerate}
-Gaifman distinguished between measures and probabilities; as we are only concerned with probabilities, it is easy to see that these three conditions are equivalent to those we stated.
-}:
+Gaifman distinguished between measures and probabilities; as we are only concerned with probabilities, it is easy to see that these three conditions are equivalent to those we stated.}
+
 \begin{enumerate}
 \item $\forall \varphi: \PP(\varphi) \in [0,1]$
 \item $\PP(\top) = 1$
 \item $\forall \varphi \forall \psi: \PP(\varphi) = \PP(\varphi \wedge \psi) + \PP(\varphi \wedge \neg \psi)$
 \end{enumerate}
-
 We call a function which satisfies these conditions \emph{Gaifman coherent}.
 
 In section \ref{An Alternative View of Coherent Distributions}, we show that these are equivalent to a measure over complete theories extending some base theory.
