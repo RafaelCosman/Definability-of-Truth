@@ -1,4 +1,7 @@
+
+%%fakesection preamble
 \documentclass[12pt]{article}
+%%fakesubsection usepackage
 \usepackage[dvips]{graphics,color}
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -9,7 +12,7 @@
 \usepackage{enumerate}
 \usepackage{mathtools,cancel,verbatim,hyperref,wasysym}
 \usepackage{todonotes}
-
+%%fakesubsection setlength
 \setlength{\parskip}{1pc}
 \setlength{\parindent}{0pt}
 \setlength{\topmargin}{-3pc}
@@ -30,6 +33,7 @@
 \else \advance \gnArgHgt by -\gnCornerHgt%
 \fi \raise\gnArgHgt\hbox{$\ulcorner$} \box\gnBoxA %
 \raise\gnArgHgt\hbox{$\urcorner$}}
+%%fakesubsection newcommand
 \newcommand{\of}[1]{\left(#1\right)}
 \newcommand{\Pow}[1]{\mathcal{P}\of{#1}}
 \newcommand{\comp}[2]{\left\{ #1 \; \middle\vert \; #2\right\}}
@@ -63,10 +67,9 @@
 \newcommand{\cT}{\mathcal{T}}
 \newcommand{\cU}{\mathcal{U}}
 \newcommand{\Godel}[1]{\ulcorner #1 \urcorner}
-
 \newcommand{\inOpen}[1]{#1 \in (a, b)}
 \newcommand{\inClosed}[1]{#1 \in [a, b]}
-
+%%fakesubsection newtheorem
 \newcounter{ctr}[section]
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[subsection]
@@ -81,7 +84,7 @@
 \newtheorem{example}[theorem]{Example}
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
-%%fakesection
+%%fakesubsection authors
 \begin{document}
 \title{On Reflection \\ }
 \author{
@@ -108,26 +111,46 @@ We prove that there exist coherent probability distributions $\PP$ over sentence
 \setcounter{section}{-1}
 \section{Introduction}
 
-%XXX Add bits here to make it clear what we are actually doing. So that readers don't think the whole thing is about truth predicates in regular languages, but the analogue in probabilistic logic.
+% Need to answer before continuing editing this section [Rafael: this is where the most important bottleneck is. Write answers in comments or just implement directly in the relevant XXX (they are labeled with refs of the form [example-label])]
+%XXX [prob-log] What work has been done in probabilistic logic? What previous work do we motivate this from?
+%XXX [explicit-norms] What is the norm for such an explicit discussion of previous work? Keep, cut down, expand?
+%XXX [intro-sec-norms] Check the norms for splitting intros into such sections.
+%XXX [deeper-refs] pick two papers and more deeply investigate their connection to our paper; write the paragraphs for the background section.
 
-A central notion in metamathematics is the \emph{truth} of a sentence. To express this notion within a theory, we might introduce a predicate $\True$ which acts on quoted sentences $\q{\varphi}$ and returns their truth value $\Tq{\varphi}$ (where $\q{\varphi}$ is a representation of $\varphi$ within the theory, for example its G\"{o}del number).
-We would like a truth predicate to satisfy a formal correctness property:
+
+% XXX [prob-log] what work has been done in probabilistic logic before? Did you add papers to the list about this? Maybe there is a classic reference text that we could cite and be done (like Hajek is for fuzzy logic)?
+% add bits about probabilistic stuff here. Then draw analogy to truth values and stuff
+
+We wish to construct a probabilistic language which can represent its own sentences's probabilities, which we take as an analogue to the truth values of sentences.
+If we wished to express a theory's truth values within the theory,
+we might introduce a predicate $\True$ which acts on quoted sentences $\q{\varphi}$ and returns their truth value $\Tq{\varphi}$ (where $\q{\varphi}$ is a representation of $\varphi$ within the theory, for example its G\"{o}del number).
+
+To confirm that the predicate is actually a correct representation, we would like it to satisfy a formal correctness property:
 \begin{equation}\label{truth-reflection}
-\forall \varphi : \Tq{\varphi} \iff \varphi.
+	\forall \varphi : \Tq{\varphi} \iff \varphi.
 \end{equation}
 Unfortunately, it is impossible for any expressive language to contain its own truth predicate $\True$.
 For if it did, we could consider the liar's sentence $G$ defined by the diagonalization
 \[G \iff \Tq{\neg{G}}.\]
 Combining this with property~\ref{truth-reflection}, we obtain:
 \[G \iff \Tq{\neg{G}} \iff \neg G,\]
-a contradiction. Hajek has shown that an analogue of this is true in the context of fuzzy logic \cite{hajek98}.
+a contradiction. 
 
-We construct a probabilistic predicate which, in some sense, can talk about itself. We then prove that it is consistent and does not fall prey to the standard paradoxes. We also develop some additional results, showing that our construction extends to talking about expectations.
+In this work, we show that a probabilistic analogue succeeds where the truth predicate failed, proving that our construction is consistent and does not fall prey to the standard paradoxes.
+We also develop some additional results, showing that our construction extends to talking about expectations.
+%XXX expand this bit greatly to talk more about our actual results. The intro has a lot about truth predicates and background, but little about our construction
+%XXX maybe move the truth predicate discussion to the next subsection or cut it down
+% Note that this last bit is structurally sound except for expansion of probabilistic stuff, which requiers knowledge of probabilistic background, and maybe modifying the explicit discussion of the truth predicate.
+%XXX [explicit-norms] What is the norm for such an explicit discussion of previous work? Keep, cut down, expand?
+\subsection{Background and previous work}
+%XXX [intro-sec-norms] Check the norms for splitting intros into such sections.
+
+%XXX do something with this: Hajek has shown that an analogue of this is true in the context of fuzzy logic \cite{hajek98}.
 
 Our work relies heavily on previous work done by Gaifman. In his 1964 paper, Gaifman introduces a set of coherence conditions for probabilities $\PP$ defined over languages containing arithmetic \cite{gaifman64}. We will refer to any function $\mathbb{P}$ as satisfying the \emph{Gaifman conditions} if it satisfies the following
 \footnote{Gaifman's original formulation was:
 \begin{enumerate}
-\item If $\vdash \varphi$ and $\vdash \psi$ then $\PP(\varphi)=\PP(\psi)$
+\item If $\vdash \varphi$ and $\vdash \psi$ then $\PP(\varphi)=\PP(\p)$
 \item If $\vdash \neg (\varphi \wedge \phi)$ then $\PP(\varphi \vee \psi) = \PP(\varphi) + \PP(\psi)$
 \item $If \vdash \varphi$ then $\PP(\varphi) = 1$
 \end{enumerate}
@@ -143,18 +166,35 @@ We call a function which satisfies these conditions \emph{Gaifman coherent}.
 
 In section \ref{An Alternative View of Coherent Distributions}, we show that these are equivalent to a measure over complete theories extending some base theory.
 
-%XXX Rafael, I think this may need to be refactored or expanded. I'm a little uncomfortable with our citations and paying heed section. See specific comments below
 %XXX Nate commented that a good way to do this is to pick two things and contrast more specifically, then to note that similar work to A, B, C, etc.
+
+% Final structure will look like
+% 
+% We build off of Gaifman's work on this (present Gaifman coherence)
+% Thing one to investigate deeply (probably Gaifman bounded reasoning)
+% Thing two (Leitgeb? Campbell-Moore?)
+% Also these guys were important\dots
+%        [end of subsection]
+
+%XXX [deeper-refs] pick two papers and more deeply investigate their connection to our paper; write the paragraphs for the background section.
 
 Our work builds off of Gaifman's work on bounded reasoning \cite{gaifman04} and also contributes 
 %XXX What do you mean contributes? The obvious interpretation is false.
 to frameworks of autonomous, probabilistic agents such as those studied by Hutter and Demski
-%XXX I think that we need to either develop this part further or delete it \cite{hutter13,demski12}.
+\cite{hutter13,demski12}.
+%XXX I think that we need to either develop this part further or delete it 
 We handle the liar's paradox in a similar way to Hajek; our approach also requires nonstandard models \cite{hajek98}.
 Replacing the biconditional with a conditional in our reflection principle mirrors Scharp's distinction between ascending and descending truth \cite{scharp13}.
-Most centrally, our work focuses on self-referential probabilities resulting in a system very similar in purpose to those constructed by Leitgeb and Campbell \cite{leitgeb08,leitgeb12b,leitgeb12a,campbell14}.
+Most centrally, our work focuses on self-referential probabilities resulting in a system very similar in purpose to those constructed by Leitgeb and Campbell \cite{leitgeb08,leitgeb12a,leitgeb12b,campbell14}.
 
-We begin in section~\ref{refl-cons} by defining a reflection principle and then proving that it is consistent. In section~\ref{refl-refl} we explore the implications of this, showing that our principle satisfies weak versions of some meta-reflective desiderata. We also prove some impossibility results. In section~\ref{refl-exp}, we derive a version of our reflection principle for expectations. Along the way, we prove an alternate characterization of coherence, which makes many new tools available to us. In section~\ref{nonstandard-models}, we show that our measures are supported on nonstandard models; we demonstrate a result that tells why this is worrisome. We also prove the existence of a  additive measure that fulfills most of our desiderata and is supported on standard theories. In section~\ref{further-work}, we argue for weakening the reflection principle and mention some open problems.
+\subsection{Structure of the Paper} %XXX [intro-sec-norms] check if a norm or not (note: Campbell-moore seems to do this, but she may not be representative)
+We begin in section~\ref{refl-cons} by defining a reflection principle and then proving that it is consistent. 
+In section~\ref{refl-refl} we explore the implications of this, showing that our principle satisfies weak versions of some meta-reflective desiderata. 
+We also prove some impossibility results. In section~\ref{refl-exp}, we derive a version of our reflection principle for expectations. 
+Along the way, we prove an alternate characterization of coherence, which makes many new tools available to us. 
+In section~\ref{nonstandard-models}, we show that our measures are supported on nonstandard models; we demonstrate a result that tells why this is worrisome. 
+We also prove the existence of a  additive measure that fulfills most of our desiderata and is supported on standard theories. 
+In section~\ref{further-work}, we argue for weakening the reflection principle and mention some open problems.
 
 \section{The Reflection Principle for Probabilistic Logic}
 \label{refl-cons}
@@ -373,7 +413,7 @@ Then by applying the reverse inner reflection principle we have that $\Po{\inClo
 %This is a contradiction, as $\PP$ must assign the same value to inner reflection and its contrapositive.
 This is now a decider, a $\PP$ which assigns $0$ or $1$ to every sentence, thereby acting as a truth predicate. Which is a contradiction.
 
-% XXX Kaya will fix the above paragraph
+% XXX-Kaya will fix the above paragraph
 
 A similar argument shows that any coherent, reflective $\mathbb{P}$ must assign probability $0$ to inner reflection.
 \end{proof}
