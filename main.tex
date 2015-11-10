@@ -125,11 +125,11 @@ We prove that there exist coherent probability distributions over sentences that
 
 % add bits about probabilistic stuff here. Then draw analogy to truth values and stuff
 
-We wish to construct a probabilistic language which can represent its own sentences' probabilities, which we take as an analogue to the truth values of sentences.
+We wish to construct a probabilistic language which can represent its own sentences' probabilities, which we take as a continuous analogue to the truth values of sentences.
 If we wished to express a theory's truth values within the theory,
 we might introduce a predicate $\True$ which acts on encodings of sentences $\q{\varphi}$ and returns their truth value $\Tq{\varphi}$.
 
-We would like this predicate it to satisfy a formal correctness property:
+We might want this predicate to satisfy a formal correctness property:
 \begin{equation}\label{truth-reflection}
 	\forall \varphi : \Tq{\varphi} \iff \varphi.
 \end{equation}
@@ -166,6 +166,8 @@ Gaifman distinguished between measures and probabilities; as we are only concern
 \end{enumerate}
 We call a function which satisfies these conditions \emph{Gaifman coherent}.
 
+
+
 In section \ref{An Alternative View of Coherent Distributions}, we show that these are equivalent to a measure over complete theories extending some base theory.
 
 %XXX Nate commented that a good way to do this is to pick two things and contrast more specifically, then to note that similar work to A, B, C, etc.
@@ -195,8 +197,8 @@ In section~\ref{refl-refl} we explore the implications of this, showing that our
 We also prove some impossibility results. In section~\ref{refl-exp}, we derive a version of our reflection principle for expectations. 
 Along the way, we prove an alternate characterization of coherence, which makes many new tools available to us. 
 In section~\ref{nonstandard-models}, we show that our measures are supported on nonstandard models; we demonstrate a result that tells why this is worrisome. 
-We also prove the existence of a  additive measure that fulfills most of our desiderata and is supported on standard theories. 
-In section~\ref{further-work}, we argue for weakening the reflection principle and mention some open problems.
+We also prove the existence of a additive measure that fulfills most of our desiderata and is supported on standard theories. 
+In section~\ref{further-work}, we argue for weakening the reflection principle and mention some open problems. %XXX KAYA in this sentence, should it say "finitely additive measure" instead of "additive measure"?
 
 \section{The Reflection Principle for Probabilistic Logic}
 \label{refl-cons}
