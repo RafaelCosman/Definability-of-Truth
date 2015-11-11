@@ -233,20 +233,23 @@ We might want to have the function symbol $P$ satisfy
 But this falls immediately to an analogous liar's paradox: consider $\vp \iff \Pq{\vp} < 1$.
 
 To overcome this challenge, we deny $P$ access to the exact values of $\PP$ but instead let $P$ have \emph{arbitrarily precise} information about $\PP$.
-Let $(a, b)$ be an open interval containing $\Po{\varphi}$.
+Let $(a, b)$ be any open interval containing $\Po{\varphi}$.
 Then a sufficiently accurate approximation to $\Po{\varphi}$
 would let us conclude $\Po{\varphi} \in (a, b)$,
-and so, in this vein, we define our reflection principle as:
+and so, in this vein, we might try to define our reflection principle as:
 
 \begin{equation}\label{literal-reflection}
 \forall a, b \in \mathbb{Q} : \inOpen{\PP(\varphi)} \iff \PP(\inOpen{\Pq{\varphi}}) = 1 
 \end{equation}
 
-%XXX add bit about how to get to next stage XXX KAYA what do you mean by this?
+But this unfortunately also falls to the same liar's paradox ($\vp \iff \Pq{\vp} < 1$). The issue here turns out to be the bi-implication. Replacing it with implication yields a consistent reflection principle.
+
+%XXX add bit about how to get to next stage
 
 \begin{definition}
-Let $T$ be a consistent theory over some language $L$ \footnote{The pair $(T, L)$ must be rich enough to admit Godel numbering}. Let $L'$ be the extension of $L$ by a function symbol $P$. Let $\mathbb{P}$ be a Gaifman coherent probability distribution over $T$.
-We say that $\PP$ is \emph{reflectively consistent} if it satisfies
+Let $T$ be a consistent theory over some language $L$ \footnote{The pair $(T, L)$ must be rich enough to admit Godel numbering}.
+Let $L'$ be the extension of $L$ by a function symbol $P$.
+Let $\mathbb{P}$ be a Gaifman coherent probability distribution over $T$. We say that $\PP$ is \emph{reflectively consistent} if it satisfies
 \begin{equation}\label{reflection}
 \forall \varphi \in L' \; \forall a, b \in \mathbb{Q} : \inOpen{\Po{\varphi}} \Longrightarrow \Po{\inOpen{\Pq{\varphi}}} = 1 .\\
 \end{equation}
@@ -262,11 +265,10 @@ we can obtain a reflectively consistent $\PP$ which assigns probability 1 to eac
 
 %XXX FIX to not refer to agents (req. intro rewritten)
 
-The intuition behind the description ``reflective consistency''
+The intuition behind the name ``reflective consistency''
 is that, when viewed as the state of an agent's beliefs, such a $\PP$ would not change upon further reflection.
-
 This is analogous to the standard view of truth
-as a fixed point of a certain revision operation, as in~\cite{kripke75}.
+as a fixed point of a certain revision operation, as in Kripke's Outline of a theory of truth~\cite{kripke75}.
 Indeed, we show that such $\PP$s exist
 by constructing an appropriate revision operation and appealing
 to Kakutani's fixed point theorem.
