@@ -213,41 +213,39 @@ In section~\ref{further-work}, we argue for weakening the reflection principle a
 %XXX It seems like this requires the probabilistic research from the previous section
 %XXX [prob-log] Finish probabilistic stuff from [prob-log] 
 
-Usually, a language has sentences which are either true or false. Having introduced the concept of Gaifman coherence, we can describe languages in which sentences are assigned probabilities as opposed to truth values. We adopt the convention of referring to the probability of a sentence $\vp$ by using the symbol $\PP$, as in $\PP(\vp)=0$ means that the probability of $\vp$ is $0$. $\PP$ is a function from the language to the real interval $[0,1]$, not a symbol in the language. A specific distribution $\PP$ can be thought of as analogous to a model of the language. We will generally only be interested in Gaifman coherent $\PP$'s.
+Usually, a language has sentences which are either true or false. Having introduced the concept of Gaifman coherence, we can describe languages in which sentences are assigned probabilities as opposed to truth values. Let $\PP(\vp)$ refer to the probability of a sentence $\vp$. For example, $\PP(\vp)=0$ means that the probability of $\vp$ is $0$. Note that $\PP$ is a function from the language to the real interval $[0,1]$, \emph{not} a symbol in the language.
 
-Truth predicates in two valued logic fall to paradoxes. We wish to construct something analogous to a truth predicate in our probabilistic logic; we call this a reflection principle
+Just like how a truth predicate $True$ would allow a theory to refer to its own notion of truth, we wish to construct a function symbol in the language which will allow our probabilistic logic to refer to the probabilities of its own sentences.
+We will now introduce the probabalistic analogue to the truth predicate $True$: A function symbol in the language, $P$, which approximates the values of $\PP$. 
 
-We wish to construct a probabilistic logic which can refer to the probabilities of its own sentences.
+Just like how $True$ attempted to satisfy
 
-We wish to define some sort of \emph{reflection principle} to allow a theory to have some access to a Gaifman coherent probability distribution defined over it.
-Take some consistent theory $T$ over some language $L$ \footnote{The pair $(T, L)$ must be rich enough to admit Godel numbering}. Let $L'$ be the extension of $L$ by a function symbol $P$. Take $\mathbb{P}$ to be Gaifman coherent over $T$. Intuitively, we want $P$ to be able to estimate $\mathbb{P}$, that is, to \emph{reflect} $\mathbb{P}$.
-Modeling ourselves on the example of truth predicates, we could define the reflection principle as:
-
-\begin{equation}\label{truth-predicate-reflection}
-\forall \varphi \in L' \; \PP(\varphi) \iff \PP(\Pq{\vp}=1) = 1 
+\begin{equation}
+\vp \iff True(\q{\vp}),
 \end{equation}
 
-This falls immediately to the liar's paradox.
-%XXX more here? May not be needed?
-To overcome this challenge, we imagine $P$ as
-having access to \emph{arbitrarily precise} information about $\PP$,
-without having access to the exact values of $\PP$.
+We might want to have the function symbol $P$ satisfy
+
+\begin{equation}\label{truth-predicate-reflection}
+\PP(\varphi)=1 \iff \PP(\Pq{\vp}=1) = 1 
+\end{equation}
+
+But this falls immediately to an analogous liar's paradox: consider $\vp \iff \Pq{\vp} < 1$.
+
+To overcome this challenge, we deny $P$ access to the exact values of $\PP$ but instead let $P$ have \emph{arbitrarily precise} information about $\PP$.
 Let $(a, b)$ be an open interval containing $\Po{\varphi}$.
 Then a sufficiently accurate approximation to $\Po{\varphi}$
 would let us conclude $\Po{\varphi} \in (a, b)$,
 and so, in this vein, we define our reflection principle as:
 
 \begin{equation}\label{literal-reflection}
-\forall \varphi \in L' \; \forall a, b \in \mathbb{Q} : \inOpen{\PP(\varphi)} \iff \PP(\inOpen{\Pq{\varphi}}) = 1 
+\forall a, b \in \mathbb{Q} : \inOpen{\PP(\varphi)} \iff \PP(\inOpen{\Pq{\varphi}}) = 1 
 \end{equation}
-But this leads directly to a contradiction: if we define $G \leftrightarrow \Pq{G} < 1$, then
-\[ \Po{G} < 1 \iff \Po{\Pq{G} < 1} = 1 \iff \Po{G} = 1, \]
-which is a contradiction.
 
-%XXX intuitions behind contradiction
-%XXX add bit about how to get to next stage
+%XXX add bit about how to get to next stage XXX KAYA what do you mean by this?
 
 \begin{definition}
+Let $T$ be a consistent theory over some language $L$ \footnote{The pair $(T, L)$ must be rich enough to admit Godel numbering}. Let $L'$ be the extension of $L$ by a function symbol $P$. Let $\mathbb{P}$ be a Gaifman coherent probability distribution over $T$.
 We say that $\PP$ is \emph{reflectively consistent} if it satisfies
 \begin{equation}\label{reflection}
 \forall \varphi \in L' \; \forall a, b \in \mathbb{Q} : \inOpen{\Po{\varphi}} \Longrightarrow \Po{\inOpen{\Pq{\varphi}}} = 1 .\\
