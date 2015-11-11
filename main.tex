@@ -150,7 +150,7 @@ In this work, we show that a probabilistic analogue succeeds where the truth pre
 
 %XXX do something with this: Hajek has shown that an analogue of this is true in the context of fuzzy logic \cite{hajek98}.
 
-Much work has already been done on defining probability distributions over sentences. In his 1964 paper \cite{gaifman64}, Gaifman introduced a set of three conditions that imply all of the properties one would expect of a probability distribution. The three conditions are as follows: 
+Much work has already been done on defining probability distributions over sentences. In his 1964 paper \cite{gaifman64}, Gaifman introduced a set of three conditions that imply all of the properties one would expect of a probability distribution. The three conditions are as follows:
 \footnote{Gaifman's original formulation was:
 \begin{enumerate}
 \item If $\vdash \varphi$ and $\vdash \psi$ then $\PP(\varphi)=\PP(\p)$
@@ -159,15 +159,13 @@ Much work has already been done on defining probability distributions over sente
 \end{enumerate}
 Gaifman distinguished between measures and probabilities; as we are only concerned with probabilities, it is easy to see that these three conditions are equivalent to those we stated.
 }
-
-\begin{enumerate}
-\item $\forall \varphi: \PP(\varphi) \in [0,1]$
-\item $\PP(\top) = 1$
-\item $\forall \varphi \forall \psi: \PP(\varphi) = \PP(\varphi \wedge \psi) + \PP(\varphi \wedge \neg \psi)$
-\end{enumerate}
-We call a function which satisfies these conditions \emph{Gaifman coherent}.
-
-
+\begin{center}
+\begin{tabular}{l r}
+1. $\forall \varphi: \PP(\varphi) \in [0,1]$ & probabilities range from 0 to 1 \\
+2. $\PP(\top) = 1$ & the probability of a sentence in the theory is 1 \\
+3. $\forall \varphi \forall \psi: \PP(\varphi) = \PP(\varphi \wedge \psi) + \PP(\varphi \wedge \neg \psi)$ & phi is as likely as (phi and psi) plus (phi and not psi)
+\end{tabular}
+\end{center}
 
 In section \ref{An Alternative View of Coherent Distributions}, we show that these are equivalent to a measure over complete theories extending some base theory.
 
@@ -737,6 +735,7 @@ and have its inner language analogue assigned probability 1 by $\PP$.
 It is also open whether an analogue of the reflection principle can be constructed that avoids the issues we have encountered with nonstandard models.
 
 \section{Acknowledgements}
+The authors would like to thank Kenny and Giego Caleiro their help with this paper.
 
 %%fakesection References
 % bibtex handles this
