@@ -127,11 +127,11 @@ We prove that there exist coherent probability distributions over sentences that
 
 We wish to construct a probabilistic language which can represent its own sentences' probabilities, which we take as a continuous analogue to the truth values of sentences.
 If we wished to express a theory's truth values within the theory,
-we might introduce a predicate $\True$ which acts on encodings of sentences $\q{\varphi}$ and returns their truth value $\Tq{\varphi}$.
+we might introduce a predicate $\True$ which acts on encodings of sentences $\q{\vp}$ and returns their truth value $\Tq{\vp}$.
 
 We might want this predicate to satisfy a formal correctness property:
 \begin{equation}\label{truth-reflection}
-	\forall \varphi : \Tq{\varphi} \iff \varphi.
+	\forall \vp : \Tq{\vp} \iff \vp.
 \end{equation}
 Unfortunately, it is impossible for any expressive language to contain its own truth predicate, for if it did, we could consider the liar's sentence $G$ defined by the diagonalization
 \[G \iff \Tq{\neg{G}}.\]
@@ -153,17 +153,17 @@ In this work, we show that a probabilistic analogue succeeds where the truth pre
 Much work has already been done on defining probability distributions over sentences. In his 1964 paper \cite{gaifman64}, Gaifman introduced a set of three conditions that imply all of the properties one would expect of a probability distribution. The three conditions are as follows:
 \footnote{Gaifman's original formulation was:
 \begin{enumerate}
-\item If $\vdash \varphi$ and $\vdash \psi$ then $\PP(\varphi)=\PP(\p)$
-\item If $\vdash \neg (\varphi \wedge \phi)$ then $\PP(\varphi \vee \psi) = \PP(\varphi) + \PP(\psi)$
-\item $If \vdash \varphi$ then $\PP(\varphi) = 1$
+\item If $\vdash \vp$ and $\vdash \psi$ then $\PP(\vp)=\PP(\p)$
+\item If $\vdash \neg (\vp \wedge \phi)$ then $\PP(\vp \vee \psi) = \PP(\vp) + \PP(\psi)$
+\item $If \vdash \vp$ then $\PP(\vp) = 1$
 \end{enumerate}
 Gaifman distinguished between measures and probabilities; as we are only concerned with probabilities, it is easy to see that these three conditions are equivalent to those we stated.
 }
 \begin{center}
 \begin{tabular}{l r}
-1. $\forall \varphi: \PP(\varphi) \in [0,1]$ & probabilities range from 0 to 1 \\
+1. $\forall \vp: \PP(\vp) \in [0,1]$ & probabilities range from 0 to 1 \\
 2. $\PP(\top) = 1$ & the probability of a sentence in the theory is 1 \\
-3. $\forall \varphi \forall \psi: \PP(\varphi) = \PP(\varphi \wedge \psi) + \PP(\varphi \wedge \neg \psi)$ & phi is as likely as (phi and psi) plus (phi and not psi)
+3. $\forall \vp \forall \psi: \PP(\vp) = \PP(\vp \wedge \psi) + \PP(\vp \wedge \neg \psi)$ & phi is as likely as (phi and psi) plus (phi and not psi)
 \end{tabular}
 \end{center}
 
@@ -227,19 +227,19 @@ Just like how $True$ attempted to satisfy
 We might want to have the function symbol $P$ satisfy
 
 \begin{equation}\label{truth-predicate-reflection}
-\PP(\varphi)=1 \iff \PP(\Pq{\vp}=1) = 1 
+\PP(\vp)=1 \iff \PP(\Pq{\vp}=1) = 1 
 \end{equation}
 
 But this falls immediately to an analogous liar's paradox: consider $\vp \iff \Pq{\vp} < 1$.
 
 To overcome this challenge, we deny $P$ access to the exact values of $\PP$ but instead let $P$ have \emph{arbitrarily precise} information about $\PP$.
-Let $(a, b)$ be any open interval containing $\Po{\varphi}$.
-Then a sufficiently accurate approximation to $\Po{\varphi}$
-would let us conclude $\Po{\varphi} \in (a, b)$,
+Let $(a, b)$ be any open interval containing $\Po{\vp}$.
+Then a sufficiently accurate approximation to $\Po{\vp}$
+would let us conclude $\Po{\vp} \in (a, b)$,
 and so, in this vein, we might try to define our reflection principle as:
 
 \begin{equation}\label{literal-reflection}
-\forall a, b \in \mathbb{Q} : \inOpen{\PP(\varphi)} \iff \PP(\inOpen{\Pq{\varphi}}) = 1 
+\forall a, b \in \mathbb{Q} : \inOpen{\PP(\vp)} \iff \PP(\inOpen{\Pq{\vp}}) = 1 
 \end{equation}
 
 But this unfortunately also falls to the same liar's paradox ($\vp \iff \Pq{\vp} < 1$). The issue here turns out to be the bi-implication. Replacing it with implication yields a consistent reflection principle.
@@ -251,13 +251,13 @@ Let $T$ be a consistent theory over some language $L$ \footnote{The pair $(T, L)
 Let $L'$ be the extension of $L$ by a function symbol $P$.
 Let $\mathbb{P}$ be a Gaifman coherent probability distribution over $T$. We say that $\PP$ is \emph{reflectively consistent} if it satisfies
 \begin{equation}\label{reflection}
-\forall \varphi \in L' \; \forall a, b \in \mathbb{Q} : \inOpen{\Po{\varphi}} \Longrightarrow \Po{\inOpen{\Pq{\varphi}}} = 1 .\\
+\forall \vp \in L' \; \forall a, b \in \mathbb{Q} : \inOpen{\Po{\vp}} \Longrightarrow \Po{\inOpen{\Pq{\vp}}} = 1 .\\
 \end{equation}
 \end{definition}
 
 Note that the reverse implication is not true; however, by applying the contrapositive twice, it can be shown that condition~\ref{reflection} is equivalent to
 \begin{equation}\label{reflection-converse}
-\forall \varphi \in L' \; \forall a, b \in \mathbb{Q} : \inClosed{\Po{\varphi}} \Longleftarrow \Po{\inClosed{\Pq{\varphi}}} > 0
+\forall \vp \in L' \; \forall a, b \in \mathbb{Q} : \inClosed{\Po{\vp}} \Longleftarrow \Po{\inClosed{\Pq{\vp}}} > 0
 \end{equation}
 Note that this is almost the reverse implication, except for the fact that it uses closed instead of open intervals and $\PP>0$ instead of $\PP=1$.
 Our goal is to show that starting from any consistent theory $T$
@@ -266,19 +266,19 @@ we can obtain a reflectively consistent $\PP$ which assigns probability 1 to eac
 %XXX FIX to not refer to agents (req. intro rewritten)
 
 The intuition behind the name ``reflective consistency''
-is that, when viewed as the state of an agent's beliefs, such a $\PP$ would not change upon further reflection.
+is that there is a revision operation, intuitively called 'reflection', such that reflectively consistent $\PP$s are exactly those $\PP$s that do not change upon reflection.
 This is analogous to the standard view of truth
-as a fixed point of a certain revision operation, as in Kripke's Outline of a theory of truth~\cite{kripke75}.
+as a fixed point of a certain revision operation, as in Kripke's \emph{Outline of a theory of truth}~\cite{kripke75}.
 Indeed, we show that such $\PP$s exist
-by constructing an appropriate revision operation and appealing
+by constructing the revision operation and appealing
 to Kakutani's fixed point theorem.
 \begin{theorem} \emph{Consistency of the Reflection Principle}: 
-Take a language $L$ and a theory $T$ over that language. Extend $L$ by a function symbol $P$ to get the language $L'$. Then there exists a Gaifman coherent $\mathbb{P}$ which assigns probability one to every sentence in $T$ and satisfies the reflection principle:
+Let $T$ be a consistent theory over a language $L$. Extend $L$ by a function symbol $P$ to get the language $L'$. There exists a Gaifman coherent $\mathbb{P}$ which assigns probability one to every sentence in $T$ and satisfies the reflection principle:
 $$\forall \vp \in L' \forall a,b\in \mathbb{Q}: \inOpen{\Po{\vp}} \Rightarrow \mathbb{P}(\inOpen{\Pq{\vp}})=1.$$
 \end{theorem}
 \begin{proof}
 Let us define a relation $R$ which will correspond to our notion that a probability distributions is `believed' by another probability distribution.
-$$xRy \iff \forall x, y \in \mathbb{Q}: \inOpen{x(\varphi)} \rightarrow y(\inOpen{P(\varphi)})=1$$
+$$xRy \iff \forall x, y \in \mathbb{Q}: \inOpen{x(\vp)} \rightarrow y(\inOpen{P(\vp)})=1$$
 Intuitively, a reflective $P$ is just a $P$ that 'believes' in itself. That is, a $P$ such that $PRP$.
 By definition of $R$, a probability distribution $x$ satisfies the reflection principle if and only if $xRx$.
 We will show that such a probability distribution exists using Kakutani's fixed point theorem.
@@ -299,7 +299,7 @@ Kakutani's fixed point theorem states that there exists $x$ such that $xRx$, giv
 Because $T$ is consistent we can exhibit elements in $\mathcal{A}$.
 Let $T^{*}$ be a completion of $T$.
 Every sentence is either true or false in $T^{*}$.
-Let $\mathbb{P}(\varphi) = 1$ for all $\varphi$ in $T^{*}$ and $\mathbb{P}(\varphi) = 0$ otherwise.
+Let $\mathbb{P}(\vp) = 1$ for all $\vp$ in $T^{*}$ and $\mathbb{P}(\vp) = 0$ otherwise.
 It is easy to see that $x$ is Gaifman coherent and thus an element of $\mathcal{A}$.
 
 Thus we have shown that $\mathcal{A}$ is non-empty. Specifically, there is an element for each completion of $T$. Note that each model of $T$ gives a completion $T^{*}$. However, note also that there may be other elements that don't correspond to completions of $T$.
@@ -315,40 +315,40 @@ Every neighborhood of $x$ contains a point of $\mathcal{A}$.
 (Note that $\mathcal{A}$ is first-countable because it is a subspace of $[0, 1]^{L'}$ which is first-countable because it is a countable product of a first-countable space.)
 
 We can form a sequence of points $x_i$ converging to $x$ where all $x_i$ are in $\mathcal{A}$.
-Note that convergence is equivalent to convergence with respect to every individual $\varphi$ because we are in the product topology.
-We will now prove that $x$ is also in $\mathcal{A}$ by showing that $x$ must satisfy the Gaifman conditions with respect to any $\varphi$. 
-Fix a $\varphi$.
-We take the sequence of reals $x_i(\varphi)$.
+Note that convergence is equivalent to convergence with respect to every individual $\vp$ because we are in the product topology.
+We will now prove that $x$ is also in $\mathcal{A}$ by showing that $x$ must satisfy the Gaifman conditions with respect to any $\vp$. 
+Fix a $\vp$.
+We take the sequence of reals $x_i(\vp)$.
 \begin{itemize}
-\item \emph{$x(\varphi)\in [0,1]$.}
-Note that $x_i(\varphi)$ is a sequence of real numbers all in the interval $[0, 1]$.
-Thus they must converge to a real number within that interval, so $x(\varphi)\in[0,1]$.
-\item \emph{If $\varphi$ is logically valid from $T$, then $x(\varphi)=1$.}
-This condition only applies if $\varphi$ is logically valid in $T$, so assume that that is true.
-Since every $x_i$ is Gaifman coherent, this implies that $x_i(\varphi)$ are all $1$. Thus they converge to $1$.
-\item $\forall \psi: x(\varphi) -x(\varphi\wedge\psi)-x(\varphi\wedge\neg\psi)=0$.
+\item \emph{$x(\vp)\in [0,1]$.}
+Note that $x_i(\vp)$ is a sequence of real numbers all in the interval $[0, 1]$.
+Thus they must converge to a real number within that interval, so $x(\vp)\in[0,1]$.
+\item \emph{If $\vp$ is logically valid from $T$, then $x(\vp)=1$.}
+This condition only applies if $\vp$ is logically valid in $T$, so assume that that is true.
+Since every $x_i$ is Gaifman coherent, this implies that $x_i(\vp)$ are all $1$. Thus they converge to $1$.
+\item $\forall \psi: x(\vp) -x(\vp\wedge\psi)-x(\vp\wedge\neg\psi)=0$.
 (Note that we have rewritten the condition to make this part clearer.)
 Fix a $\psi$.
-Since the $x_i$'s are all Gaifman coherent, $\forall i\forall \psi: x_i(\varphi) -x_i(\varphi\wedge\psi)-x_i(\varphi\wedge\neg\psi)=0$
+Since the $x_i$'s are all Gaifman coherent, $\forall i\forall \psi: x_i(\vp) -x_i(\vp\wedge\psi)-x_i(\vp\wedge\neg\psi)=0$
 This is a sequence of zeroes, so it must converge to zero, so $x$ fulfills this condition.
 \end{itemize}
-Note that our choices of $\varphi$ and $\psi$ were arbitrary. Thus the conditions hold for all $\varphi$ and $\psi$. This implies that the limit $x$ is Gaifman coherent and therefore $\mathcal{A}$ is closed.
+Note that our choices of $\vp$ and $\psi$ were arbitrary. Thus the conditions hold for all $\vp$ and $\psi$. This implies that the limit $x$ is Gaifman coherent and therefore $\mathcal{A}$ is closed.
 Thus $\mathcal{A}$ is compact.
 
 \item \emph{$\mathcal{A}$ is convex.}
 Given any $x,z\in\mathcal{A}$, we will show that if $y$ is a linear combination of $x$ and $z$, then $y$ is Gaifman coherent and therefore is in $\mathcal{A}$.
-Like in the proof for the previous condition of Kakutani's theorem, we start by fixing a $\varphi$, and run the proof for our equivalent conditions.
+Like in the proof for the previous condition of Kakutani's theorem, we start by fixing a $\vp$, and run the proof for our equivalent conditions.
 \begin{itemize}
-\item \emph{$y(\varphi) \in [0, 1]$}
-We know that $x(\varphi) \in [0,1]$ and $z(\psi) \in [0,1]$.
+\item \emph{$y(\vp) \in [0, 1]$}
+We know that $x(\vp) \in [0,1]$ and $z(\psi) \in [0,1]$.
 Thus a linear combination of the two must be in $[0,1]$.
-\item \emph{If $\varphi$ is logically valid from $T$, then $y(\varphi)=1$.}
-Assume $\varphi$ is logically valid from $T$.
-Then, $x(\varphi)=1$ and $z(\varphi)=1$, so any convex combination of ones must be one.
-Thus, $y(\varphi) = 1$.
-\item \emph{$\forall \psi: z(\varphi) -z(\varphi\wedge\psi)-z(\varphi\wedge\neg\psi)=0$.}
-The condition holds for $x(\varphi)$ and $z(\varphi)$.
-Since convex combinations of zeroes are zero, $y(\varphi)=0$.
+\item \emph{If $\vp$ is logically valid from $T$, then $y(\vp)=1$.}
+Assume $\vp$ is logically valid from $T$.
+Then, $x(\vp)=1$ and $z(\vp)=1$, so any convex combination of ones must be one.
+Thus, $y(\vp) = 1$.
+\item \emph{$\forall \psi: z(\vp) -z(\vp\wedge\psi)-z(\vp\wedge\neg\psi)=0$.}
+The condition holds for $x(\vp)$ and $z(\vp)$.
+Since convex combinations of zeroes are zero, $y(\vp)=0$.
 \end{itemize}
 Thus convex combinations of $x$ and $y$ satisfy all the Gaifman conditions. Thus they are in $\mathcal{A}$. Thus $\mathcal{A}$ is convex.
 Therefore, convex combinations of Gaifman coherent probability distributions are Gaifman coherent.
@@ -357,17 +357,17 @@ Therefore, convex combinations of Gaifman coherent probability distributions are
 $\mathcal{A}$ is a subset of $[0, 1]^{L'}$ which is a subspace of $R^{L'}$ which is locally convex and Hausdorff.
 
 \item \emph{$R$ has a closed graph.}
-Consider a convergent infinite sequence $(x_i,y_i)$ such that $\forall i, x_iRy_i$. Say it converges to $(x,y)$.
+Consider a convergent infinite sequence $(x_i,y_i)$ such that $\forall i:x_iRy_i$. Say it converges to $(x,y)$.
 We will show that $xRy$.
-Fix $\varphi, a, b$ such that $a < x(\varphi) < b$.
-Since $x_i$ converges to $x$, $\exists N. \forall i > n, a < x_i(\varphi) < b.$
-Since $x_iRy_i$, we have by definition that $\forall i>n: y_i(a < P(\ulcorner \varphi \urcorner) < b) = 1$
-This implies that $y(a < P(\ulcorner \varphi \urcorner) < b) = 1$, or equivalently, $xRy$.
+Fix $\vp, a, b$ such that $\inOpen{x(\vp)}$.
+Since $x_i$ converges to $x$, $\exists n \forall i > n: \inOpen{x_i(\vp)}$.
+Since $x_iRy_i$, we have by definition that $\forall i>n: y_i(\inOpen{\Pq{\vp}}) = 1$
+This implies that $y(\inOpen{\Pq{\vp}}) = 1$, or equivalently, $xRy$.
 Thus $R$ has a closed graph.
 
 \item \emph{$\forall x \exists y$ s.t. $xRy$.}
 Given an $x\in\mathcal{A}$ we can construct a $y$ such that $xRy$.
-Take a completion $T^*$ of the theory $T$ which includes all statements of the form $a < P(\ulcorner \varphi \urcorner) < b$, where $a < x(\varphi) < b$.
+Take a completion $T^*$ of the theory $T$ which includes all statements of the form $\inOpen{\Pq{\vp}}$, where $\inOpen{x(\vp)}$.
 Since $x$ is Gaifman coherent, this theory is consistent.
 Let $y$ assign $1$ to all statements in $T^*$ and $0$ to all statements not in $T^*$.
 This $y$ satisfies $xRy$ and is Gaifman coherent.
@@ -375,9 +375,9 @@ This $y$ satisfies $xRy$ and is Gaifman coherent.
 \item \emph{$\forall x$ the set $\{y \in \mathcal{A}: xRy\}$ is convex.}
 Let $y_0, y_2$ be elements of the set $\{y \in A: xRy\}$, and let $y_1$ be any convex combination of $y_0$ and $y_2$.
 We will show that $xRy_1$ and therefore $y_1$ is in the set $\{y \in A: xRy\}$
-Choose $\varphi, a, b$ such that $a < x(\varphi) < b$.
-Because $xRy_0$ and $xRy_2$, we know that $y_0(a < P(\varphi) < b) = 1$ and $y_2(a < P(\varphi) < b) = 1$.
-Thus $y_1(a < P(\varphi) < b) = 1$.
+Choose $\vp, a, b$ such that $\inOpen{x(\vp)}$.
+Because $xRy_0$ and $xRy_2$, we know that $y_0(\inOpen{\Pq{\vp}}) = 1$ and $y_2(\inOpen{\Pq{\vp}}) = 1$.
+Thus $y_1(\inOpen{\Pq{\vp}}) = 1$.
 By convexity of $\mathcal{A}$ we have that $y_1$ is in $\mathcal{A}$, so $xRy_1$.
 Therefore, $\{y \in A: xRy\}$ is convex.
 \end{enumerate}
@@ -397,11 +397,11 @@ The reflection principle is stated in the metalanguage, and is a
 not an axiom in $T$ to which $\PP$ assigns probability 1.
 In contrast to this principle, which we can think of as an \emph{outer reflection principle}, we might also want $\PP$ to assign probability 1 to its own reflective consistency.
 To this end, define the inner reflection principle as:
-$$\forall a,b\in\mathbb{Q}\forall\varphi\in L':\PP(\Pq{\varphi}\in(a,b)\rightarrow\Pq{\Pq{\varphi}\in(a,b)}=1)=1$$
+$$\forall a,b\in\mathbb{Q}\forall\vp\in L':\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$
 We can prove the existence of a $\PP$ which satisfies the inner reflection principle, but such $\PP$s unfortunately cannot also satisfy the outer reflection principle and are therefore not actually reflective. This result intuitively means that reflective $\PP$s do not believe that they are reflective and $\PP$s that believe they are reflective are not actually reflective.
 \begin{proposition} \emph{Existence of an Inner Reflective $\mathbb{P}$}
 Take a language $L$ and a theory $T$ over that language. Extend $L$ by a function symbol $P$ to get the language $L'$. Then there exists a Gaifman coherent $\mathbb{P}$ which assigns probability one to every sentence in $T$ and satisfies the inner reflection principle:
-$$\forall a,b\in\mathbb{Q}\forall\varphi\in L':\PP(\Pq{\varphi}\in(a,b)\rightarrow\Pq{\Pq{\varphi}\in(a,b)}=1)=1$$
+$$\forall a,b\in\mathbb{Q}\forall\vp\in L':\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$
 \end{proposition}
 \begin{proof}
 This follows from an easy modification of the definition of the relation $R$ in the proof of consistency of the reflection principle. The proof goes through almost identically other than this one modification.
@@ -412,15 +412,15 @@ Take a language $L$ and a theory $T$ over that language. Extend $L$ by a functio
 \end{proposition}
 \begin{proof}
 Assume that there exists a reflective $\PP$ which satisfies
-$$\forall a,b\in\mathbb{Q}\forall\varphi\in L':\PP(\Pq{\varphi}\in(a,b)\rightarrow\Pq{\Pq{\varphi}\in(a,b)}=1)=1$$.
+$$\forall a,b\in\mathbb{Q}\forall\vp\in L':\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$.
 
 % XXX fix this proof
 
-Choose a $\varphi$ such that $\Po{\inClosed{\Pq{\varphi}}} > 0$.
+Choose a $\vp$ such that $\Po{\inClosed{\Pq{\vp}}} > 0$.
 
-Then by the outer reflection principle we have that $\Po{\Pq{\inClosed{\Pq{\varphi}}} > 0} = 1$
+Then by the outer reflection principle we have that $\Po{\Pq{\inClosed{\Pq{\vp}}} > 0} = 1$
 
-Then by applying the reverse inner reflection principle we have that $\Po{\inClosed{\Pq{\varphi}}} = 1$
+Then by applying the reverse inner reflection principle we have that $\Po{\inClosed{\Pq{\vp}}} = 1$
 
 %This is a contradiction, as $\PP$ must assign the same value to inner reflection and its contrapositive.
 This is now a decider, a $\PP$ which assigns $0$ or $1$ to every sentence, thereby acting as a truth predicate. Which is a contradiction.
@@ -432,23 +432,23 @@ A similar argument shows that any coherent, reflective $\mathbb{P}$ must assign 
 Not all is lost. We can show that every coherent, reflective $\mathbb{P}$ satisfies a weaker version of the inner reflection principle.
 \begin{proposition} \emph{Weaker Inner Reflection.}
 Every Gaifman coherent, reflective $\mathbb{P}$ satisfies
-$$\forall a,b,\ varepsilon>0\in\mathbb{Q}\forall\varphi\in L':\PP(\Pq{\varphi}\in(a,b)\rightarrow\Pq{\Pq{\varphi}\in(a,b)}>1-\varepsilon)=1.$$
+$$\forall a,b,\ varepsilon>0\in\mathbb{Q}\forall\vp\in L':\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}>1-\varepsilon)=1.$$
 \end{proposition}
 \begin{proof}
-Assume that $\Pq{\varphi}\in (a,b)$ is a theorem.
-%XXX Then, $\PP(\varphi)\in(a,b)$.
+Assume that $\Pq{\vp}\in (a,b)$ is a theorem.
+%XXX Then, $\PP(\vp)\in(a,b)$.
 By the contrapositive of the reflection principle, we have that
-$$\PP(\Pq{\varphi}\in(a,b))=1.$$
+$$\PP(\Pq{\vp}\in(a,b))=1.$$
 We can then derive 
-$$1-\varepsilon<\PP(\inOpen{\Pq{\varphi}})<1+\varepsilon.$$
+$$1-\varepsilon<\PP(\inOpen{\Pq{\vp}})<1+\varepsilon.$$
 Applying the reflection principle, we get that we've proved
-$$\Pq{\varphi}\in (a,b)\rightarrow\Pq{\inOpen{\Pq{\varphi}}}>1-\varepsilon.$$
+$$\Pq{\vp}\in (a,b)\rightarrow\Pq{\inOpen{\Pq{\vp}}}>1-\varepsilon.$$
 Since $\PP$ assigns probability one to theorems of the theory, this is sufficient to prove the proposition.
 \end{proof}
 \subsection{Reflective Coherence}
 We would also like $\PP$ to assign probability $1$ to its own Gaifman coherence. Here, the situation is much better. In fact, we can prove that there exist $\mathbb{P}$'s which do exactly this.
 Note that we are now talking about $P$ in the language being Gaifman coherent; thinking of the statement $Coh(P)$ as saying that $P$ is Gaifman coherent, we define $Coh(P)$ as
-$$\forall \varphi: (\Pq{\varphi} \in [0, 1]) \wedge (\varphi \rightarrow \Pq{\varphi}=1) \wedge (\forall \psi: \Pq{\varphi} = \Pq{\varphi \wedge \psi} + \Pq{\varphi \wedge \neg \psi})$$
+$$\forall \vp: (\Pq{\vp} \in [0, 1]) \wedge (\vp \rightarrow \Pq{\vp}=1) \wedge (\forall \psi: \Pq{\vp} = \Pq{\vp \wedge \psi} + \Pq{\vp \wedge \neg \psi})$$
 \begin{proposition}
 There exists a coherent, reflective $\mathbb{P}$ such that $\mathbb{P}(Coh(P))=1$.
 \end{proposition}
@@ -458,22 +458,22 @@ This follows from some simple modifications to the consistency of the reflection
 We would like to combine this result with the inner reflection principle, but this is impossible. No $\mathbb{P}$ can assign positive probability to both its coherence and its inner reflection principle.
 \begin{proposition}
 There does not exist a coherent, reflective $\mathbb{P}$ and an $\varepsilon$ such that
-$$\forall a,b \in\mathbb{Q}\forall\varphi\in L':\PP(Coh(P)\wedge(\Pq{\varphi}\in[a,b]\rightarrow\Pq{\Pq{\varphi}\in(a,b))}=1)>\varepsilon$$
+$$\forall a,b \in\mathbb{Q}\forall\vp\in L':\PP(Coh(P)\wedge(\Pq{\vp}\in[a,b]\rightarrow\Pq{\Pq{\vp}\in(a,b))}=1)>\varepsilon$$
 \end{proposition}
 \begin{proof}
 Suppose such a coherent $\PP$ and $\varepsilon$ exist. Construct a fixed-point statement
-$$\varphi:\iff\Pq{\varphi}<1-\varepsilon$$
+$$\vp:\iff\Pq{\vp}<1-\varepsilon$$
 Also define as shorthand
-$$IRP:\iff(Coh(P)\wedge(\Pq{\varphi}\in[a,b]\rightarrow\Pq{\Pq{\varphi}\in(a,b))}=1)$$
+$$IRP:\iff(Coh(P)\wedge(\Pq{\vp}\in[a,b]\rightarrow\Pq{\Pq{\vp}\in(a,b))}=1)$$
 We know that $\PP(IRP)>\varepsilon$ due to the inner reflection principle.
-Suppose $$\PP(\Pq{\varphi}<1-\varepsilon\wedge IRP)>0.$$
+Suppose $$\PP(\Pq{\vp}<1-\varepsilon\wedge IRP)>0.$$
 Then:
-$$\PP(\Pq{\varphi}<1-\epsilon\wedge IRP\wedge\Pq{\Pq{\varphi}<1-\varepsilon}=1)>0$$
-Due to $IRP$ implying $Coh(P)$ which implies $$\Pq{\varphi}=\Pq{\Pq{\varphi}<1 - \varepsilon}$$
-$$\PP(\Pq{\varphi}<1-\varepsilon\wedge IRP\wedge \Pq{\varphi}=1)>0$$
+$$\PP(\Pq{\vp}<1-\epsilon\wedge IRP\wedge\Pq{\Pq{\vp}<1-\varepsilon}=1)>0$$
+Due to $IRP$ implying $Coh(P)$ which implies $$\Pq{\vp}=\Pq{\Pq{\vp}<1 - \varepsilon}$$
+$$\PP(\Pq{\vp}<1-\varepsilon\wedge IRP\wedge \Pq{\vp}=1)>0$$
 $$\PP(\bot)>0$$
-which contradicts $\PP$’s coherence. Therefore, we must have $\PP(\Pq{\varphi}<1-\varepsilon\wedge IRP)=0$.
-Since $\PP(IRP)>\varepsilon$, it follows that $\PP(\Pq{\varphi}<1-\varepsilon)<1-\varepsilon$. Equivalently, $\PP(\varphi)<1-\varepsilon$. By the outer reflection principle, $\PP(\Pq{\varphi}<1-\epsilon)=1$, or equivalently $\PP(\varphi)=1$, which is a contradiction when combined with $\PP(\varphi)<1-\varepsilon$.
+which contradicts $\PP$’s coherence. Therefore, we must have $\PP(\Pq{\vp}<1-\varepsilon\wedge IRP)=0$.
+Since $\PP(IRP)>\varepsilon$, it follows that $\PP(\Pq{\vp}<1-\varepsilon)<1-\varepsilon$. Equivalently, $\PP(\vp)<1-\varepsilon$. By the outer reflection principle, $\PP(\Pq{\vp}<1-\epsilon)=1$, or equivalently $\PP(\vp)=1$, which is a contradiction when combined with $\PP(\vp)<1-\varepsilon$.
 \end{proof}
 However, since the weakened inner reflection principle follows from the outer reflection principle and coherence, there trivially exist $\mathbb{P}$'s which assign positive probability to a version of the statement in the previous proposition modified to talk about the weakened inner reflection principle.
 \section{The Reflection Principle for Expectations}
@@ -494,7 +494,7 @@ For $S\subseteq T$, we have $\cS_T\subseteq\cS_S$, and hence consider $\Delta(\c
 \subsection{Definable Values and their Expectations}
 In this subsection, fix a theory $T$ extending $\zfcl$. We will construct a notion of random variable in our system and prove that its expectation is well defined and behaves in the way we would like.
 \begin{definition}
-A \emph{definable value} is given by a one-parameter formula $\varphi(x)$ of $\cL$ such that $T\vdash\big(\exists!x.\;\varphi(x)\big)\wedge\big(\forall x.\;\varphi(x)\to x\in\RR\big)$. We use capital letters, in particular $X$, to denote definable values, since we will consider them random variables on~$\cS_T$, and we write $T\vdash\psi(X)$ to mean $T\vdash\forall x.\;\varphi(x)\to\psi(x)$.
+A \emph{definable value} is given by a one-parameter formula $\vp(x)$ of $\cL$ such that $T\vdash\big(\exists!x.\;\vp(x)\big)\wedge\big(\forall x.\;\vp(x)\to x\in\RR\big)$. We use capital letters, in particular $X$, to denote definable values, since we will consider them random variables on~$\cS_T$, and we write $T\vdash\psi(X)$ to mean $T\vdash\forall x.\;\vp(x)\to\psi(x)$.
 
 We say that ``\emph{$X\in[a,b]$ is definable}'', where $a<b\in\RR$, if $X$ is a definable value and for all $a',b'\in\QQ$ such that $a'\le a$ and $b\le b'$, we have $T\vdash\dot a'\le X\le \dot b'$.
 We say that a definable value $X$ is \emph{bounded} if there are $a,b\in\RR$ such that $X\in[a,b]$.
@@ -514,7 +514,7 @@ If $X(S) < a$, then there is some $a'\in\QQ$ with $X(S) < a' \le a$. Then by ass
 Suppose that $X$ is definable, and let $a,b\in\RR$, $a<b$. Then, the set $A := \{S\in\cS_T : X(S) \in (a,b)\}$ is open in $\cS_T$.
 \end{lemma}
 \begin{proof}
-Let $A(a',b') := \{S : S\vdash\dot a' < X < \dot b'\}$ for $a',b'\in\QQ$. This set is open, because for any $\varphi$, the set of all theories containing $\varphi$ is open. We show that $A$ is the union of all $A(a',b')$ with $a < a' < b' < b$.
+Let $A(a',b') := \{S : S\vdash\dot a' < X < \dot b'\}$ for $a',b'\in\QQ$. This set is open, because for any $\vp$, the set of all theories containing $\vp$ is open. We show that $A$ is the union of all $A(a',b')$ with $a < a' < b' < b$.
 We first show $A \subseteq \bigcup A(a',b')$. Suppose that $S\in A$; then $a < X(S) < b$, so there are $a',b'\in\QQ$ such that $a<a'<X(S)<b'<b$, and since the inequalities are strict, we can conclude $S\vdash X > \dot a'$ and $S\nvdash X > \dot b'$, i.e.\ $S\vdash\dot a' < X < \dot b'$, and thus $S\in A(a',b')$.
 We now show $\bigcup A(a',b')\subseteq A$. Thus, suppose that $a < a' < b' < b$ and $S\in A(a',b')$. Then $a' \le X(S) \le b'$ and hence $a < X(S) < b$, implying $S\in A$.
 \end{proof}
@@ -529,9 +529,9 @@ If $X\in[a,b]$ is definable and $\PP\in\Delta(\cS_T)$, then $\EE[X]\in[a,b]$, wh
 \end{corollary}
 \subsection{An Alternative View of Coherent Distributions} \label{An Alternative View of Coherent Distributions}
 In this subsection, fix again a theory $T$ extending $\zfcl$.
-A $\PP\in\Delta(\cS)$ assigns a probability to every sentence~$\varphi$ in the language~$\cL$, by setting $\PP[\varphi] := \PP(\{S\in\cS:S\vdash\varphi\})$. This defines a mapping $\iota : \Delta(\cS)\to [0,1]^\NN\subset\RR^\NN$, where we consider $\RR^\NN$ to be endowed with the product topology. (The exponent~$\NN$ comes from some enumeration of the sentences of~$\cL$.) We now show first that $\iota$ is an injection and has compact range, and then that it in fact preserves the topology of $\Delta(\cS)$.
+A $\PP\in\Delta(\cS)$ assigns a probability to every sentence~$\vp$ in the language~$\cL$, by setting $\PP[\vp] := \PP(\{S\in\cS:S\vdash\vp\})$. This defines a mapping $\iota : \Delta(\cS)\to [0,1]^\NN\subset\RR^\NN$, where we consider $\RR^\NN$ to be endowed with the product topology. (The exponent~$\NN$ comes from some enumeration of the sentences of~$\cL$.) We now show first that $\iota$ is an injection and has compact range, and then that it in fact preserves the topology of $\Delta(\cS)$.
 \begin{definition}
-By the \emph{standard base} of $\cS$ we mean the collection of all sets of the form $\{S\in\cS : S\vdash\varphi\}$, where $\varphi$ is a sentence of~$\cL$.
+By the \emph{standard base} of $\cS$ we mean the collection of all sets of the form $\{S\in\cS : S\vdash\vp\}$, where $\vp$ is a sentence of~$\cL$.
 \end{definition}
 Recall that the standard base forms a Boolean algebra.
 \begin{theorem}
@@ -588,10 +588,10 @@ In this subsection, we develop an alternate approach to reflection about reflect
 Let $\zfcp := \zfcl + P\in\Delta(\cS_\zfcl)$.
 \end{definition}
 \begin{definition}
-A theory $T$ is \emph{enlightened} if it is meditative, extends $\zfcp$, and satisfies $T\vdash P[\varphi] = 1$ for every $\varphi\in T$.
+A theory $T$ is \emph{enlightened} if it is meditative, extends $\zfcp$, and satisfies $T\vdash P[\vp] = 1$ for every $\vp\in T$.
 \end{definition}
 It would be even better if we could have $T\vdash\zfcl + P\in\Delta(\cS_T)$ (for which $T$ of course needs to be definable). However, for $\cS_T$ to be well-defined, $T$ must be consistent, and any recursively enumerable $T$ that believes its own consistency is inconsistent by the second incompleteness theorem.
-If there are any enlightened theories, then there is a least enlightened theory, namely the least fixed point of the equation $T = \zfcp + \{P[\varphi] = 1 : \varphi\in T\}$. But it is not a priori clear that this theory is meditative, or even that it is consistent. 
+If there are any enlightened theories, then there is a least enlightened theory, namely the least fixed point of the equation $T = \zfcp + \{P[\vp] = 1 : \vp\in T\}$. But it is not a priori clear that this theory is meditative, or even that it is consistent. 
 
 We now show that enlightened theories exist.
 Fix some Grothendieck universe $\cU$. (By our assumption that a strongly inaccessible cardinal exists, there is at least one Grothendieck universe.) Recall that $\cU$ is a model of ZFC (with~$\in$ interpreted as the standard membership relation), and that all ``small'' sets (such as $\RR$ and $\Delta(\cS_T)$) are the same in~$\cU$ as in the class~$\mathbf{V}$ of all sets.
@@ -607,7 +607,7 @@ Now suppose that $\cT_{<\alpha}$ is inconsistent for some $\alpha$; let $\alpha$
 $\cT$ is an enlightened theory.
 \end{theorem}
 \begin{proof}
-First, note that if $T_{\alpha}= T_{\alpha+1}$ for any $\alpha$, then $T_{<\alpha+2} = T_{<\alpha+1}$ so $T_{\alpha+2} = T_{\alpha+1} = T_\alpha$; by induction, we see that $T_\beta = T_\alpha$ for every $\beta\ge\alpha$. But we can only have $T_{\alpha}\subsetneq T_{\alpha+1}$ for countably many $\alpha$, since there are only countably many sentences of~$\cL$. Thus, the sequence must stabilize at some countable ordinal $\alpha^*$, and we have $\cT = \cT_{\alpha^*}$. Since $\cT_{<\alpha^*}$ is consistent, there is some $\PP\in\Delta(\cS_{\cT_{<\alpha^*}})$, and therefore $(\cU,\PP)\vdash\cT$, showing that $\cT$ is meditative. By construction, it is also clear that $\cT\vdash\zfcp$ as well as $\cT\vdash P[\varphi]=1$ for all $\varphi\in\cT$.
+First, note that if $T_{\alpha}= T_{\alpha+1}$ for any $\alpha$, then $T_{<\alpha+2} = T_{<\alpha+1}$ so $T_{\alpha+2} = T_{\alpha+1} = T_\alpha$; by induction, we see that $T_\beta = T_\alpha$ for every $\beta\ge\alpha$. But we can only have $T_{\alpha}\subsetneq T_{\alpha+1}$ for countably many $\alpha$, since there are only countably many sentences of~$\cL$. Thus, the sequence must stabilize at some countable ordinal $\alpha^*$, and we have $\cT = \cT_{\alpha^*}$. Since $\cT_{<\alpha^*}$ is consistent, there is some $\PP\in\Delta(\cS_{\cT_{<\alpha^*}})$, and therefore $(\cU,\PP)\vdash\cT$, showing that $\cT$ is meditative. By construction, it is also clear that $\cT\vdash\zfcp$ as well as $\cT\vdash P[\vp]=1$ for all $\vp\in\cT$.
 \end{proof}
 We are now justified in making the following definition.
 \begin{definition}
@@ -621,7 +621,7 @@ Having built up some machinery in the previous section, we are now ready to prov
 \subsection{Assigning Probabilities to Sets of Standard Theories of PA}
 \begin{definition}
 Take $L'$ to be the extension of the language $L$ (which contains at least the language of arithmetic) by a function symbol $P$. A \emph{standard theory} is a complete theory over $L'$ which extends the theory of the standard model of the naturals where $P\subset\mathbb{N}$ and 
-$$\exists f : L'\rightarrow[0, 1] \text{ s.t. } \forall \varphi: a, b, (\ulcorner \varphi \urcorner, a, b) \in P \iff f(\ulcorner \varphi \urcorner) \in (a, b).$$
+$$\exists f : L'\rightarrow[0, 1] \text{ s.t. } \forall \vp: a, b, (\ulcorner \vp \urcorner, a, b) \in P \iff f(\ulcorner \vp \urcorner) \in (a, b).$$
 \end{definition}
 We would like to construct coherent, reflective distributions which are supported on standard theories of Peano Arithmetic. It turns out that not only do such distributions not exist, but every coherent, reflective distribution must assign zero probability to any set of standard theories. However, there does exist a finitely additive measure supported on standard theories that acts like $\PP$ which can be seen to satisfy an analogue of the reflection principle.
 \begin{theorem} \emph{Disbelief in Standard Theories}
@@ -641,26 +641,26 @@ In particular, no standard theory can have such an axiom, as otherwise it would 
 \end{proof}
 While this seems problematic, we can trace this disbelief in standard theories back to the countable additivity condition. We now construct a finitely additive measure which fulfills many of our desiderata and is supported on standard theories.
 \begin{definition}
-Define the set $N$ to be the set of all standard theories. A subset $N_{\varphi}$ of $N$ is defined as $N_{\varphi}:=\{T:\varphi\in T\}$.
+Define the set $N$ to be the set of all standard theories. A subset $N_{\vp}$ of $N$ is defined as $N_{\vp}:=\{T:\vp\in T\}$.
 \end{definition}
 \begin{definition}
-Define a function $\mu(N_{\varphi}):=\PP[\varphi]$.
+Define a function $\mu(N_{\vp}):=\PP[\vp]$.
 \end{definition}
 \begin{definition}
 We define our base theory $T:=\bigcap N$.
 \end{definition}
 \begin{theorem} \emph{Existence of Finitely Additive Measure Supported on Standard Theories}
 $\mu$ is well-defined, finitely additive, and satisfies a version of the reflection principle:
-$$a < \mu(S_{\varphi}) < b \rightarrow \mu(S_{a < P(\ulcorner \varphi \urcorner) < b}) = 1.$$
+$$a < \mu(S_{\vp}) < b \rightarrow \mu(S_{a < P(\ulcorner \vp \urcorner) < b}) = 1.$$
 \end{theorem}
 \begin{proof}
 We first show that $\mu$ is well-defined. By consistency of the reflection principle, we have that there exists a coherent, reflective $\PP$ over our base theory $T$.
-Say that $N_{\varphi}=N_{\psi}$. Then, by definition, $\varphi$ and \$psi are in the same complete theories, so they must be logically equivalent. Therefore, $T$ proves $\varphi\leftrightarrow\psi$, so by Gaifman coherence, $\PP[\varphi]=\PP[\psi]$. Hence, $\mu$ is well defined.
-We now check that $\mu$ is a finitely additive measure. Clearly, $\mu(\varphi)\in[0,1]$ and $\mu(\emptyset)=\PP[\bot]=0$.
+Say that $N_{\vp}=N_{\psi}$. Then, by definition, $\vp$ and \$psi are in the same complete theories, so they must be logically equivalent. Therefore, $T$ proves $\vp\leftrightarrow\psi$, so by Gaifman coherence, $\PP[\vp]=\PP[\psi]$. Hence, $\mu$ is well defined.
+We now check that $\mu$ is a finitely additive measure. Clearly, $\mu(\vp)\in[0,1]$ and $\mu(\emptyset)=\PP[\bot]=0$.
 We need only check it is finitely additive. 
-$$\mu(N_{\varphi}\cup N_{\psi})=\mu(N_{\varphi\vee\psi})=\PP(\varphi\vee\psi)$$
-If $N_{\varphi}\cup N_{\psi}=\emptyset$, then we must have that $T$ proves $\neg(\varphi\cup\psi)$, so 
-$$\PP(\varphi\vee\psi)=\PP(\varphi)+\PP(\psi)$$
+$$\mu(N_{\vp}\cup N_{\psi})=\mu(N_{\vp\vee\psi})=\PP(\vp\vee\psi)$$
+If $N_{\vp}\cup N_{\psi}=\emptyset$, then we must have that $T$ proves $\neg(\vp\cup\psi)$, so 
+$$\PP(\vp\vee\psi)=\PP(\vp)+\PP(\psi)$$
 By the way we defined it, $\mu$ clearly satisfies the modified reflection principle we gave.
 \end{proof}
 \subsection{The Procrastination Paradox}
@@ -674,35 +674,35 @@ Consider an immortal rational agent trying to decide whether to do a certain nec
 
 Informally, the problem arises if the agent trusts the reasoning of future versions of itself too much; then, it reasons that tomorrow, it will either press the button or show that the button gets pressed at a later time, implying that in either case the button gets pressed, and it is therefore not necessary to press the button today. The agent reasons the same way at all future times, meaning that the button never actually gets pressed.
 
-Formally, the original procrastination paradox shows that if a recursive sequence~$T_n$ of first-order theories extending Peano Arithmetic satisfies $T_n \vdash \square_{T_{n+1}}(\varphi)\to\varphi$ for every $n\in\NN$ and every sentence~$\varphi$, where $\square_{T_{n+1}}(\varphi)$ is the statement that~$\varphi$ is provable in $T_{n+1}$, then all~$T_n$ have only nonstandard models.
+Formally, the original procrastination paradox shows that if a recursive sequence~$T_n$ of first-order theories extending Peano Arithmetic satisfies $T_n \vdash \square_{T_{n+1}}(\vp)\to\vp$ for every $n\in\NN$ and every sentence~$\vp$, where $\square_{T_{n+1}}(\vp)$ is the statement that~$\vp$ is provable in $T_{n+1}$, then all~$T_n$ have only nonstandard models.
 
-The proof uses the diagonal lemma to define a predicate~$\varphi(n) :\leftrightarrow \neg\square_{T_n}\big(\exists k>n{:}\;\varphi(k)\big)$, where we interpret~$\varphi(n)$ to mean that the agent presses the button at time~$n$; in other words, the agent presses the button iff it cannot find an argument that in~$T_n$ that the button will get pressed at some later time.
+The proof uses the diagonal lemma to define a predicate~$\vp(n) :\leftrightarrow \neg\square_{T_n}\big(\exists k>n{:}\;\vp(k)\big)$, where we interpret~$\vp(n)$ to mean that the agent presses the button at time~$n$; in other words, the agent presses the button iff it cannot find an argument that in~$T_n$ that the button will get pressed at some later time.
 
-Then,~$T_n$ proves that $\varphi(n+1)\vee\neg\varphi(n+1)$, and that $\neg\varphi(n+1)$ is equivalent to $\square_{T_{n+1}}\big(\exists k>n+1{:}\;\varphi(k)\big)$, which (according to~$T_n$'s special axiom) implies~$\exists k>n+1{:}\;\varphi(k)$; hence, $T_n$ proves $\varphi(n+1)\vee\exists k>n+1{:}\;\varphi(k)$, which immediately yields~$T_n\vdash\exists k>n{:}\;\varphi(k)$. In other words, $\NN\vDash\forall n{:}\;\square_{T_n}\big(\exists k>n{:}\;\varphi(k)\big)$. 
+Then,~$T_n$ proves that $\vp(n+1)\vee\neg\vp(n+1)$, and that $\neg\vp(n+1)$ is equivalent to $\square_{T_{n+1}}\big(\exists k>n+1{:}\;\vp(k)\big)$, which (according to~$T_n$'s special axiom) implies~$\exists k>n+1{:}\;\vp(k)$; hence, $T_n$ proves $\vp(n+1)\vee\exists k>n+1{:}\;\vp(k)$, which immediately yields~$T_n\vdash\exists k>n{:}\;\vp(k)$. In other words, $\NN\vDash\forall n{:}\;\square_{T_n}\big(\exists k>n{:}\;\vp(k)\big)$. 
 
-But this is equivalent to $\NN\vDash\forall n{:}\;\neg\varphi(n)$; in other words, all~$T_n$ are unsound on the standard model. However, the $T_n$ can nevertheless be~\emph{consistent} (see~\cite{yudkowsky13}), implying that they have \emph{nonstandard} models~$\cM_n$ which satisfy $\cM_n\vDash\exists k>n{:}\;\varphi(k)$; thus, these models contain \emph{nonstandard} ``times''~$k$ at which the button does in fact get pressed.
+But this is equivalent to $\NN\vDash\forall n{:}\;\neg\vp(n)$; in other words, all~$T_n$ are unsound on the standard model. However, the $T_n$ can nevertheless be~\emph{consistent} (see~\cite{yudkowsky13}), implying that they have \emph{nonstandard} models~$\cM_n$ which satisfy $\cM_n\vDash\exists k>n{:}\;\vp(k)$; thus, these models contain \emph{nonstandard} ``times''~$k$ at which the button does in fact get pressed.
 
 We now formulate an analogue of this argument in terms of reflective, coherent probability  distributions.
-To do so, we fix a definable sequence of rational numbers $\varepsilon_n > 0$ such that $\varepsilon_n\to0$ (for example, we may set $\varepsilon_n := 2^{-n}$), and consider an agent that will press the button at time~$n$ if the probability that it will get pressed at some later time is less than~$1-\varepsilon_n$. Formally, we use the diagonal lemma to define a predicate~$\varphi(n)$ such that $\zfc\;\vdash\;\varphi(n)\,\leftrightarrow\, P[\exists k>n{:}\;\varphi(k)] \,<\, 1 - \varepsilon_n$.
+To do so, we fix a definable sequence of rational numbers $\varepsilon_n > 0$ such that $\varepsilon_n\to0$ (for example, we may set $\varepsilon_n := 2^{-n}$), and consider an agent that will press the button at time~$n$ if the probability that it will get pressed at some later time is less than~$1-\varepsilon_n$. Formally, we use the diagonal lemma to define a predicate~$\vp(n)$ such that $\zfc\;\vdash\;\vp(n)\,\leftrightarrow\, P[\exists k>n{:}\;\vp(k)] \,<\, 1 - \varepsilon_n$.
 The following theorem can be interpreted as saying that $\PP$ believes for certain that it will press the button eventually.
 \begin{theorem} \emph{Procrastination}
-For all $n\in\NN$, $\PP[\exists k>n{:}\;\varphi(k)] = 1$.
+For all $n\in\NN$, $\PP[\exists k>n{:}\;\vp(k)] = 1$.
 \end{theorem}
 \begin{proof}
-Suppose not. Then there is an $n_0\in\NN$ such that $\PP[\exists k>n_0{:}\;\varphi(k)]$ is less than one, and therefore less than~$1 - \varepsilon_n$ for some~$n>n_0$. Since $\exists k>n_0{:}\;\varphi(k)$ is implied by $\exists k>n{:}\; \varphi(k)$, the former statement must be at least as probable as the latter one, i.e., $1 - \varepsilon_n \;>\; \PP[\exists k>n_0{:}\; \varphi(k)] \;\ge\; \PP[\exists k>n{:}\;\varphi(k)]$, and hence by the reflection principle
+Suppose not. Then there is an $n_0\in\NN$ such that $\PP[\exists k>n_0{:}\;\vp(k)]$ is less than one, and therefore less than~$1 - \varepsilon_n$ for some~$n>n_0$. Since $\exists k>n_0{:}\;\vp(k)$ is implied by $\exists k>n{:}\; \vp(k)$, the former statement must be at least as probable as the latter one, i.e., $1 - \varepsilon_n \;>\; \PP[\exists k>n_0{:}\; \vp(k)] \;\ge\; \PP[\exists k>n{:}\;\vp(k)]$, and hence by the reflection principle
 \[
-\PP[\varphi(n)] \;\;=\;\; \PP[P[\exists k>n{:}\;\varphi(k)] \,<\, 1 - \varepsilon_n] \;\;=\;\; 1.
+\PP[\vp(n)] \;\;=\;\; \PP[P[\exists k>n{:}\;\vp(k)] \,<\, 1 - \varepsilon_n] \;\;=\;\; 1.
 \]
-But this implies $\PP[\exists k>n_0{:}\;\varphi(k)] = 1$, contradicting our assumption that this probability is less than one.
+But this implies $\PP[\exists k>n_0{:}\;\vp(k)] = 1$, contradicting our assumption that this probability is less than one.
 \end{proof}
 The following result can be interpreted as saying that even though the system is certain that it will eventually press the button, it does not in fact do so.
 \begin{theorem}
-For all $n\in\NN$, $\PP[\varphi(n)] = 0$.
+For all $n\in\NN$, $\PP[\vp(n)] = 0$.
 \end{theorem}
 \begin{proof}
-By the previous theorem, $\PP[\exists k>n{:}\;\varphi(k)] = 1 > 1 - \epsilon_n$, and hence
+By the previous theorem, $\PP[\exists k>n{:}\;\vp(k)] = 1 > 1 - \epsilon_n$, and hence
 \[
-\PP[\varphi(n)] \;\;=\;\; \PP[P[\exists k>n{:}\;\varphi(k)] < 1 - \epsilon_n] \;\;=\;\; 0.
+\PP[\vp(n)] \;\;=\;\; \PP[P[\exists k>n{:}\;\vp(k)] < 1 - \epsilon_n] \;\;=\;\; 0.
 \]
 \end{proof}
 These two results are not contradictory: They merely imply that~$\PP$ is supported on complete theories whose (nonstandard) models believe that the button gets pressed \emph{at some nonstandard time}, just as in the procrastination paradox for logical theories.
@@ -717,12 +717,12 @@ and \emph{assigned probability $1$ by $\PP$},
 we need to weaken property~\ref{reflection}.
 One alternative reflection principle
 is an approximate verison of
-the intuitively appealing identity $\Pc{\varphi}{\Pq{\varphi} = p} = p$,
+the intuitively appealing identity $\Pc{\vp}{\Pq{\vp} = p} = p$,
 which formalizes the notion of ``self-trust'' rather than ``self-knowledge.''
 For example, we could consider the relaxation
 \begin{gather*}
-\forall \varphi \in L' \; \forall a, b \in \mathbb{Q} \st \Po{\varphi \wedge \of{\inOpen{\Pq{\varphi}}}} \leq b \Po{\inClosed{\Pq{\varphi}}} \\
-\forall \varphi \in L' \; \forall a, b \in \mathbb{Q} \st \Po{\varphi \wedge \of{\inClosed{\Pq{\varphi}}}} \geq a \Po{\inOpen{\Pq{\varphi}}}
+\forall \vp \in L' \; \forall a, b \in \mathbb{Q} \st \Po{\vp \wedge \of{\inOpen{\Pq{\vp}}}} \leq b \Po{\inClosed{\Pq{\vp}}} \\
+\forall \vp \in L' \; \forall a, b \in \mathbb{Q} \st \Po{\vp \wedge \of{\inClosed{\Pq{\vp}}}} \geq a \Po{\inOpen{\Pq{\vp}}}
 \end{gather*}
 This is strictly weaker than our proposed reflection principle,
 so our result implies that there exist coherent distributions satisfying this principle.
