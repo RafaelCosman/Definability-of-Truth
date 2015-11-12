@@ -141,7 +141,7 @@ Combining this with property~\ref{truth-reflection}, we obtain:
 \[G \iff \Tq{\neg{G}} \iff \neg G\]
 which is a contradiction. 
 
-In this work, we show that a probabilistic analogue succeeds where the truth predicate failed. We prove that our construction is consistent and does not fall prey to the standard paradoxes.
+In this work, we exhibit a probabilistic analogue that succeeds where the truth predicate failed. We prove that our construction is consistent and does not fall prey to the standard paradoxes.
 
 %XXX expand this bit greatly to talk more about our actual results. The intro has a lot about truth predicates and background, but little about our construction
 %XXX maybe move the truth predicate discussion to the next subsection or cut it down
@@ -389,8 +389,9 @@ Therefore, by Kakutani's fixed point theorem, $R$ has a fixed point, which is, b
 \section{Reflection about Reflection}
 \label{refl-refl}
 %%fakesubsection
-If we think of a reflective $\PP$ as one that can 'model' itself, we might want more than for $P$ to just approximate $\PP$ arbitrarily well. We might want $\PP$ to be confident that \emph{$P$ obeys the same principles as $\PP$}, namely the Reflection principle and Gaifman coherence. We will show that unfortunately any coherent $\PP$s that assign non-zero probability to $P$ exhibiting reflection are \emph{necessarily not themselves reflective}. This result intuitively means that reflective $\PP$s cannot model their own reflection and $\PP$s that think they model their own reflection are not actually reflective.
+If we think of a reflective $\PP$ as one that can 'model' itself, we might want more than for $P$ to just approximate $\PP$ arbitrarily well. We might want $\PP$ to be confident that \emph{$P$ obeys the same principles as $\PP$}, namely the Reflection principle and Gaifman coherence.
 
+We will show that, unfortunately, any coherent $\PP$s that assign non-zero probability to $P$ exhibiting reflection are \emph{necessarily themselves non-reflective}. This result intuitively means that reflective $\PP$s cannot model their own reflection and $\PP$s that think they model their own reflection are not actually reflective.
 
 \subsection{The Inner Reflection Principle}
 The reflection principle is stated in the metalanguage, and is a 
@@ -398,14 +399,20 @@ The reflection principle is stated in the metalanguage, and is a
 not an axiom in $T$ to which $\PP$ assigns probability 1.
 In contrast to this principle, which we can think of as an \emph{outer reflection principle}, we might also want $\PP$ to assign probability 1 to its own reflective consistency.
 To this end, define the inner reflection principle as:
-$$\forall a,b\in\mathbb{Q}\forall\vp\in L':\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$
+$$\forall\vp\in L' \ \forall a,b\in\mathbb{Q}:\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$\footnote{Note that the quantification here is in the metalanguage. An even stronger inner-reflection principle would have the quantification on the inside i.e.
+$$\forall\vp\in L' : \PP(\forall a,b\in\mathbb{Q} : \Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$
+Or even
+$$\PP(\forall\q{\vp} \ \forall a,b\in\mathbb{Q} : \Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$ (where $\forall \q{\vp}$ is quantifying over all (valid) encodings in the language, which might be, for example, the natural numbers.)}
+We will prove that there exist coherent inner-reflective $\PP$s. We will then prove that these inner-reflective $\PP$s cannot also be outer-reflective.
+%$XXX KAYA what do you think of this footnote?
 
 \begin{proposition} \emph{Existence of an Inner Reflective $\PP$}
 Take a language $L$ and a theory $T$ over that language. Extend $L$ by a function symbol $P$ to get the language $L'$. Then there exists a Gaifman coherent $\PP$ which assigns probability one to every sentence in $T$ and satisfies the inner reflection principle:
-$$\forall a,b\in\mathbb{Q}\forall\vp\in L':\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$
+$$\forall\vp\in L' \ \forall a,b\in\mathbb{Q}:\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$
 \end{proposition}
 \begin{proof}
-This follows from an easy modification of the definition of the relation $R$ in the proof of consistency of the reflection principle. The proof goes through almost identically other than this one modification.
+This follows from an easy modification of the definition of the relation $R$ in the proof of consistency of the reflection principle. The proof proceeds almost identically other than this one modification.
+%XXX KAYA I don't think that this is true. At all. Can you provide the alternate R that works here?
 \end{proof}
 
 \begin{proposition} \emph{Impossibility of Satisfying both Inner and Outer Reflection}
@@ -415,7 +422,7 @@ Take a language $L$ and a theory $T$ over that language. Extend $L$ by a functio
 Assume that there exists a reflective $\PP$ which satisfies
 $$\forall a,b\in\mathbb{Q}\forall\vp\in L':\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$.
 
-% XXX fix this proof
+% XXX KAYA fix this proof
 
 Choose a $\vp$ such that $\Po{\inClosed{\Pq{\vp}}} > 0$.
 
@@ -433,7 +440,7 @@ A similar argument shows that any coherent, reflective $\PP$ must assign probabi
 Not all is lost. We can show that every coherent, reflective $\PP$ satisfies a weaker version of the inner reflection principle.
 \begin{proposition} \emph{Weaker Inner Reflection.}
 Every Gaifman coherent, reflective $\PP$ satisfies
-$$\forall a,b,\ varepsilon>0\in\mathbb{Q}\forall\vp\in L':\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}>1-\varepsilon)=1.$$
+$$\forall\vp\in L' \ \forall a,b,\varepsilon > 0 \in\mathbb{Q}:\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}>1-\varepsilon)=1.$$
 \end{proposition}
 \begin{proof}
 Assume that $\Pq{\vp}\in (a,b)$ is a theorem.
@@ -447,8 +454,8 @@ $$\Pq{\vp}\in (a,b)\rightarrow\Pq{\inOpen{\Pq{\vp}}}>1-\varepsilon.$$
 Since $\PP$ assigns probability one to theorems of the theory, this is sufficient to prove the proposition.
 \end{proof}
 \subsection{Reflective Coherence}
-We would also like $\PP$ to assign probability $1$ to its own Gaifman coherence. Here, the situation is much better. In fact, we can prove that there exist $\PP$'s which do exactly this.
-Note that we are now talking about $P$ in the language being Gaifman coherent; thinking of the statement $Coh(P)$ as saying that $P$ is Gaifman coherent, we define $Coh(P)$ as
+We would also like $\PP$ to assign probability $1$ to $P$ being Gaifman coherent. Here, the situation is much better. We will prove that there exist $\PP$'s which do exactly this.
+Let $Coh(P)$ be the sentence stating that $P$ is Gaifman coherent. Specifically, $Coh(P)$ is
 $$\forall \vp: (\Pq{\vp} \in [0, 1]) \wedge (\vp \rightarrow \Pq{\vp}=1) \wedge (\forall \psi: \Pq{\vp} = \Pq{\vp \wedge \psi} + \Pq{\vp \wedge \neg \psi})$$
 \begin{proposition}
 There exists a coherent, reflective $\PP$ such that $\PP(Coh(P))=1$.
@@ -456,14 +463,15 @@ There exists a coherent, reflective $\PP$ such that $\PP(Coh(P))=1$.
 \begin{proof}
 This follows from some simple modifications to the consistency of the reflection principle proof.
 \end{proof}
-We would like to combine this result with the inner reflection principle, but this is impossible. No $\PP$ can assign positive probability to both its coherence and its inner reflection principle.
+We would like to combine this result with the inner reflection principle, but this is impossible. No $\PP$ can assign positive probability to both its $Coh(P)$ and its inner reflection principle.
 \begin{proposition}
 There does not exist a coherent, reflective $\PP$ and an $\varepsilon$ such that
 $$\forall a,b \in\mathbb{Q}\forall\vp\in L':\PP(Coh(P)\wedge(\Pq{\vp}\in[a,b]\rightarrow\Pq{\Pq{\vp}\in(a,b))}=1)>\varepsilon$$
 \end{proposition}
 \begin{proof}
-Suppose such a coherent $\PP$ and $\varepsilon$ exist. Construct a fixed-point statement
-$$\vp:\iff\Pq{\vp}<1-\varepsilon$$
+Suppose such a coherent $\PP$ and $\varepsilon$ exist.
+Let $\vp$ be the following liar's sentence:
+$$\vp \iff \Pq{\vp}<1-\varepsilon$$
 Also define as shorthand
 $$IRP:\iff(Coh(P)\wedge(\Pq{\vp}\in[a,b]\rightarrow\Pq{\Pq{\vp}\in(a,b))}=1)$$
 We know that $\PP(IRP)>\varepsilon$ due to the inner reflection principle.
