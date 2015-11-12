@@ -197,9 +197,9 @@ In section~\ref{refl-refl} we explore the implications of this and show that our
 
 In section~\ref{refl-exp}, we derive a version of our reflection principle for expectations. Along the way, we prove an alternate characterization of coherence, which makes many new tools available to us. 
 
-In section~\ref{nonstandard-models}, we show that our measures are supported on nonstandard models; we demonstrate a result that tells why this is worrisome. We also prove the existence of a additive measure that fulfills most of our desiderata and is supported on standard theories. 
+In section~\ref{nonstandard-models}, we show that our measures are supported on nonstandard models; we demonstrate a result that tells why this is worrisome. We also prove the existence of a finitely additive measure that fulfills most of our desiderata and is supported on standard theories. 
 
-In section~\ref{further-work}, we argue for weakening the reflection principle and mention some open problems. %XXX KAYA in this sentence, should it say "finitely additive measure" instead of "additive measure"?
+In section~\ref{further-work}, we argue for weakening the reflection principle and mention some open problems. 
 
 \section{The Reflection Principle for Probabilistic Logic}
 \label{refl-cons}
@@ -397,12 +397,12 @@ The reflection principle is stated in the metalanguage, and is a
 not an axiom in $T$ to which $\PP$ assigns probability 1.
 In contrast to this principle, which we can think of as an \emph{outer reflection principle}, we might also want $\PP$ to assign probability 1 to its own reflective consistency.
 To this end, define the inner reflection principle as:
-$$\forall\vp\in L' \ \forall a,b\in\mathbb{Q}:\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$\footnote{Note that the quantification here is in the metalanguage. An even stronger inner-reflection principle would have the quantification on the inside i.e.
+$$\forall\vp\in L' \ \forall a,b\in\mathbb{Q}:\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$
+\footnote{Note that the quantification here is in the metalanguage. An even stronger inner-reflection principle would have the quantification on the inside i.e.
 $$\forall\vp\in L' : \PP(\forall a,b\in\mathbb{Q} : \Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$
 Or even
 $$\PP(\forall\q{\vp} \ \forall a,b\in\mathbb{Q} : \Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$ (where $\forall \q{\vp}$ is quantifying over all (valid) encodings in the language, which might be, for example, the natural numbers.)}
-We will prove that there exist coherent inner-reflective $\PP$s. We will then prove that these inner-reflective $\PP$s cannot also be outer-reflective.
-%$XXX KAYA what do you think of this footnote?
+We will prove that there exist coherent inner reflective $\PP$s. We will then prove that these inner reflective $\PP$s cannot also be outer reflective.
 
 \begin{proposition} \emph{Existence of an Inner Reflective $\PP$}
 Take a language $L$ and a theory $T$ over that language. Extend $L$ by a function symbol $P$ to get the language $L'$. Then there exists a Gaifman coherent $\PP$ which assigns probability one to every sentence in $T$ and satisfies the inner reflection principle:
@@ -410,7 +410,7 @@ $$\forall\vp\in L' \ \forall a,b\in\mathbb{Q}:\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq
 \end{proposition}
 \begin{proof}
 This follows from an easy modification of the definition of the relation $R$ in the proof of consistency of the reflection principle. The proof proceeds almost identically other than this one modification.
-%XXX KAYA I don't think that this is true. At all. Can you provide the alternate R that works here?
+%XXX MATH - I don't think that this is true. At all. Can you provide the alternate R that works here?
 \end{proof}
 
 \begin{proposition} \emph{Impossibility of Satisfying both Inner and Outer Reflection}
@@ -420,7 +420,7 @@ Take a language $L$ and a theory $T$ over that language. Extend $L$ by a functio
 Assume that there exists a reflective $\PP$ which satisfies
 $$\forall a,b\in\mathbb{Q}\forall\vp\in L':\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$.
 
-% XXX KAYA fix this proof
+% XXX MATH - fix this proof
 
 Choose a $\vp$ such that $\Po{\inClosed{\Pq{\vp}}} > 0$.
 
@@ -431,7 +431,7 @@ Then by applying the reverse inner reflection principle we have that $\Po{\inClo
 %This is a contradiction, as $\PP$ must assign the same value to inner reflection and its contrapositive.
 This is now a decider, a $\PP$ which assigns $0$ or $1$ to every sentence, thereby acting as a truth predicate. Which is a contradiction.
 
-% XXX-Kaya will fix the above paragraph
+% XXX MATH - fix the above paragraph
 
 A similar argument shows that any coherent, reflective $\PP$ must assign probability $0$ to inner reflection.
 \end{proof}
@@ -442,7 +442,7 @@ $$\forall\vp\in L' \ \forall a,b,\varepsilon > 0 \in\mathbb{Q}:\PP(\Pq{\vp}\in(a
 \end{proposition}
 \begin{proof}
 Assume that $\Pq{\vp}\in (a,b)$ is a theorem.
-%XXX Then, $\PP(\vp)\in(a,b)$.
+%XXX MATH - Then, $\PP(\vp)\in(a,b)$.
 By the contrapositive of the reflection principle, we have that
 $$\PP(\Pq{\vp}\in(a,b))=1.$$
 We can then derive 
