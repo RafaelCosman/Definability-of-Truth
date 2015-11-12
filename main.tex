@@ -41,8 +41,8 @@
 \newcommand{\Tq}[1]{\True\left(\q{#1}\right)}
 \newcommand{\To}[1]{\True\left(#1\right)}
 \newcommand{\PP}{\mathbb{P}}
-\newcommand{\Pc}[2]{\mathbb{P}\left(#1\;\middle\vert\;#2\right)}
-\newcommand{\Po}[1]{\mathbb{P}\left(#1\right)}
+\newcommand{\Pc}[2]{\PP\left(#1\;\middle\vert\;#2\right)}
+\newcommand{\Po}[1]{\PP\left(#1\right)}
 \newcommand{\Pq}[1]{P\left(\q{#1}\right)}
 \newcommand{\Pqp}[1]{P'\left(\q{#1}\right)}
 \newcommand{\vp}{\varphi}
@@ -125,7 +125,8 @@ We prove that there exist coherent probability distributions over sentences that
 
 % add bits about probabilistic stuff here. Then draw analogy to truth values and stuff
 
-We wish to construct a probabilistic language which can represent its own sentences' probabilities, which we take as a continuous analogue to the truth values of sentences.
+We wish to construct a probabilistic language which can model its own sentences' probabilities, which we take as a continuous analogue to the truth values of sentences.
+
 If we wished to express a theory's truth values within the theory,
 we might introduce a predicate $\True$ which acts on encodings of sentences $\q{\vp}$ and returns their truth value $\Tq{\vp}$.
 
@@ -133,6 +134,7 @@ We might want this predicate to satisfy a formal correctness property:
 \begin{equation}\label{truth-reflection}
 	\forall \vp : \Tq{\vp} \iff \vp.
 \end{equation}
+
 Unfortunately, it is impossible for any expressive language to contain its own truth predicate, for if it did, we could consider the liar's sentence $G$ defined by the diagonalization
 \[G \iff \Tq{\neg{G}}.\]
 Combining this with property~\ref{truth-reflection}, we obtain:
@@ -162,7 +164,7 @@ Gaifman distinguished between measures and probabilities; as we are only concern
 \begin{center}
 \begin{tabular}{l r}
 1. $\forall \vp: \PP(\vp) \in [0,1]$ & probabilities range from 0 to 1 \\
-2. $\PP(\top) = 1$ & the probability of a sentence in the theory is 1 \\
+2. $\PP(\top) = 1$ & the probability of a tautology is 1 \\
 3. $\forall \vp \forall \psi: \PP(\vp) = \PP(\vp \wedge \psi) + \PP(\vp \wedge \neg \psi)$ & phi is as likely as (phi and psi) plus (phi and not psi)
 \end{tabular}
 \end{center}
@@ -213,18 +215,18 @@ In section~\ref{further-work}, we argue for weakening the reflection principle a
 %XXX It seems like this requires the probabilistic research from the previous section
 %XXX [prob-log] Finish probabilistic stuff from [prob-log] 
 
-Usually, a language has sentences which are either true or false. Having introduced the concept of Gaifman coherence, we can describe languages in which sentences are assigned probabilities as opposed to truth values. Let $\PP(\vp)$ refer to the probability of a sentence $\vp$. For example, $\PP(\vp)=0$ means that the probability of $\vp$ is $0$. Note that $\PP$ is a function from the language to the real interval $[0,1]$, \emph{not} a symbol in the language.
+Usually, one considers sentences to be true or false. Having introduced the concept of Gaifman coherence, we can instead assign sentences probabilities in a coherent manner. Let $\PP(\vp)$ refer to the probability of a sentence $\vp$. For example, $\PP(\vp)=0$ means that the probability of $\vp$ is $0$. Note that $\PP$ is a function from the language to the real interval $[0,1]$, \emph{not} a symbol in the language.
 
 Just like how a truth predicate $True$ would allow a theory to refer to its own notion of truth, we wish to construct a function symbol in the language which will allow our probabilistic logic to refer to the probabilities of its own sentences.
-We will now introduce the probabalistic analogue to the truth predicate $True$: A function symbol in the language, $P$, which approximates the values of $\PP$. 
+We will now introduce the probabalistic analogue of the truth predicate $True$: A function symbol in the language, $P$, which approximates the values of $\PP$. 
 
-Just like how $True$ attempted to satisfy
+Like how $True$ attempted to satisfy
 
 \begin{equation}
 \vp \iff True(\q{\vp}),
 \end{equation}
 
-We might want to have the function symbol $P$ satisfy
+We might want the function symbol $P$ to satisfy
 
 \begin{equation}\label{truth-predicate-reflection}
 \PP(\vp)=1 \iff \PP(\Pq{\vp}=1) = 1 
@@ -233,8 +235,8 @@ We might want to have the function symbol $P$ satisfy
 But this falls immediately to an analogous liar's paradox: consider $\vp \iff \Pq{\vp} < 1$.
 
 To overcome this challenge, we deny $P$ access to the exact values of $\PP$ but instead let $P$ have \emph{arbitrarily precise} information about $\PP$.
-Let $(a, b)$ be any open interval containing $\Po{\vp}$.
-Then a sufficiently accurate approximation to $\Po{\vp}$
+For any open interval $(a, b)$ containing $\Po{\vp}$,
+a sufficiently accurate approximation to $\Po{\vp}$
 would let us conclude $\Po{\vp} \in (a, b)$,
 and so, in this vein, we might try to define our reflection principle as:
 
@@ -242,14 +244,14 @@ and so, in this vein, we might try to define our reflection principle as:
 \forall a, b \in \mathbb{Q} : \inOpen{\PP(\vp)} \iff \PP(\inOpen{\Pq{\vp}}) = 1 
 \end{equation}
 
-But this unfortunately also falls to the same liar's paradox ($\vp \iff \Pq{\vp} < 1$). The issue here turns out to be the bi-implication. Replacing it with implication yields a consistent reflection principle.
+But this unfortunately also falls to the same liar's paradox ($\vp \iff \Pq{\vp} < 1$). The issue with (\ref{literal-reflection}) turns out to be its bi-implication. Replacing bi-implication with implication yields a reflection principle that we will prove is consistent.
 
 %XXX add bit about how to get to next stage
 
 \begin{definition}
 Let $T$ be a consistent theory over some language $L$ \footnote{The pair $(T, L)$ must be rich enough to admit Godel numbering}.
 Let $L'$ be the extension of $L$ by a function symbol $P$.
-Let $\mathbb{P}$ be a Gaifman coherent probability distribution over $T$. We say that $\PP$ is \emph{reflectively consistent} if it satisfies
+Let $\PP$ be a Gaifman coherent probability distribution over $T$. We say that $\PP$ is \emph{reflective} if it satisfies
 \begin{equation}\label{reflection}
 \forall \vp \in L' \; \forall a, b \in \mathbb{Q} : \inOpen{\Po{\vp}} \Longrightarrow \Po{\inOpen{\Pq{\vp}}} = 1 .\\
 \end{equation}
@@ -261,30 +263,28 @@ Note that the reverse implication is not true; however, by applying the contrapo
 \end{equation}
 Note that this is almost the reverse implication, except for the fact that it uses closed instead of open intervals and $\PP>0$ instead of $\PP=1$.
 Our goal is to show that starting from any consistent theory $T$
-we can obtain a reflectively consistent $\PP$ which assigns probability 1 to each sentence of $T$.
+we can obtain a reflective $\PP$ which assigns probability 1 to each sentence of $T$.
 
-%XXX FIX to not refer to agents (req. intro rewritten)
-
-The intuition behind the name ``reflective consistency''
-is that there is a revision operation, intuitively called 'reflection', such that reflectively consistent $\PP$s are exactly those $\PP$s that do not change upon reflection.
+The intuition behind the name ``reflective''
+is that there is a relation, intuitively called 'modeling', such that reflective $\PP$s are exactly those $\PP$s that model themselves.
 This is analogous to the standard view of truth
 as a fixed point of a certain revision operation, as in Kripke's \emph{Outline of a theory of truth}~\cite{kripke75}.
 Indeed, we show that such $\PP$s exist
-by constructing the revision operation and appealing
+by constructing the modeling relation and appealing
 to Kakutani's fixed point theorem.
 \begin{theorem} \emph{Consistency of the Reflection Principle}: 
-Let $T$ be a consistent theory over a language $L$. Extend $L$ by a function symbol $P$ to get the language $L'$. There exists a Gaifman coherent $\mathbb{P}$ which assigns probability one to every sentence in $T$ and satisfies the reflection principle:
-$$\forall \vp \in L' \forall a,b\in \mathbb{Q}: \inOpen{\Po{\vp}} \Rightarrow \mathbb{P}(\inOpen{\Pq{\vp}})=1.$$
+Let $T$ be a consistent theory over a language $L$. Let $L'$ be $L$ extended by a function symbol $P$. There exists a Gaifman coherent $\PP$ which assigns probability one to every sentence in $T$ and satisfies the reflection principle:
+$$\qquad \qquad \forall \vp \in L' \ \forall a,b\in \mathbb{Q}: \inOpen{\Po{\vp}} \Rightarrow \PP(\inOpen{\Pq{\vp}})=1.$$
 \end{theorem}
 \begin{proof}
-Let us define a relation $R$ which will correspond to our notion that a probability distributions is `believed' by another probability distribution.
-$$xRy \iff \forall x, y \in \mathbb{Q}: \inOpen{x(\vp)} \rightarrow y(\inOpen{P(\vp)})=1$$
-Intuitively, a reflective $P$ is just a $P$ that 'believes' in itself. That is, a $P$ such that $PRP$.
-By definition of $R$, a probability distribution $x$ satisfies the reflection principle if and only if $xRx$.
+Let us define a relation $R$ which will correspond to the notion that a probability distribution $x$ is `modeled' by another probability distribution $y$.
+$$xRy \iff \forall \vp \in L' \ \forall a, b \in \mathbb{Q}: \inOpen{x(\vp)} \Rightarrow y(\inOpen{\Pq{\vp}})=1$$
+Intuitively, a reflective $\PP$ is just a $\PP$ that 'models' itself. That is, an $\PP$ such that $\PP R \PP$.
+By definition of $R$, a probability distribution $\PP$ satisfies the reflection principle if and only if $\PP R \PP$.
 We will show that such a probability distribution exists using Kakutani's fixed point theorem.
-Kakutani's fixed point theorem states that there exists $x$ such that $xRx$, given that the following holds:
+Kakutani's fixed point theorem states that there exists $x$ such that $xRx$, given that the following hold:
 \begin{enumerate}
-\item  \emph{$\mathcal{A}$ is nonempty}.
+\item \emph{$\mathcal{A}$ is nonempty}.
 \item \emph{$\mathcal{A}$ is compact.}
 \item \emph{$\mathcal{A}$ is convex.}
 \item \emph{$\mathcal{A}$ is a subset of a locally convex Hausdorff space.}
@@ -299,10 +299,10 @@ Kakutani's fixed point theorem states that there exists $x$ such that $xRx$, giv
 Because $T$ is consistent we can exhibit elements in $\mathcal{A}$.
 Let $T^{*}$ be a completion of $T$.
 Every sentence is either true or false in $T^{*}$.
-Let $\mathbb{P}(\vp) = 1$ for all $\vp$ in $T^{*}$ and $\mathbb{P}(\vp) = 0$ otherwise.
+Let $\PP(\vp) = 1$ for all $\vp$ in $T^{*}$ and $\PP(\vp) = 0$ otherwise.
 It is easy to see that $x$ is Gaifman coherent and thus an element of $\mathcal{A}$.
 
-Thus we have shown that $\mathcal{A}$ is non-empty. Specifically, there is an element for each completion of $T$. Note that each model of $T$ gives a completion $T^{*}$. However, note also that there may be other elements that don't correspond to completions of $T$.
+Thus we have shown that $\mathcal{A}$ is non-empty. Specifically, there is an element for each completion of $T$. Note that each model of $T$ gives a completion $T^{*}$. However, also note that there may be elements that don't correspond to completions of $T$.
 
 \item \emph{$\mathcal{A}$ is compact.}
 $[0,1]$ is compact by the Bolzano-Weierstrass theorem.
@@ -389,8 +389,9 @@ Therefore, by Kakutani's fixed point theorem, $R$ has a fixed point, which is, b
 \section{Reflection about Reflection}
 \label{refl-refl}
 %%fakesubsection
-We would like to be able to assign probability $1$ to the reflection principle and to the Gaifman conditions.
-We show that only very weak forms of these desiderata can be satisfied simultaniously.
+If we think of a reflective $\PP$ as one that can 'model' itself, we might want more than for $P$ to just approximate $\PP$ arbitrarily well. We might want $\PP$ to be confident that \emph{$P$ obeys the same principles as $\PP$}, namely the Reflection principle and Gaifman coherence. We will show that unfortunately any coherent $\PP$s that assign non-zero probability to $P$ exhibiting reflection are \emph{necessarily not themselves reflective}. This result intuitively means that reflective $\PP$s cannot model their own reflection and $\PP$s that think they model their own reflection are not actually reflective.
+
+
 \subsection{The Inner Reflection Principle}
 The reflection principle is stated in the metalanguage, and is a 
 \emph{statement which is true about $\PP$},
@@ -398,9 +399,9 @@ not an axiom in $T$ to which $\PP$ assigns probability 1.
 In contrast to this principle, which we can think of as an \emph{outer reflection principle}, we might also want $\PP$ to assign probability 1 to its own reflective consistency.
 To this end, define the inner reflection principle as:
 $$\forall a,b\in\mathbb{Q}\forall\vp\in L':\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$
-We can prove the existence of a $\PP$ which satisfies the inner reflection principle, but such $\PP$s unfortunately cannot also satisfy the outer reflection principle and are therefore not actually reflective. This result intuitively means that reflective $\PP$s do not believe that they are reflective and $\PP$s that believe they are reflective are not actually reflective.
-\begin{proposition} \emph{Existence of an Inner Reflective $\mathbb{P}$}
-Take a language $L$ and a theory $T$ over that language. Extend $L$ by a function symbol $P$ to get the language $L'$. Then there exists a Gaifman coherent $\mathbb{P}$ which assigns probability one to every sentence in $T$ and satisfies the inner reflection principle:
+
+\begin{proposition} \emph{Existence of an Inner Reflective $\PP$}
+Take a language $L$ and a theory $T$ over that language. Extend $L$ by a function symbol $P$ to get the language $L'$. Then there exists a Gaifman coherent $\PP$ which assigns probability one to every sentence in $T$ and satisfies the inner reflection principle:
 $$\forall a,b\in\mathbb{Q}\forall\vp\in L':\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$
 \end{proposition}
 \begin{proof}
@@ -408,7 +409,7 @@ This follows from an easy modification of the definition of the relation $R$ in 
 \end{proof}
 
 \begin{proposition} \emph{Impossibility of Satisfying both Inner and Outer Reflection}
-Take a language $L$ and a theory $T$ over that language. Extend $L$ by a function symbol $P$ to get the language $L'$. Then there exists no Gaifman coherent $\mathbb{P}$ which assigns probability one to every sentence in $T$ and satisfies both the inner and outer reflection principles. In fact, any coherent, reflective $\mathbb{P}$ must assign probability $0$ to inner reflection.
+Take a language $L$ and a theory $T$ over that language. Extend $L$ by a function symbol $P$ to get the language $L'$. Then there exists no Gaifman coherent $\PP$ which assigns probability one to every sentence in $T$ and satisfies both the inner and outer reflection principles. In fact, any coherent, reflective $\PP$ must assign probability $0$ to inner reflection.
 \end{proposition}
 \begin{proof}
 Assume that there exists a reflective $\PP$ which satisfies
@@ -427,11 +428,11 @@ This is now a decider, a $\PP$ which assigns $0$ or $1$ to every sentence, there
 
 % XXX-Kaya will fix the above paragraph
 
-A similar argument shows that any coherent, reflective $\mathbb{P}$ must assign probability $0$ to inner reflection.
+A similar argument shows that any coherent, reflective $\PP$ must assign probability $0$ to inner reflection.
 \end{proof}
-Not all is lost. We can show that every coherent, reflective $\mathbb{P}$ satisfies a weaker version of the inner reflection principle.
+Not all is lost. We can show that every coherent, reflective $\PP$ satisfies a weaker version of the inner reflection principle.
 \begin{proposition} \emph{Weaker Inner Reflection.}
-Every Gaifman coherent, reflective $\mathbb{P}$ satisfies
+Every Gaifman coherent, reflective $\PP$ satisfies
 $$\forall a,b,\ varepsilon>0\in\mathbb{Q}\forall\vp\in L':\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}>1-\varepsilon)=1.$$
 \end{proposition}
 \begin{proof}
@@ -446,18 +447,18 @@ $$\Pq{\vp}\in (a,b)\rightarrow\Pq{\inOpen{\Pq{\vp}}}>1-\varepsilon.$$
 Since $\PP$ assigns probability one to theorems of the theory, this is sufficient to prove the proposition.
 \end{proof}
 \subsection{Reflective Coherence}
-We would also like $\PP$ to assign probability $1$ to its own Gaifman coherence. Here, the situation is much better. In fact, we can prove that there exist $\mathbb{P}$'s which do exactly this.
+We would also like $\PP$ to assign probability $1$ to its own Gaifman coherence. Here, the situation is much better. In fact, we can prove that there exist $\PP$'s which do exactly this.
 Note that we are now talking about $P$ in the language being Gaifman coherent; thinking of the statement $Coh(P)$ as saying that $P$ is Gaifman coherent, we define $Coh(P)$ as
 $$\forall \vp: (\Pq{\vp} \in [0, 1]) \wedge (\vp \rightarrow \Pq{\vp}=1) \wedge (\forall \psi: \Pq{\vp} = \Pq{\vp \wedge \psi} + \Pq{\vp \wedge \neg \psi})$$
 \begin{proposition}
-There exists a coherent, reflective $\mathbb{P}$ such that $\mathbb{P}(Coh(P))=1$.
+There exists a coherent, reflective $\PP$ such that $\PP(Coh(P))=1$.
 \end{proposition}
 \begin{proof}
 This follows from some simple modifications to the consistency of the reflection principle proof.
 \end{proof}
-We would like to combine this result with the inner reflection principle, but this is impossible. No $\mathbb{P}$ can assign positive probability to both its coherence and its inner reflection principle.
+We would like to combine this result with the inner reflection principle, but this is impossible. No $\PP$ can assign positive probability to both its coherence and its inner reflection principle.
 \begin{proposition}
-There does not exist a coherent, reflective $\mathbb{P}$ and an $\varepsilon$ such that
+There does not exist a coherent, reflective $\PP$ and an $\varepsilon$ such that
 $$\forall a,b \in\mathbb{Q}\forall\vp\in L':\PP(Coh(P)\wedge(\Pq{\vp}\in[a,b]\rightarrow\Pq{\Pq{\vp}\in(a,b))}=1)>\varepsilon$$
 \end{proposition}
 \begin{proof}
@@ -475,7 +476,7 @@ $$\PP(\bot)>0$$
 which contradicts $\PP$’s coherence. Therefore, we must have $\PP(\Pq{\vp}<1-\varepsilon\wedge IRP)=0$.
 Since $\PP(IRP)>\varepsilon$, it follows that $\PP(\Pq{\vp}<1-\varepsilon)<1-\varepsilon$. Equivalently, $\PP(\vp)<1-\varepsilon$. By the outer reflection principle, $\PP(\Pq{\vp}<1-\epsilon)=1$, or equivalently $\PP(\vp)=1$, which is a contradiction when combined with $\PP(\vp)<1-\varepsilon$.
 \end{proof}
-However, since the weakened inner reflection principle follows from the outer reflection principle and coherence, there trivially exist $\mathbb{P}$'s which assign positive probability to a version of the statement in the previous proposition modified to talk about the weakened inner reflection principle.
+However, since the weakened inner reflection principle follows from the outer reflection principle and coherence, there trivially exist $\PP$'s which assign positive probability to a version of the statement in the previous proposition modified to talk about the weakened inner reflection principle.
 \section{The Reflection Principle for Expectations}
 \label{refl-exp}
 %XXX check the exposition in this section (bottleneck: intro fix)
@@ -554,17 +555,17 @@ We consider $\Delta(\cS)$ to be endowed with the topology of \emph{weak converge
 $\iota$ is a homeomorphism.
 \end{theorem}
 \begin{proof}
-The Stone space of a Boolean algebra is metrizable if and only if the Boolean algebra is countable, so since the standard base of $\cS$ is countable, the notion of weak convergence of probability measures on our space is well-defined. One of the equivalent definitions is that $\mathbb{P}_n\to\mathbb{P}$ if $\liminf\mathbb{P}_n(B)\ge\mathbb{P}(B)$ for all open sets $B$. We want to show that this is equivalent to convergence in the product topology on $[0,1]^\NN$, which amounts to pointwise convergence of $\mathbb{P}_n(A)$ to $\mathbb{P}(A)$ for all $A$ in the standard base.
-Suppose first that $\mathbb{P}_n(A)\to\mathbb{P}(A)$ for all base sets $A$ and let $B$ be an arbitrary open set. $B$ can be written as a countable union $\textstyle\bigcup_m A_m$ of base sets; since the base is closed under Boolean operations, it follows that it can be written as a countable disjoint union (let $\textstyle A_m' := A_m\setminus\bigcup_{i=1}^{m-1}A_i)$. For any $\epsilon>0$, there is an $m\in\mathbb{N}$ such that $\textstyle\mathbb{P}(B)\le\mathbb{P}(\bigcup_{i=1}^m A_i)+\epsilon/2$. By pointwise convergence, for sufficiently large $n$ we have $\mathbb{P}(A_i)\le\mathbb{P}_n(A_i) + \epsilon/2m$ for all $i\le m$. Therefore,
+The Stone space of a Boolean algebra is metrizable if and only if the Boolean algebra is countable, so since the standard base of $\cS$ is countable, the notion of weak convergence of probability measures on our space is well-defined. One of the equivalent definitions is that $\PP_n\to\PP$ if $\liminf\PP_n(B)\ge\PP(B)$ for all open sets $B$. We want to show that this is equivalent to convergence in the product topology on $[0,1]^\NN$, which amounts to pointwise convergence of $\PP_n(A)$ to $\PP(A)$ for all $A$ in the standard base.
+Suppose first that $\PP_n(A)\to\PP(A)$ for all base sets $A$ and let $B$ be an arbitrary open set. $B$ can be written as a countable union $\textstyle\bigcup_m A_m$ of base sets; since the base is closed under Boolean operations, it follows that it can be written as a countable disjoint union (let $\textstyle A_m' := A_m\setminus\bigcup_{i=1}^{m-1}A_i)$. For any $\epsilon>0$, there is an $m\in\mathbb{N}$ such that $\textstyle\PP(B)\le\PP(\bigcup_{i=1}^m A_i)+\epsilon/2$. By pointwise convergence, for sufficiently large $n$ we have $\PP(A_i)\le\PP_n(A_i) + \epsilon/2m$ for all $i\le m$. Therefore,
 \[
-\textstyle\mathbb{P}(B)\;\le\;\sum_{i=1}^m\mathbb{P}(A_i)+\epsilon/2\;\le\;\sum_{i=1}^m\mathbb{P}_n(A_i) + \epsilon\;\le\;\mathbb{P}_n(B)+\epsilon.
+\textstyle\PP(B)\;\le\;\sum_{i=1}^m\PP(A_i)+\epsilon/2\;\le\;\sum_{i=1}^m\PP_n(A_i) + \epsilon\;\le\;\PP_n(B)+\epsilon.
 \]
 Since this holds for all $\epsilon$, the desired inequality follows.
-Suppose now that $\liminf\mathbb{P}_n(B)\ge\mathbb{P}(B)$ for all open sets $B$. We must show that for all base sets $A$, $\mathbb{P}_n(A)\to\mathbb{P}(A)$. But base sets are clopen, so we have both $\liminf\mathbb{P}_n(A)\ge\mathbb{P}(A)$ and
+Suppose now that $\liminf\PP_n(B)\ge\PP(B)$ for all open sets $B$. We must show that for all base sets $A$, $\PP_n(A)\to\PP(A)$. But base sets are clopen, so we have both $\liminf\PP_n(A)\ge\PP(A)$ and
 \[
-\limsup\mathbb{P}_n(A) \;=\; 1-\liminf\mathbb{P}_n(A^c) \;\le\; 1 - \mathbb{P}(A^c) \;=\; \mathbb{P}(A),
+\limsup\PP_n(A) \;=\; 1-\liminf\PP_n(A^c) \;\le\; 1 - \PP(A^c) \;=\; \PP(A),
 \]
-implying $\lim\mathbb{P}_n(A) = \mathbb{P}(A)$.
+implying $\lim\PP_n(A) = \PP(A)$.
 \end{proof}
 \subsection{The Reflection Principle for Expectations}
 \begin{definition}
@@ -631,12 +632,12 @@ Then, $\PP$ must assign probability zero to any set of standard theories of $T$.
 \end{theorem}
 \begin{proof}
 Consider the sentence $G$ defined by $G \iff P(G) < 1$.
-Then, $\mathbb{P}(G)=1$.
+Then, $\PP(G)=1$.
 Applying the reflection principle, we get that 
-$$\forall\epsilon>0: \mathbb{P}(\{T:1-\epsilon<P(G)<1\in T\})=1$$
+$$\forall\epsilon>0: \PP(\{T:1-\epsilon<P(G)<1\in T\})=1$$
 Now, 
-$$\{T:\forall \epsilon>0,1-\epsilon<P(G)<1\in T\}=\bigcap_{\epsilon>0}\{T:1-\epsilon<P(G)<1\in T\},$$ so we apply countable additivity and De Morgan's laws to get that $$\mathbb{P}(\{T:\forall \epsilon>0,1-\epsilon<P(G)<1\in T\})=1.$$
-This means that any theory which does not have $\forall \epsilon>0,1-\epsilon<P(G)<1$ as an axiom, will be assigned probability zero by $\mathbb{P}$.
+$$\{T:\forall \epsilon>0,1-\epsilon<P(G)<1\in T\}=\bigcap_{\epsilon>0}\{T:1-\epsilon<P(G)<1\in T\},$$ so we apply countable additivity and De Morgan's laws to get that $$\PP(\{T:\forall \epsilon>0,1-\epsilon<P(G)<1\in T\})=1.$$
+This means that any theory which does not have $\forall \epsilon>0,1-\epsilon<P(G)<1$ as an axiom, will be assigned probability zero by $\PP$.
 In particular, no standard theory can have such an axiom, as otherwise it would contain a number smaller than one which was also greater than any standard rational smaller than one.
 \end{proof}
 While this seems problematic, we can trace this disbelief in standard theories back to the countable additivity condition. We now construct a finitely additive measure which fulfills many of our desiderata and is supported on standard theories.
@@ -711,7 +712,7 @@ These two results are not contradictory: They merely imply that~$\PP$ is support
 %XXX check this section. Maybe rewrite to be more in vein of new intro. (bottleneck: [prob-log])
 
 The impossibility results of sections \ref{refl-refl} and \ref{nonstandard-models} indicate that our reflection principle may be too strong.
-Most importantly, our $\mathbb{P}$'s can have only so much self knowledge.
+Most importantly, our $\PP$'s can have only so much self knowledge.
 In order to devise a reflection principle which is simultaneously \emph{satisfied by $\PP$}
 and \emph{assigned probability $1$ by $\PP$},
 we need to weaken property~\ref{reflection}.
