@@ -487,8 +487,10 @@ However, since the weakened inner reflection principle follows from the outer re
 \label{refl-exp}
 %XXX check the exposition in this section (bottleneck: intro fix)
 %%fakesubsection purpose of this section
-We would like to be able to talk about expectations and random variables. In this section we develop one approach to this, introducing a reflection principle for expectations, $a < \EE[X] < b \implies \PP[a < E[X] < b] = 1$, and which assigns probability~1 to the proposition that $P$ is a coherent probability distribution which itself assigns probability~1 to the same proposition. 
+We would like to be able to talk about expectations and random variables. In this section we develop one approach to this, introducing a reflection principle for expectations, $a < \EE[X] < b \implies \PP[a < E[X] < b] = 1$.
+%XXX rafael and which assigns probability~1 to the proposition that $P$ is a coherent probability distribution which itself assigns probability~1 to the same proposition. 
 Along the way, we give a definition of ``coherent probability distribution'' as a probability distribution over a Stone space of complete theories (with its associated $\sigma$-algebra), which makes many new mathematical tools available to the study of our system.
+
 Our metalanguage is $\zfc$ + the existence of a strongly inaccessible cardinal.
 Let $\cL := \{\in,P\}$ be the language of set theory extended by a single constant symbol $P$, and let $\zfcl$ denote $\zfc$ with all axiom schemas ranging over formulas in~$\cL$.
 \begin{definition}
@@ -615,14 +617,15 @@ We will employ Kakutani's fixed point theorem to find a $\PP \in f(\PP)$. Recall
 
 \item \emph{$\mathcal{A}$ is a subset of a locally convex Hausdorff space.} $\mathcal{A}$ is a compact subset of the locally convex topological vector space~$\RR^\NN$.
 
-\item \emph{$R$ has a closed graph.} Clearly, the set $\{\iota(\PP'):\iota(\PP)R\iota(\PP')\}$ is closed, since it is the intersection of the closed set~$\cA$ with the closed sets $\{v\in\RR^\NN : v(n) = 1\}$, for every~$n$ that is the G\"odel number of a statement $\dot a < E[X] < \dot b$ that must be assigned probability~1. %XXX KAYA is there an issue with this?
+\item \emph{$R$ has a closed graph.} Given $\PP_n,\PP'_n,\PP,\PP'\in\Delta(\cS_T)$ such that $\PP_n\to\PP$, $\PP'_n\to\PP'$, and $\forall n : \iota(\PP_n)R\iota(\PP'_n)$, we want to prove that $\iota(\PP)R\iota(\PP')$. For this, we make use of the fact that if $\PP_n$ converges weakly to $\PP$ (i.e., converges in the weak-$*$ topology that we have put on $\Delta(\cS_T)$), then $\EE_n[X]\to\EE[X]$ for every bounded, continuous function $X : \cS_T\to\RR$, and hence in particular for every bounded definable value~$X$. Thus, if $a < \EE[X] < b$, then $a < \EE_n < b$ for all~$n$ greater than some~$n_0$, and hence $\PP'_n[\dot a < E[X] < \dot b] = 1$ for all $n>n_0$. Since $\iota(\PP'_n)$ converges pointwise to $\iota(\PP')$, this implies that $\PP'[\dot a < E[X] < \dot b] = 1$, as was to be shown.
 
-\item \emph{$\forall x \exists y$ s.t. $xRy$.} Clearly, $\iota(\PP)R\iota(\delta_{T(\cU,\PP)})$, where $\delta_{T(\cU,\PP)}$ the distribution that assigns probability~1 to~$T(\cU,\PP)$, the complete theory of the model~$(\cU,\PP)$.
+\item \emph{$\forall x \exists y$ s.t. $xRy$.} Let $\delta_{T(\cU,\PP)}$ be the distribution that assigns probability~1 to~$T(\cU,\PP)$, the complete theory of the model~$(\cU,\PP)$. Note that $\iota(\PP)R\iota(\delta_{T(\cU,\PP)})$.
 
-\item \emph{$\forall x$ the set $\{y \in \mathcal{A}: xRy\}$ is convex.} Because it is the intersection of $\mathcal{A}$ with $\{v\in\RR^\NN : v(n) = 1\}$, for every~$n$ that is the G\"odel number of a statement $\dot a < E[X] < \dot b$ that must be assigned probability~1.
+\item \emph{$\forall x$ the set $\{y \in \mathcal{A}: xRy\}$ is convex.} Because $\mathcal{A}$ is convex and this set is the intersection of $\mathcal{A}$ with $\{v\in\RR^\NN : v(n) = 1\}$, for every~$n$ that is the G\"odel number of a statement $\dot a < E[X] < \dot b$ that must be assigned probability~1.
 \end{enumerate}
 
-We can now apply the Kakutani fixed point theorem to obtain our desired result (i.e., the existence of a fixed point $\PP\in f(\PP)$) if we can furthermore show that~$f$ has closed graph, i.e., that given $\PP_n,\PP'_n,\PP,\PP'\in\Delta(\cS_T)$ such that $\PP_n\to\PP$, $\PP'_n\to\PP'$, and $\iota(\PP'_n)\in f(\iota(\PP_n))$, we have $\iota(\PP')\in f(\iota(\PP))$. For this, we make use of the fact that if $\PP_n$ converges weakly to $\PP$ (i.e., converges in the weak-$*$ topology that we have put on $\Delta(\cS_T)$), then $\EE_n[X]\to\EE[X]$ for every bounded, continuous function $X : \cS_T\to\RR$, and hence in particular for every bounded definable value~$X$. Thus, if $a < \EE[X] < b$, then $a < \EE_n < b$ for all~$n$ greater than some~$n_0$, and hence $\PP'_n[\dot a < E[X] < \dot b] = 1$ for all $n>n_0$. Since $\iota(\PP'_n)$ converges pointwise to $\iota(\PP')$, this implies that $\PP'[\dot a < E[X] < \dot b] = 1$, as was to be shown.
+We can now apply the Kakutani fixed point theorem to obtain our desired result, the existence of a $\PP$ such that $\iota(\PP)R\iota(\PP)$. We will now build on this result to define the \emph{Enlightened theories}.
+
 \end{proof}
 \subsection{Enlightened theories}
 In this subsection, we develop an alternate approach to reflection about reflection.
