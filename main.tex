@@ -153,9 +153,9 @@ In this work, we exhibit a probabilistic analogue that succeeds where the truth 
 Much work has already been done on defining probability distributions over sentences. In his 1964 paper \cite{gaifman64}, Gaifman introduced a set of three conditions that imply all of the properties one would expect of a probability distribution. The three conditions are as follows:
 \footnote{Gaifman's original formulation was:
 \begin{enumerate}
-\item If $\vdash \vp$ and $\vdash \psi$ then $\PP(\vp)=\PP(\p)$
+\item If $\vdash \vp$ and $\vdash \psi$ then $\PP(\vp)=\PP(\vp)$
 \item If $\vdash \neg (\vp \wedge \phi)$ then $\PP(\vp \vee \psi) = \PP(\vp) + \PP(\psi)$
-\item $If \vdash \vp$ then $\PP(\vp) = 1$
+fitem $If \vdash \vp$ then $\PP(\vp) = 1$
 \end{enumerate}
 Gaifman distinguished between measures and probabilities; as we are only concerned with probabilities, it is easy to see that these three conditions are equivalent to those we stated.
 }
@@ -499,12 +499,22 @@ We write $\Delta(\cS)$ for the set of probability distributions over $\cS$ with 
 \end{definition}
 For $S\subseteq T$, we have $\cS_T\subseteq\cS_S$, and hence consider $\Delta(\cS_T)$ to be a subset of $\Delta(\cS_S)$.
 \subsection{Definable Values and their Expectations}
-In this subsection, fix a theory $T$ extending $\zfcl$. We will construct a notion of random variable in our system and prove that its expectation is well defined and behaves in the way we would like.
+We will construct a notion of random variables in our system and prove that their expectation is well defined.
+
+Intuitively, we will choose a theory $T$ and let any formula $\vp(x)$ define a 'random variable' if and only if $T$ can prove that $\vp$ is satisfied by a unique value. For example, consider
+
+$$\vp(x) \iff (x = 0 \wedge \psi) \vee (x = 1 \wedge \neg \psi)$$
+
+If $\psi\in T$ then $\vp(0)$, but if $\neg \psi\in T$ then $\vp(1)$.
+
+However, $\psi$ may be independent of $T$, in which case $T$ can prove $\vp(0)\vee\vp(1)$, but cannot prove either of the statements in the disjunction. Given a distribution $\PP\in \Delta(T)$, we can calculate a probability distribution over the values satisfying $vp$. We can think of this distribution as analogous to a random variable; given this framing, we will construct a way of calculating expectations for these distributions.
+
 \begin{definition}
+Let $T$ be a theory extending $\zfcl$. 
 A \emph{definable value} is given by a one-parameter formula $\vp(x)$ of $\cL$ such that $T\vdash\big(\exists!x.\;\vp(x)\big)\wedge\big(\forall x.\;\vp(x)\to x\in\RR\big)$. We use capital letters, in particular $X$, to denote definable values, since we will consider them random variables on~$\cS_T$, and we write $T\vdash\psi(X)$ to mean $T\vdash\forall x.\;\vp(x)\to\psi(x)$.
 
 We say that ``\emph{$X\in[a,b]$ is definable}'', where $a<b\in\RR$, if $X$ is a definable value and for all $a',b'\in\QQ$ such that $a'\le a$ and $b\le b'$, we have $T\vdash\dot a'\le X\le \dot b'$.
-We say that a definable value $X$ is \emph{bounded} if there are $a,b\in\RR$ such that $X\in[a,b]$.
+We say that a definable value $X$ is \emph{bounded} if there are $a,b\in\RR$ such that $\inClosed{X}$.
 \end{definition}
 \begin{definition}
 If $X$ is a definable value and $S\in\cS_T$, let
@@ -535,7 +545,8 @@ By the previous lemma, $X^{-1}((a',b'))$ is open for every open interval $(a',b'
 If $X\in[a,b]$ is definable and $\PP\in\Delta(\cS_T)$, then $\EE[X]\in[a,b]$, where $\EE[X] := \int X(S)\,d\PP(S)$; in particular, the expectation of bounded definable values is well-defined and has its usual properties, such as linearity.
 \end{corollary}
 \subsection{An Alternative View of Coherent Distributions} \label{An Alternative View of Coherent Distributions}
-In this subsection, fix again a theory $T$ extending $\zfcl$.
+Intuitively, one can think of coherent distributions as measures over completions of a theory. They then assign to any statement $\psi$ a probability corresponding to the 'fraction' of the completions that include $\psi$. A rigorous definition follows.
+
 A $\PP\in\Delta(\cS)$ assigns a probability to every sentence~$\vp$ in the language~$\cL$, by setting $\PP[\vp] := \PP(\{S\in\cS:S\vdash\vp\})$. This defines a mapping $\iota : \Delta(\cS)\to [0,1]^\NN\subset\RR^\NN$, where we consider $\RR^\NN$ to be endowed with the product topology. (The exponent~$\NN$ comes from some enumeration of the sentences of~$\cL$.) We now show first that $\iota$ is an injection and has compact range, and then that it in fact preserves the topology of $\Delta(\cS)$.
 \begin{definition}
 By the \emph{standard base} of $\cS$ we mean the collection of all sets of the form $\{S\in\cS : S\vdash\vp\}$, where $\vp$ is a sentence of~$\cL$.
@@ -577,15 +588,39 @@ implying $\lim\PP_n(A) = \PP(A)$.
 \begin{definition}
 A theory $T$ in the language $\cL$ is \emph{meditative} if it is consistent and there is a Grothendieck universe $\cU$ such that for every $\PP\in\Delta(\cS_T)$, we have $(\cU,\PP)\vDash T$.
 \end{definition}
-The proof of the following theorem is almost the same as the proof of consistency of the reflection principle in a previous section. We set up the problem and then show that we can use Kakutani's fixed point theorem to find a fixed point.
+The proof of the following theorem is analogous to the proof of consistency of the reflection principle in a previous section. We define a function $f$ an then and then appeal to Kakutani's fixed point theorem to find a fixed point of $f$.
 \begin{theorem}
 For every meditative theory $T$, there is a $\PP\in\Delta(\cS_T)$ such that for every bounded definable value~$X$ and all $a,b\in\QQ$,
 \[a<\EE[X]<b\;\implies\;\PP[\dot a < E[X] < \dot b] = 1.\]
 \end{theorem}
 \begin{proof}
-Let $\cA$ be the range of the embedding $\iota$. We know that this is a compact subset of the locally convex topological vector space~$\RR^\NN$. Moreover,~$\cA$ is clearly convex, since~$\Delta(\cS_T)$ is convex and~$\iota$ clearly preserves convex combinations. Finally, there is a $\PP\in\Delta(\cS_T)$ since~$T$ is consistent, so $\iota(\PP)\in\cA$, which is therefore non-empty.
+Let $\cA$ be the range of the embedding $\iota$. Define $f : \cA\to\Pow{\cA}$, such that $\iota(\PP')\in f(\iota(\PP))$ if for every bounded definable value~$X$ and all $a,b\in\QQ$ such that $a<\EE[X]<b$, we have $\PP'[\dot a < E[X] < \dot b] = 1$.
 
-We now consider the correspondence $f : \cA\to\Pow{\cA}$, where $\iota(\PP')\in f(\iota(\PP))$ if for every bounded definable value~$X$ and all $a,b\in\QQ$ such that $a<\EE[X]<b$, we have $\PP'[\dot a < E[X] < \dot b] = 1$. Clearly, the set $f(\iota(\PP))$ is closed, since it is the intersection of the closed set~$\cA$ with the closed sets $\{v\in\RR^\NN : v(n) = 1\}$, for every~$n$ that is the G\"odel number of a statement $\dot a < E[X] < \dot b$ that must be assigned probability~1. It is also clear that it is convex, and it is non-empty because it contains $\delta_{T(\cU,\PP)}$, the distribution that assigns probability~1 to~$T(\cU,\PP)$, the complete theory of the model~$(\cU,\PP)$.
+We will employ Kakutani's fixed point theorem to find a $\PP \in f(\PP)$. Recall that Kakutani's fixed point theorem requires the following 7 properties:
+(1) $\mathcal{A}$ is nonempty,
+(2) $\mathcal{A}$ is compact,
+(3) $\mathcal{A}$ is convex,
+(4) $\mathcal{A}$ is a subset of a locally convex Hausdorff space,
+(5) $f$ has a closed graph,
+(6) $\forall x$ $f(x)$,
+(7) $\forall x$ the set $\{y \in \mathcal{A}: xRy\}$ is convex.
+\cite{kakutani41}.
+
+\begin{enumerate}
+\item \emph{$\mathcal{A}$ is nonempty}. There is a $\PP\in\Delta(\cS_T)$ since~$T$ is consistent, so $\iota(\PP)\in\cA$, which is therefore non-empty.
+
+\item \emph{$\mathcal{A}$ is compact.} By correlary 3.2.3.
+
+\item \emph{$\mathcal{A}$ is convex.} Moreover,~$\cA$ is clearly convex, since~$\Delta(\cS_T)$ is convex and~$\iota$ clearly preserves convex combinations.
+
+\item \emph{$\mathcal{A}$ is a subset of a locally convex Hausdorff space.} $\mathcal{A}$ is a compact subset of the locally convex topological vector space~$\RR^\NN$.
+
+\item \emph{$R$ has a closed graph.} Clearly, the set $f(\iota(\PP))$ is closed, since it is the intersection of the closed set~$\cA$ with the closed sets $\{v\in\RR^\NN : v(n) = 1\}$, for every~$n$ that is the G\"odel number of a statement $\dot a < E[X] < \dot b$ that must be assigned probability~1.
+
+\item \emph{$\forall x \exists y$ s.t. $xRy$.} $f(\iota(\PP))$ contains $\delta_{T(\cU,\PP)}$, the distribution that assigns probability~1 to~$T(\cU,\PP)$, the complete theory of the model~$(\cU,\PP)$.
+
+\item \emph{$\forall x$ the set $\{y \in \mathcal{A}: xRy\}$ is convex.} Trivially
+\end{enumerate}
 
 We can now apply the Kakutani fixed point theorem to obtain our desired result (i.e., the existence of a fixed point $\PP\in f(\PP)$) if we can furthermore show that~$f$ has closed graph, i.e., that given $\PP_n,\PP'_n,\PP,\PP'\in\Delta(\cS_T)$ such that $\PP_n\to\PP$, $\PP'_n\to\PP'$, and $\iota(\PP'_n)\in f(\iota(\PP_n))$, we have $\iota(\PP')\in f(\iota(\PP))$. For this, we make use of the fact that if $\PP_n$ converges weakly to $\PP$ (i.e., converges in the weak-$*$ topology that we have put on $\Delta(\cS_T)$), then $\EE_n[X]\to\EE[X]$ for every bounded, continuous function $X : \cS_T\to\RR$, and hence in particular for every bounded definable value~$X$. Thus, if $a < \EE[X] < b$, then $a < \EE_n < b$ for all~$n$ greater than some~$n_0$, and hence $\PP'_n[\dot a < E[X] < \dot b] = 1$ for all $n>n_0$. Since $\iota(\PP'_n)$ converges pointwise to $\iota(\PP')$, this implies that $\PP'[\dot a < E[X] < \dot b] = 1$, as was to be shown.
 \end{proof}
