@@ -588,21 +588,21 @@ implying $\lim\PP_n(A) = \PP(A)$.
 \begin{definition}
 A theory $T$ in the language $\cL$ is \emph{meditative} if it is consistent and there is a Grothendieck universe $\cU$ such that for every $\PP\in\Delta(\cS_T)$, we have $(\cU,\PP)\vDash T$.
 \end{definition}
-The proof of the following theorem is analogous to the proof of consistency of the reflection principle in a previous section. We define a function $f$ an then and then appeal to Kakutani's fixed point theorem to find a fixed point of $f$.
+The proof of the following theorem is analogous to the proof of consistency of the reflection principle in a previous section. We define a relation $R$ an then and then appeal to Kakutani's fixed point theorem to find a fixed point of $R$.
 \begin{theorem}
 For every meditative theory $T$, there is a $\PP\in\Delta(\cS_T)$ such that for every bounded definable value~$X$ and all $a,b\in\QQ$,
 \[a<\EE[X]<b\;\implies\;\PP[\dot a < E[X] < \dot b] = 1.\]
 \end{theorem}
 \begin{proof}
-Let $\cA$ be the range of the embedding $\iota$. Define $f : \cA\to\Pow{\cA}$, such that $\iota(\PP')\in f(\iota(\PP))$ if for every bounded definable value~$X$ and all $a,b\in\QQ$ such that $a<\EE[X]<b$, we have $\PP'[\dot a < E[X] < \dot b] = 1$.
+Let $\cA$ be the range of the embedding $\iota$. Define $R$, such that $\iota(\PP)R\iota(\PP')$ if for every bounded definable value~$X$ and all $a,b\in\QQ$ such that $a<\EE[X]<b$, we have $\PP'[\dot a < E[X] < \dot b] = 1$.
 
 We will employ Kakutani's fixed point theorem to find a $\PP \in f(\PP)$. Recall that Kakutani's fixed point theorem requires the following 7 properties:
 (1) $\mathcal{A}$ is nonempty,
 (2) $\mathcal{A}$ is compact,
 (3) $\mathcal{A}$ is convex,
 (4) $\mathcal{A}$ is a subset of a locally convex Hausdorff space,
-(5) $f$ has a closed graph,
-(6) $\forall x$ $f(x)$,
+(5) $R$ has a closed graph,
+(6) $\forall x \exists y : xRy$,
 (7) $\forall x$ the set $\{y \in \mathcal{A}: xRy\}$ is convex.
 \cite{kakutani41}.
 
@@ -611,15 +611,15 @@ We will employ Kakutani's fixed point theorem to find a $\PP \in f(\PP)$. Recall
 
 \item \emph{$\mathcal{A}$ is compact.} By correlary 3.2.3.
 
-\item \emph{$\mathcal{A}$ is convex.} Moreover,~$\cA$ is clearly convex, since~$\Delta(\cS_T)$ is convex and~$\iota$ clearly preserves convex combinations.
+\item \emph{$\mathcal{A}$ is convex.}~$\Delta(\cS_T)$ is convex and~$\iota$ clearly preserves convex combinations.
 
 \item \emph{$\mathcal{A}$ is a subset of a locally convex Hausdorff space.} $\mathcal{A}$ is a compact subset of the locally convex topological vector space~$\RR^\NN$.
 
-\item \emph{$R$ has a closed graph.} Clearly, the set $f(\iota(\PP))$ is closed, since it is the intersection of the closed set~$\cA$ with the closed sets $\{v\in\RR^\NN : v(n) = 1\}$, for every~$n$ that is the G\"odel number of a statement $\dot a < E[X] < \dot b$ that must be assigned probability~1.
+\item \emph{$R$ has a closed graph.} Clearly, the set $\{\iota(\PP'):\iota(\PP)R\iota(\PP')\}$ is closed, since it is the intersection of the closed set~$\cA$ with the closed sets $\{v\in\RR^\NN : v(n) = 1\}$, for every~$n$ that is the G\"odel number of a statement $\dot a < E[X] < \dot b$ that must be assigned probability~1. %XXX KAYA is there an issue with this?
 
-\item \emph{$\forall x \exists y$ s.t. $xRy$.} $f(\iota(\PP))$ contains $\delta_{T(\cU,\PP)}$, the distribution that assigns probability~1 to~$T(\cU,\PP)$, the complete theory of the model~$(\cU,\PP)$.
+\item \emph{$\forall x \exists y$ s.t. $xRy$.} Clearly, $\iota(\PP)R\iota(\delta_{T(\cU,\PP)})$, where $\delta_{T(\cU,\PP)}$ the distribution that assigns probability~1 to~$T(\cU,\PP)$, the complete theory of the model~$(\cU,\PP)$.
 
-\item \emph{$\forall x$ the set $\{y \in \mathcal{A}: xRy\}$ is convex.} Trivially
+\item \emph{$\forall x$ the set $\{y \in \mathcal{A}: xRy\}$ is convex.} Because it is the intersection of $\mathcal{A}$ with $\{v\in\RR^\NN : v(n) = 1\}$, for every~$n$ that is the G\"odel number of a statement $\dot a < E[X] < \dot b$ that must be assigned probability~1.
 \end{enumerate}
 
 We can now apply the Kakutani fixed point theorem to obtain our desired result (i.e., the existence of a fixed point $\PP\in f(\PP)$) if we can furthermore show that~$f$ has closed graph, i.e., that given $\PP_n,\PP'_n,\PP,\PP'\in\Delta(\cS_T)$ such that $\PP_n\to\PP$, $\PP'_n\to\PP'$, and $\iota(\PP'_n)\in f(\iota(\PP_n))$, we have $\iota(\PP')\in f(\iota(\PP))$. For this, we make use of the fact that if $\PP_n$ converges weakly to $\PP$ (i.e., converges in the weak-$*$ topology that we have put on $\Delta(\cS_T)$), then $\EE_n[X]\to\EE[X]$ for every bounded, continuous function $X : \cS_T\to\RR$, and hence in particular for every bounded definable value~$X$. Thus, if $a < \EE[X] < b$, then $a < \EE_n < b$ for all~$n$ greater than some~$n_0$, and hence $\PP'_n[\dot a < E[X] < \dot b] = 1$ for all $n>n_0$. Since $\iota(\PP'_n)$ converges pointwise to $\iota(\PP')$, this implies that $\PP'[\dot a < E[X] < \dot b] = 1$, as was to be shown.
