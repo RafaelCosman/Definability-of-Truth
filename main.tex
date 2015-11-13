@@ -106,7 +106,13 @@ Rafael Cosman\thanks{Machine Intelligence Research Institute}
 }
 \maketitle
 \begin{abstract}
-We prove that there exist Gaifman coherent probability distributions over sentences that satisfy a reflection principle, namely, distributions that assign 0 probability to any sentence saying that a corresponding inner function symbol differs by more than an infinitesimal amount from the value of the distribution when evaluated at any sentence. An analogous principle is proved for expectations. We proceed to show that such distributions unfortunately assign zero probability to an inner language version of the reflection principle. But they can exhibit inner coherence and a weaker version of inner reflection. We prove that these probability distributions are necessarily supported on nonstandard models.
+It is well known that truth predicates fail to liar's sentences.
+One solution is to assign probabilities to sentences.
+We develop a novel framework for probability distributions over sentences which achieves an important property called \emph{reflection}. 
+Intuitively, this is the property that a probability distribution `believes' in itself.
+We build an analogous framework for expectations and prove a similar property.
+We also prove a negative result: such probability distributions cannot exhibit a property called inner reflection. 
+Intuitively, while they believe in themselves, they cannot \emph{believe} that they believe in themselves.
 \end{abstract}
 \setcounter{section}{-1}
 \section{Introduction}
@@ -123,15 +129,15 @@ We prove that there exist Gaifman coherent probability distributions over senten
 
 % TODO [prob-log] what work has been done in probabilistic logic before? Did you add papers to the list about this? Maybe there is a classic reference text that we could cite and be done (like Hajek is for fuzzy logic)?
 
+%TODO Gaifman condition impossibility result from N.O. maybe add??
+
 % add bits about probabilistic stuff here. Then draw analogy to truth values and stuff
+In this work we will build a framework for reflective probability distributions. These distributions will be over a language including a symbol $P$ which will `reflect' the probabilities in the distribution. Just like how a truth predicate $True$ `reflects' the notion of truth in the theory,
 
-If we wished to express a theory's truth values within the theory,
-we might introduce a predicate $\True$ which acts on encodings of sentences $\q{\vp}$ and returns their truth value $\Tq{\vp}$.
-
-We might want this predicate to satisfy a formal correctness property:
 \begin{equation}\label{truth-reflection}
-	\forall \vp : \Tq{\vp} \iff \vp.
+	\Tq{\vp} \iff \vp.
 \end{equation}
+
 
 Unfortunately, it is impossible for any expressive language to contain its own truth predicate, for if it did, we could consider the liar's sentence $G$ defined by the diagonalization
 \[G \iff \Tq{\neg{G}}.\]
@@ -139,16 +145,26 @@ Combining this with property~\ref{truth-reflection}, we obtain:
 \[G \iff \Tq{\neg{G}} \iff \neg G\]
 which is a contradiction. 
 
+Three-valued logics attempt to solve this issue by having an indeterminate value in addition to True and False. Sentences like $G$ are assigned the indeterminate value. These systems, however, are not satisfactory because they are unable to reach conclusions such as $G \vee \neg G$.
+
+This work instead takes the approach of assigning probabilities to sentences. These probabilities are often thought of as 'degrees of belief'.
+Much work has already been done in this vein, but there is a crucial property called reflection that has not been fully achieved. Leitgeb in \emph{From Type-Free Truth to Type Free Probability} constructs theories which exhibit attractive properties close to full reflection but they 
+
 In this work, we exhibit a probabilistic analogue that succeeds where the truth predicate failed. We prove that our construction is consistent and does not fall prey to the standard paradoxes.
 
 %TODO expand this bit greatly to talk more about our actual results. The intro has a lot about truth predicates and background, but little about our construction
 %TODO maybe move the truth predicate discussion to the next subsection or cut it down
 % Note that this last bit is structurally sound except for expansion of probabilistic stuff, which requiers knowledge of probabilistic background, and maybe modifying the explicit discussion of the truth predicate.
 %TODO [explicit-norms] What is the norm for such an explicit discussion of previous work? Keep, cut down, expand?
+
 \subsection{Background and previous work}
 %TODO [intro-sec-norms] Check the norms for splitting intros into such sections.
 
 %TODO do something with this: Hajek has shown that an analogue of this is true in the context of fuzzy logic \cite{hajek98}.
+
+
+
+Others have also constructed probability distributions over sentences in order to combat this same issue. For example,
 
 Much work has already been done on defining probability distributions over sentences. In his 1964 paper \cite{gaifman64}, Gaifman introduced a set of three conditions that imply all of the properties one would expect of a probability distribution. The three conditions are as follows:
 \footnote{Gaifman's original formulation was:
@@ -236,7 +252,7 @@ To overcome this challenge, we deny $P$ access to the exact values of $\PP$ but 
 For any open interval $(a, b)$ containing $\Po{\vp}$,
 a sufficiently accurate approximation to $\Po{\vp}$
 would let us conclude $\Po{\vp} \in (a, b)$,
-and so, in this vein, we might try to define our reflection principle as:
+and so, in this vein, we might consider the following reflection principle:
 
 \begin{equation}\label{literal-reflection}
 \forall a, b \in \mathbb{Q} : \inOpen{\PP(\vp)} \iff \PP(\inOpen{\Pq{\vp}}) = 1 
