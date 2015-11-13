@@ -387,21 +387,21 @@ Therefore, by Kakutani's fixed point theorem, $R$ has a fixed point, which is, b
 \section{Reflection about Reflection}
 \label{refl-refl}
 %%fakesubsection
-If we think of a reflective $\PP$ as one that can 'model' itself, we might want more than for $P$ to just approximate $\PP$ arbitrarily well. We might want $\PP$ to be confident that \emph{$P$ obeys the same principles as $\PP$}, namely the Reflection principle and Gaifman coherence.
+Given a $\PP$,
+if we think of $P$ as approximating $\PP$, then we would like $P$ to reflect not only the probability assignments of $\PP$, but also the its structure. Specifically, we would like $\PP$ to assign high probability to the statements that $P$ is reflective and Gaifman coherent. 
 
-We will show that, unfortunately, any coherent $\PP$s that assign non-zero probability to $P$ exhibiting reflection are \emph{necessarily themselves non-reflective}. This result intuitively means that reflective $\PP$s cannot model their own reflection and $\PP$s that think they model their own reflection are not actually reflective.
-
+We will show that, unfortunately, any coherent $\PP$ that assigns non-zero probability to $P$ exhibiting reflection is \emph{necessarily non-reflective}. This result intuitively means that no reflective, coherent $\PP$ believes that $P$ is reflective; and, further, that any $\PP$ which does believe that its approximation is reflective is not itself reflective.
 \subsection{The Inner Reflection Principle}
 The reflection principle is stated in the metalanguage, and is a 
 \emph{statement which is true about $\PP$},
 not an axiom in $T$ to which $\PP$ assigns probability 1.
-In contrast to this principle, which we can think of as an \emph{outer reflection principle}, we might also want $\PP$ to assign probability 1 to its own reflective consistency.
-To this end, define the inner reflection principle as:
+In contrast to this principle, which we can think of as an \emph{outer reflection principle}, we might also want $\PP$ to assign probability 1 to $P$'s reflective consistency.
+To this end, define the \emph{inner reflection principle} as
+\footnote{Note that the quantification here is in the metalanguage. An even stronger inner reflection principle would have the quantification on the inside i.e.
 $$\forall\vp\in L' \ \forall a,b\in\mathbb{Q}:\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$
-\footnote{Note that the quantification here is in the metalanguage. An even stronger inner-reflection principle would have the quantification on the inside i.e.
 $$\forall\vp\in L' : \PP(\forall a,b\in\mathbb{Q} : \Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$
 Or even
-$$\PP(\forall\q{\vp} \ \forall a,b\in\mathbb{Q} : \Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$ (where $\forall \q{\vp}$ is quantifying over all (valid) encodings in the language, which might be, for example, the natural numbers.)}
+$$\PP(\forall\q{\vp} \ \forall a,b\in\mathbb{Q} : \Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$ (where $\forall \q{\vp}$ is quantifying over all (valid) encodings in the language, which might be, for example, the natural numbers.)}:
 We will prove that there exist coherent inner reflective $\PP$s. We will then prove that these inner reflective $\PP$s cannot also be outer reflective.
 
 \begin{proposition} \emph{Existence of an Inner Reflective $\PP$}
@@ -418,7 +418,7 @@ Take a language $L$ and a theory $T$ over that language. Extend $L$ by a functio
 \end{proposition}
 \begin{proof}
 Assume that there exists a reflective $\PP$ which satisfies
-$$\forall a,b\in\mathbb{Q}\forall\vp\in L':\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$.
+$$\forall a,b\in\mathbb{Q}\forall\vp\in L':\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1.$$
 
 % XXX MATH - fix this proof
 
@@ -442,7 +442,7 @@ $$\forall\vp\in L' \ \forall a,b,\varepsilon > 0 \in\mathbb{Q}:\PP(\Pq{\vp}\in(a
 \end{proposition}
 \begin{proof}
 Assume that $\Pq{\vp}\in (a,b)$ is a theorem.
-%XXX MATH - Then, $\PP(\vp)\in(a,b)$.
+%XXX Then, $\PP(\vp)\in(a,b)$.
 By the contrapositive of the reflection principle, we have that
 $$\PP(\Pq{\vp}\in(a,b))=1.$$
 We can then derive 
