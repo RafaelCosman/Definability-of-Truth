@@ -77,9 +77,6 @@ Let $L'$ be the extension of $L$ by a function symbol $P$. }
 \newcommand{\definitionsOfLsAndT}{Let $T$ be a consistent theory over some language $L$.
 Let $L'$ be the extension of $L$ by a function symbol $P$. }
 
-\newcommand{\coh}{coherent}
-\newcommand{\gcoh}{Gaifman \coh~}
-
 %%fakesubsection newtheorem
 \newcounter{ctr}[section]
 \theoremstyle{plain}
@@ -105,71 +102,47 @@ Eliezer Yudkowsky\thanks{Machine Intelligence Research Institute}
 \and
 Marcello Herreshoff\thanks{Google}
 \and
-Mihaly Barasz\thanks{Google}
+Mihaly Barasz\footnotemark[3]
 \and 
-Benya Fallenstein\thanks{Machine Intelligence Research Institute}
+Benya Fallenstein\footnotemark[2]
 \and
-Jessica Taylor\thanks{Machine Intelligence Research Institute}
+Jessica Taylor\footnotemark[2]
 \and 
-Kaya Stechly\thanks{Machine Intelligence Research Institute}
+Kaya Stechly\footnotemark[2]
 \and
-Rafael Cosman\thanks{Machine Intelligence Research Institute}
+Rafael Cosman\footnotemark[2]
 }
 \maketitle
 \begin{abstract}
-% might be violating norms TODO
-%TODO check words
-It is well known that truth predicates fail to liar's sentences such as ``this sentence is false''.
-Instead of assigning \emph{truth} values to sentences and then trying to construct a \emph{truth} predicate, we assign \emph{probabilities} to sentences and then construct a \emph{probabilistic analogue} to a truth predicate. 
+Truth predicates are inconsistent due to liar's sentences such as ``this sentence is false''.
+Rather than constructing a \emph{truth} predicate and then assigning \emph{truth values} to sentences, we construct a \emph{probabilistic analogue} to a truth predicate and then assign \emph{probabilities} to sentences, including those that refer to the probabilities of other sentences. 
 %TODO send to kenny to figure out if the inner outer language distinction is clear
-Unlike the standard truth predicate construction, our analogue is consistent and does \emph{not} fail to probabilistic liar's sentences such as ``this sentence is unlikely''. 
+Unlike the standard truth predicate construction, our analogue is consistent and does not fail to probabilistic generalizations of liar's sentences such as ``this sentence is unlikely''. 
 We also prove a negative result: while our analogue works like a truth predicate, we must assign zero probability to the sentence saying it works like a truth predicate.
+%TODO decide whether to include other results here.
 \end{abstract}
 \setcounter{section}{-1}
 \section{Introduction}
 
-% Need to answer before continuing editing this section [Rafael: this is where the most important bottleneck is. Write answers in comments or just implement directly in the relevant TODO (they are labeled with refs of the form [example-label])]
-
-%TODO [prob-log] What work has been done in probabilistic logic? What previous work do we motivate this from?
-
-%TODO [explicit-norms] What is the norm for such an explicit discussion of previous work? Keep, cut down, expand?
-
-%TODO [intro-sec-norms] Check the norms for splitting intros into such sections.
-
-%TODO [deeper-refs] pick two papers and more deeply investigate their connection to our paper; write the paragraphs for the background section.
-
-% TODO [prob-log] what work has been done in probabilistic logic before? Did you add papers to the list about this? Maybe there is a classic reference text that we could cite and be done (like Hajek is for fuzzy logic)?
-
-%TODO Gaifman condition impossibility result from N.O. maybe add??
-
-% add bits about probabilistic stuff here. Then draw analogy to truth values and stuff
-
-% TODO add something about a revision sequence interpretation. Check if we can adapt the banrch sequence stuff from Leitgeb to prove consistency for this revision sequence. 
-
-A truth predicate is intended to `reflect' truth in a theory:
+A truth predicate, if possible, would `reflect' truth in a theory:
 %TODO dont like. Something about how it isnt the usual terminology and also how it isnt immediately clear what is going on.
 \begin{equation}\label{truth-reflection}
 	\vp \iff \Tq{\vp}.
 \end{equation}
 
-We use a probabilistic analogue to truth which will assign a probability to each sentence
-and a probabilistic analogue to a truth predicate which will reflect those probabilities.
+%TODO Phrasing and cadence fixes here!!!
+Let $\PP$ be a probability distribution over sentences. We think of $\PP$ as a probabilistic analogue to truth. $\PP$ has an opinion about each sentence in the language, even those sentences independent of the theory.
+%TODO finish these edits from tablet markups. Also, so CLUNKY!
+We will refer to a theory over which such a probability distribution $\PP$ is defined as a theory with a notion of \emph{outer probability} in addition to its normal notion of truth.
 
-Let $\PP$ be our probabilistic analogue for truth. That is, Let $\PP$ be a probability distribution over sentences such that if $\varphi$ is in our theory, then $\PP(\varphi) = 1$ and $\PP(\neg\varphi) = 0$.
-For all other sentences, $\PP$ will assign probabilities in a \coh way which we will define in the next subsection.
-$\PP$ can be thought of as having a probabilistic opinion about each sentence in the language, even if some such sentence is independent of the theory.
-% XXX KAYA can we give an example here?
-For example, the G\"odel sentence of any theory is independent of the theory and so could be assigned probability anywhere from $0$ to $1$.
-We will refer to a theory over which such a $\PP$ is defined as a theory with a notion of \emph{outer probability} in addition to its normal notion of truth.
-
-Let $P$ be our probabilistic analogue of a truth predicate. That is, we want $P$ to exhibit a property analogous to (\ref{truth-reflection}). We will refer to functions that exhibit such a property as \emph{inner probability functions}.
+Let $P$ be a function symbol in the language which exhibits a property analogous to (\ref{truth-reflection}). We think of $P$ as a probabilistic analogue of a truth predicate. We will refer to functions $P$ that exhibit such a property as \emph{inner probability functions}.
 For example we might want,
 
 \begin{equation}\label{truth-predicate-reflection}
 \PP(\vp)=p \iff \PP(\Pq{\vp}=p) = 1 
 \end{equation}
 
-Unfortunately, reflection principles of this strength fail to liar's sentences such as $\vp \iff \Pq{\vp} < 0.5$ (``This sentence is unlikely''). In order to achieve consistency, one must weaken this reflection principle in some way. We will take the approach of allowing $P$ to \emph{approximate} $\PP$ rather than equal $\PP$ exactly.
+Unfortunately, reflection principles of this strength fail to liar's sentences such as $\vp \iff \Pq{\vp} < 0.5$ (``This sentence is unlikely''). In order to achieve consistency, we need to weaken this reflection principle in some way. We take the approach of allowing $P$ to \emph{approximate} $\PP$ rather than equal $\PP$ exactly, as well as weakening the biconditional to a one directional implication.
 
 \subsection{Background and previous work}
 %TODO [intro-sec-norms] Check the norms for splitting intros into such sections.
@@ -196,7 +169,7 @@ Much work has already been done on developing outer probability distributions. I
 \end{enumerate}
 It is easy to see that these three conditions are equivalent to those we state.
 }
-\begin{definition} A \emph{\gcoh} probability distribution $\PP$ is one that satisfies the following:
+\begin{definition} A \emph{coherent} probability distribution $\PP$ is one that satisfies the following:
 \begin{center}
 \begin{tabular}{l r}
 1. $\forall \vp: \PP(\vp) \in [0,1]$ & probabilities range from 0 to 1 \\
@@ -284,7 +257,7 @@ But this unfortunately falls to the same liar's sentence ($\vp \iff \Pq{\vp} < 0
 \begin{definition}
 \label{refl-def}
 \definitionsOfLsAndTFirst
-Let $\PP$ be a \gcoh probability distribution over $L'$. We say that $\PP$ is \emph{reflective} iff it satisfies the following reflection principle:
+Let $\PP$ be a coherent probability distribution over $L'$. We say that $\PP$ is \emph{reflective} iff it satisfies the following reflection principle:
 \begin{equation}\label{reflection}
 \forall \vp \in L' \; \forall a, b \in \mathbb{Q} : \inOpen{\Po{\vp}} \Longrightarrow \Po{\inOpen{\Pq{\vp}}} = 1 .\\
 ~\footnote{Note that the reverse implication is necessarily false (by the arguments above against biconditionals); however, by applying the contrapositive twice, it can be shown that condition~\ref{reflection} is equivalent to
@@ -295,7 +268,7 @@ Note that this is almost the reverse implication, except for the fact that it us
 \end{definition}
 
 Our goal is to show that starting from any (rich enough\footnote{That is, it admits a G\"odel numbering.}) consistent theory $T$
-we can obtain a \emph{\coh}, \emph{reflective} $\PP$.
+we can obtain a \emph{coherent}, \emph{reflective} $\PP$.
 
 The intuition behind the name ``reflective''
 is that there is a relation, which corresponds to a restricted version of the intuitive concept of belief, such that reflective $\PP$s are exactly those $\PP$s that `believe' in themselves.
@@ -306,7 +279,7 @@ by constructing the belief relation and appealing
 to Kakutani's fixed point theorem.
 \begin{theorem} \emph{Consistency of the Reflection Principle}: 
 \definitionsOfLsAndT
-There exists a \gcoh $\PP$ which satisfies the reflection principle:
+There exists a coherent $\PP$ which satisfies the reflection principle:
 $$\qquad \qquad \forall \vp \in L' \ \forall a,b\in \mathbb{Q}: \inOpen{\Po{\vp}} \Rightarrow \PP(\inOpen{\Pq{\vp}})=1.$$
 \end{theorem}
 \begin{proof}
@@ -332,7 +305,7 @@ Because $T$ is consistent we can exhibit elements in $\mathcal{A}$.
 Let $T^{*}$ be a completion of $T$.
 Every sentence is either true or false in $T^{*}$.
 Let $\PP(\vp) = 1$ for all $\vp$ in $T^{*}$ and $\PP(\vp) = 0$ otherwise.
-It is easy to see that $x$ is \gcoh and thus an element of $\mathcal{A}$.
+It is easy to see that $x$ is coherent and thus an element of $\mathcal{A}$.
 
 Thus we have shown that $\mathcal{A}$ is non-empty. Specifically, there is an element for each completion of $T$. Note that each model of $T$ gives a completion $T^{*}$. However, also note that there may be elements that don't correspond to completions of $T$.
 
@@ -357,18 +330,18 @@ Note that $x_i(\vp)$ is a sequence of real numbers all in the interval $[0, 1]$.
 Thus they must converge to a real number within that interval, so $x(\vp)\in[0,1]$.
 \item \emph{If $\vp$ is logically valid from $T$, then $x(\vp)=1$.}
 This condition only applies if $\vp$ is logically valid in $T$, so assume that that is true.
-Since every $x_i$ is \gcoh, this implies that $x_i(\vp)$ are all $1$. Thus they converge to $1$.
+Since every $x_i$ is coherent, this implies that $x_i(\vp)$ are all $1$. Thus they converge to $1$.
 \item $\forall \psi: x(\vp) -x(\vp\wedge\psi)-x(\vp\wedge\neg\psi)=0$.
 (Note that we have rewritten the condition to make this part clearer.)
 Fix a $\psi$.
-Since the $x_i$'s are all \gcoh, $\forall i\forall \psi: x_i(\vp) -x_i(\vp\wedge\psi)-x_i(\vp\wedge\neg\psi)=0.$
+Since the $x_i$'s are all coherent, $\forall i\forall \psi: x_i(\vp) -x_i(\vp\wedge\psi)-x_i(\vp\wedge\neg\psi)=0.$
 This is a sequence of zeroes, so it must converge to zero, so $x$ fulfills this condition.
 \end{itemize}
-Note that our choices of $\vp$ and $\psi$ were arbitrary. Thus the conditions hold for all $\vp$ and $\psi$. This implies that the limit $x$ is \gcoh and therefore $\mathcal{A}$ is closed.
+Note that our choices of $\vp$ and $\psi$ were arbitrary. Thus the conditions hold for all $\vp$ and $\psi$. This implies that the limit $x$ is coherent and therefore $\mathcal{A}$ is closed.
 Thus $\mathcal{A}$ is compact.
 
 \item \emph{$\mathcal{A}$ is convex.}
-Given any $x,z\in\mathcal{A}$, we will show that if $y$ is a linear combination of $x$ and $z$, then $y$ is \gcoh and therefore is in $\mathcal{A}$.
+Given any $x,z\in\mathcal{A}$, we will show that if $y$ is a linear combination of $x$ and $z$, then $y$ is coherent and therefore is in $\mathcal{A}$.
 Like in the proof for the previous condition of Kakutani's theorem, we start by fixing a $\vp$, and run the proof for our equivalent conditions.
 \begin{itemize}
 \item \emph{$y(\vp) \in [0, 1]$}
@@ -383,7 +356,7 @@ The condition holds for $x(\vp)$ and $z(\vp)$.
 Since convex combinations of zeroes are zero, $y(\vp)=0$.
 \end{itemize}
 Thus convex combinations of $x$ and $y$ satisfy all the Gaifman conditions. Thus they are in $\mathcal{A}$. Thus $\mathcal{A}$ is convex.
-Therefore, convex combinations of \gcoh probability distributions are \gcoh.
+Therefore, convex combinations of coherent probability distributions are coherent.
 
 \item \emph{$\mathcal{A}$ is a subset of a locally convex Hausdorff space.}
 $\mathcal{A}$ is a subset of $[0, 1]^{L'}$ which is a subspace of $R^{L'}$ which is locally convex and Hausdorff.
@@ -400,9 +373,9 @@ Thus $R$ has a closed graph.
 \item \emph{$\forall x \exists y: xRy$.}
 Given an $x\in\mathcal{A}$ we can construct a $y$ such that $xRy$.
 Take a completion $T^*$ of the theory $T$ which includes all statements of the form $\inOpen{\Pq{\vp}}$, where $\inOpen{x(\vp)}$.
-Since $x$ is \gcoh, this theory is consistent.
+Since $x$ is coherent, this theory is consistent.
 Let $y$ assign $1$ to all statements in $T^*$ and $0$ to all statements not in $T^*$.
-This $y$ satisfies $xRy$ and is \gcoh.
+This $y$ satisfies $xRy$ and is coherent.
 
 \item \emph{$\forall x$ the set $\{y \in \mathcal{A}: xRy\}$ is convex.}
 Let $y_0, y_2$ be elements of the set $\{y \in A: xRy\}$, and let $y_1$ be any convex combination of $y_0$ and $y_2$.
@@ -414,7 +387,7 @@ By convexity of $\mathcal{A}$ we have that $y_1$ is in $\mathcal{A}$, so $xRy_1$
 Therefore, $\{y \in A: xRy\}$ is convex.
 \end{enumerate}
 
-Therefore, by Kakutani's fixed point theorem, $R$ has a fixed point, which is, by definition, a \coh distribution that satisfies the reflection principle.
+Therefore, by Kakutani's fixed point theorem, $R$ has a fixed point, which is, by definition, a coherent distribution that satisfies the reflection principle.
 \end{proof}
 
 
@@ -424,13 +397,13 @@ Therefore, by Kakutani's fixed point theorem, $R$ has a fixed point, which is, b
 
 The reflection principle for truth predicates is a statement in the \emph{metalanguage}:
 $$\vp \iff \Tq{\vp}.$$
-If one had a working truth predicate, a natural next desidaratum is for the theory to \emph{know} that the truth predicate works as a truth predicate. Specifically, we might want the theory to include as a \emph{sentence in the language}
+If one had a working truth predicate, a natural next desidaratum is for the theory to \emph{know} that the truth predicate works as a truth predicate. Specifically, we might want the theory to prove
 $$\vp \leftrightarrow \Tq{\vp}.$$
-Note the difference between $\leftrightarrow$, biconditional in the language, and $\iff$, biconditional in the metalanguage.
+Note the difference between $\leftrightarrow$, the biconditional in the language, and $\iff$, the biconditional in the metalanguage.
 
-Analogously, now that we have proven that $P$ works like a truth predicate, we might additionally want $\PP$ to \emph{believe} that $P$ works like a truth predicate. That is, we would like $\PP$ to assign high probability to the statement that $P$ is reflective and \gcoh.
+Analogously, now that we have proven that $P$ works like a truth predicate, we might additionally want $\PP$ to \emph{believe} that $P$ works like a truth predicate. That is, we would like $\PP$ to assign high probability to the statement that $P$ is reflective and coherent.
 
-We will show that, unfortunately, no reflective, \coh $\PP$ believes that $P$ is reflective and that any \coh $\PP$ which does believe that $P$ is reflective is not itself reflective.
+We will show that, unfortunately, no reflective, coherent~$\PP$ believes that $P$ is reflective and that any coherent~$\PP$ which does believe that $P$ is reflective is not itself reflective.
 
 \subsection{The Inner Reflection Principle}
 The reflection principle is stated in the metalanguage, and is a 
@@ -442,10 +415,10 @@ $$\forall\vp\in L' \ \forall a,b\in\mathbb{Q}:\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq
 $$\forall\vp\in L' : \PP(\forall a,b\in\mathbb{Q} : \Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$
 Or even
 $$\PP(\forall\q{\vp} \ \forall a,b\in\mathbb{Q} : \Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$ (where $\forall \q{\vp}$ is quantifying over all (valid) encodings in the language, which might be, for example, $\mathbb{N}$.) The impossibility results in this section are proved for the weak version, so carry for these two stronger versions trivially.}}$$
-We will first prove that there exist \emph{\coh} inner reflective $\PP$s, but we then prove that these inner reflective $\PP$s cannot also be outer reflective.
+We will first prove that there exist \emph{coherent} inner reflective $\PP$s, but we then prove that these inner reflective $\PP$s cannot also be outer reflective.
 
 \begin{proposition} \emph{Existence of an Inner Reflective $\PP$.}
-\definitionsOfLsAndT Then there exists a \gcoh $\PP$ which satisfies the inner reflection principle:
+\definitionsOfLsAndT Then there exists a coherent $\PP$ which satisfies the inner reflection principle:
 $$\forall\vp\in L' \ \forall a,b\in\mathbb{Q}:\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$
 \end{proposition}
 \begin{proof}
@@ -455,7 +428,7 @@ This follows from an easy modification of the definition of the relation $R$ in 
 
 \begin{proposition} \emph{Impossibility of Satisfying both Inner and Outer Reflection}
 \definitionsOfLsAndT
-Then there exists no \gcoh $\PP$ which assigns probability one to every sentence in $T$ and satisfies both the inner and outer reflection principles. In fact, any \coh, reflective $\PP$ must assign probability $0$ to inner reflection.
+Then there exists no coherent $\PP$ which assigns probability one to every sentence in $T$ and satisfies both the inner and outer reflection principles. In fact, any coherent, reflective $\PP$ must assign probability $0$ to inner reflection.
 \end{proposition}
 \begin{proof}
 Assume that there exists a reflective $\PP$ which satisfies
@@ -474,11 +447,11 @@ This is now a decider, a $\PP$ which assigns $0$ or $1$ to every sentence, there
 
 % TODO MATH - fix the above paragraph
 
-A similar argument shows that any \coh, reflective $\PP$ must assign probability $0$ to inner reflection.
+A similar argument shows that any coherent, reflective $\PP$ must assign probability $0$ to inner reflection.
 \end{proof}
-Not all is lost. We can show that every \coh, reflective $\PP$ satisfies a weaker version of the inner reflection principle.
+Not all is lost. We can show that every coherent, reflective $\PP$ satisfies a weaker version of the inner reflection principle.
 \begin{proposition} \emph{Weaker Inner Reflection.}
-Every \gcoh, reflective $\PP$ satisfies
+Every coherent, reflective $\PP$ satisfies
 $$\forall\vp\in L' \ \forall a,b,\varepsilon > 0 \in\mathbb{Q}:\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}>1-\varepsilon)=1.$$
 \end{proposition}
 \begin{proof}
@@ -493,11 +466,11 @@ $$\Pq{\vp}\in (a,b)\rightarrow\Pq{\inOpen{\Pq{\vp}}}>1-\varepsilon.$$
 Since $\PP$ assigns probability one to theorems of the theory, this is sufficient to prove the proposition.
 \end{proof}
 \subsection{Reflective Coherence}
-We would also like $\PP$ to assign probability $1$ to $P$ being \gcoh. Here, the situation is much better. We will prove that there exist $\PP$'s which do exactly this.
-Let $Coh(P)$ be the sentence stating that $P$ is \gcoh. Specifically, $Coh(P)$ is
+We would also like $\PP$ to assign probability $1$ to $P$ being coherent. Here, the situation is much better. We will prove that there exist $\PP$'s which do exactly this.
+Let $Coh(P)$ be the sentence stating that $P$ is coherent. Specifically, $Coh(P)$ is
 $$\forall \vp: (\Pq{\vp} \in [0, 1]) \wedge (\vp \rightarrow \Pq{\vp}=1) \wedge (\forall \psi: \Pq{\vp} = \Pq{\vp \wedge \psi} + \Pq{\vp \wedge \neg \psi})$$
 \begin{proposition}
-There exists a \coh, reflective $\PP$ such that $\PP(Coh(P))=1$.
+There exists a coherent, reflective $\PP$ such that $\PP(Coh(P))=1$.
 \end{proposition}
 \begin{proof}
 This follows from some simple modifications to the consistency of the reflection principle proof.
@@ -506,11 +479,11 @@ This follows from some simple modifications to the consistency of the reflection
 \end{proof}
 We would like to combine this result with the inner reflection principle, but this is impossible. No $\PP$ can assign positive probability to both its $Coh(P)$ and its inner reflection principle.
 \begin{proposition}
-There does not exist a \coh, reflective $\PP$ and an $\varepsilon$ such that
+There does not exist a coherent, reflective $\PP$ and an $\varepsilon$ such that
 $$\forall a,b \in\mathbb{Q}\forall\vp\in L':\PP(Coh(P)\wedge(\Pq{\vp}\in[a,b]\rightarrow\Pq{\Pq{\vp}\in(a,b))}=1)>\varepsilon$$
 \end{proposition}
 \begin{proof}
-Suppose such a \coh $\PP$ and $\varepsilon$ exist.
+Suppose such a coherent $\PP$ and $\varepsilon$ exist.
 Let $\vp$ be the following liar's sentence:
 $$\vp \iff \Pq{\vp}<1-\varepsilon$$
 Also define as shorthand
@@ -532,8 +505,8 @@ However, since the weakened inner reflection principle follows from the outer re
 %TODO looks like motivation and stuff may need serious work still
 %%fakesubsection purpose of this section
 We would like to be able to talk about expectations and random variables. In this section we develop one approach to this, introducing a reflection principle for expectations, $a < \EE[X] < b \implies \PP[a < E[X] < b] = 1$.
-%TODO rafael and which assigns probability~1 to the proposition that $P$ is a \coh probability distribution which itself assigns probability~1 to the same proposition. 
-Along the way, we give a definition of ``\coh probability distribution'' as a probability distribution over a Stone space of complete theories (with its associated $\sigma$-algebra), which makes many new mathematical tools available to the study of our system.
+%TODO rafael and which assigns probability~1 to the proposition that $P$ is a coherent probability distribution which itself assigns probability~1 to the same proposition. 
+Along the way, we give a definition of ``coherent probability distribution'' as a probability distribution over a Stone space of complete theories (with its associated $\sigma$-algebra), which makes many new mathematical tools available to the study of our system.
 
 Our metalanguage is $\zfc$ + the existence of a strongly inaccessible cardinal.
 Let $\cL := \{\in,P\}$ be the language of set theory extended by a single constant symbol $P$, and let $\zfcl$ denote $\zfc$ with all axiom schemas ranging over formulas in~$\cL$.
@@ -541,7 +514,7 @@ Let $\cL := \{\in,P\}$ be the language of set theory extended by a single consta
 Let $\cSL$ denote the Stone space of complete theories over~$\cL$; given a consistent theory~$T$, let $\cS_T\subseteq\cSL$ denote the subspace of all complete theories extending~$T$. (Note that $\cS_T$ is itself a Stone space.) 
 
 We will sometimes simply write $\cS$ if it is clear from the context what $T$ is or which $T$ may be chosen.
-We write $\Delta(\cS)$ for the set of probability distributions over $\cS$ with its Borel-$\sigma$-algebra. We call the elements of $\Delta(\cS_T)$ the \emph{\coh probability distributions over~$T$}.
+We write $\Delta(\cS)$ for the set of probability distributions over $\cS$ with its Borel-$\sigma$-algebra. We call the elements of $\Delta(\cS_T)$ the \emph{coherent probability distributions over~$T$}.
 \end{definition}
 For $S\subseteq T$, we have $\cS_T\subseteq\cS_S$, and hence consider $\Delta(\cS_T)$ to be a subset of $\Delta(\cS_S)$.
 \subsection{Definable Values and their Expectations}
@@ -590,8 +563,8 @@ By the previous lemma, $X^{-1}((a',b'))$ is open for every open interval $(a',b'
 \begin{corollary}
 If $X\in[a,b]$ is definable and $\PP\in\Delta(\cS_T)$, then $\EE[X]\in[a,b]$, where $\EE[X] := \int X(S)\,d\PP(S)$; in particular, the expectation of bounded definable values is well-defined and has its usual properties, such as linearity.
 \end{corollary}
-\subsection{An Alternative View of \coh Distributions} \label{An Alternative View of \coh Distributions}
-Intuitively, one can think of \coh distributions as measures over completions of a theory. They then assign to any statement $\psi$ a probability corresponding to the 'fraction' of the completions that include $\psi$. A rigorous definition follows.
+\subsection{An Alternative View of coherent Distributions} \label{An Alternative View of coherent Distributions}
+Intuitively, one can think of coherent distributions as measures over completions of a theory. They then assign to any statement $\psi$ a probability corresponding to the 'fraction' of the completions that include $\psi$. A rigorous definition follows.
 
 A $\PP\in\Delta(\cS)$ assigns a probability to every sentence~$\vp$ in the language~$\cL$, by setting $\PP[\vp] := \PP(\{S\in\cS:S\vdash\vp\})$. This defines a mapping $\iota : \Delta(\cS)\to [0,1]^\NN\subset\RR^\NN$, where we consider $\RR^\NN$ to be endowed with the product topology. (The exponent~$\NN$ comes from some enumeration of the sentences of~$\cL$.) We now show first that $\iota$ is an injection and has compact range, and then that it in fact preserves the topology of $\Delta(\cS)$.
 \begin{definition}
@@ -706,7 +679,7 @@ It may seem like $\zfch$ asserts its own consistency, and that something must th
 \section{Nonstandard Models of PA and the Reflection Principle}
 \label{nonstandard-models}
 %%fakesubsection
-Having built up some machinery in the previous section, we are now ready to prove some results about the reflection principle and standard models of PA. We prove that reflective, \coh $\PP$'s  assign zero probability to standard models. We take this as further evidence that a weaker reflection principle is needed.%TODO needed for what??
+Having built up some machinery in the previous section, we are now ready to prove some results about the reflection principle and standard models of PA. We prove that reflective, coherent~$\PP$'s  assign zero probability to standard models. We take this as further evidence that a weaker reflection principle is needed.%TODO needed for what??
 \subsection{Assigning Probabilities to Sets of Standard Theories of PA}
 The following definition is different from our standard definition of $P$. Since we are now working in the realm of Peano arithmetic, we can weaken our definition of our inner probability distribution. Instead of defining it as a function in the language, we will show that it is sufficient for it to be a three place relation which arbitrarily approximates a metalanguage function.
 \begin{definition}
@@ -714,9 +687,9 @@ Let $L'$ be the extension of the language $L$ (which contains at least the langu
 A \emph{standard theory} is a complete theory over $L'$ which extends the theory of the standard model of the naturals where $P\subset\mathbb{N}$ and 
 $$\exists f : L'\rightarrow[0, 1] \text{ s.t. } \forall \vp~\forall a, b: (\ulcorner \vp \urcorner, a, b) \in P \iff f(\vp) \in (a, b).$$
 \end{definition}
-Intuitively, $P$ is a three-valued relation which approximates some function $f$ arbitrarily well. We imagine $(\q{\vp},a,b)\in P$ to mean that $a<f(\vp)<b$, with f being the function that we require to exista
+Intuitively, $P$ is a three-valued relation which approximates some function $f$ arbitrarily well. We imagine $(\q{\vp},a,b)\in P$ to mean that $a<f(\vp)<b$, with $f$ being the function that we require to exist above. 
 
-We would like to construct \coh, reflective distributions which are supported on standard theories of Peano Arithmetic. It turns out that not only do such distributions not exist, but every \coh, reflective distribution must assign zero probability to any set of standard theories. However, there does exist a finitely additive measure supported on standard theories that acts like $\PP$ which can be seen to satisfy an analogue of the reflection principle.
+We would like to construct coherent, reflective distributions which are supported on standard theories of Peano Arithmetic. It turns out that not only do such distributions not exist, but every coherent, reflective distribution must assign zero probability to any set of standard theories. However, there does exist a finitely additive measure supported on standard theories that acts like $\PP$ which can be seen to satisfy an analogue of the reflection principle.
 \begin{theorem} \emph{Disbelief in Standard Theories}
 Let $T$ be a consistent theory which extends Peano Arithmetic.
 Let $\PP\in\Delta(\mathcal{S})$.
@@ -747,7 +720,7 @@ $\mu$ is well-defined, finitely additive, and satisfies a version of the reflect
 $$a < \mu(S_{\vp}) < b \rightarrow \mu(S_{a < P(\ulcorner \vp \urcorner) < b}) = 1.$$
 \end{theorem}
 \begin{proof}
-We first show that $\mu$ is well-defined. By consistency of the reflection principle, we have that there exists a \coh, reflective $\PP$ over our base theory $T$.
+We first show that $\mu$ is well-defined. By consistency of the reflection principle, we have that there exists a coherent, reflective $\PP$ over our base theory $T$.
 Say that $N_{\vp}=N_{\psi}$. Then, by definition, $\vp$ and \$psi are in the same complete theories, so they must be logically equivalent. Therefore, $T$ proves $\vp\leftrightarrow\psi$, so by Gaifman coherence, $\PP[\vp]=\PP[\psi]$. Hence, $\mu$ is well defined.
 We now check that $\mu$ is a finitely additive measure. Clearly, $\mu(\vp)\in[0,1]$ and $\mu(\emptyset)=\PP[\bot]=0$.
 We need only check it is finitely additive. 
@@ -775,7 +748,7 @@ Then,~$T_n$ proves that $\vp(n+1)\vee\neg\vp(n+1)$, and that $\neg\vp(n+1)$ is e
 
 But this is equivalent to $\NN\vDash\forall n{:}\;\neg\vp(n)$; in other words, all~$T_n$ are unsound on the standard model. However, the $T_n$ can nevertheless be~\emph{consistent} (see~\cite{yudkowsky13}), implying that they have \emph{nonstandard} models~$\cM_n$ which satisfy $\cM_n\vDash\exists k>n{:}\;\vp(k)$; thus, these models contain \emph{nonstandard} ``times''~$k$ at which the button does in fact get pressed.
 
-We now formulate an analogue of this argument in terms of reflective, \coh probability  distributions.
+We now formulate an analogue of this argument in terms of reflective, coherent probability  distributions.
 To do so, we fix a definable sequence of rational numbers $\varepsilon_n > 0$ such that $\varepsilon_n\to0$ (for example, we may set $\varepsilon_n := 2^{-n}$), and consider an agent that will press the button at time~$n$ if the probability that it will get pressed at some later time is less than~$1-\varepsilon_n$. Formally, we use the diagonal lemma to define a predicate~$\vp(n)$ such that $\zfc\;\vdash\;\vp(n)\,\leftrightarrow\, P[\exists k>n{:}\;\vp(k)] \,<\, 1 - \varepsilon_n$.
 The following theorem can be interpreted as saying that $\PP$ believes for certain that it will press the button eventually.
 \begin{theorem} \emph{Procrastination}
@@ -818,7 +791,7 @@ For example, we could consider the relaxation
 \forall \vp \in L' \; \forall a, b \in \mathbb{Q} \st \Po{\vp \wedge \of{\inClosed{\Pq{\vp}}}} \geq a \Po{\inOpen{\Pq{\vp}}}
 \end{gather*}
 This is strictly weaker than our proposed reflection principle,
-so our result implies that there exist \coh distributions satisfying this principle.
+so our result implies that there exist coherent distributions satisfying this principle.
 Moreover, no obvious analog of the Liar's paradox prevents this property
 from being both satisfied by $\PP$ and having its inner language analogue assigned probability 1 by $\PP$.\footnote{This property may be viewed as an approximate, asynchronous version of van Frassen's Reflection Principle. The exact version of van Frassen's principle is easily seen to be subject to the liar's paradox.}
 It remains open whether it is possible to devise a principle
