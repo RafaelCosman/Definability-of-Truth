@@ -116,8 +116,7 @@ Rafael Cosman\footnotemark[2]
 \begin{abstract}
 Truth predicates are inconsistent due to liar's sentences such as ``this sentence is false''.
 Rather than constructing a \emph{truth} predicate and then assigning \emph{truth values} to sentences, we construct a \emph{probabilistic analogue} to a truth predicate and then assign \emph{probabilities} to sentences, including those that refer to the probabilities of other sentences. 
-%TODO send to kenny to figure out if the inner outer language distinction is clear
-Unlike the standard truth predicate construction, our analogue is consistent and does not fail to probabilistic generalizations of liar's sentences such as ``this sentence is unlikely''. 
+Unlike the standard truth predicate construction, our analogue is consistent and consistently deals with probabilistic generalizations of liar's sentences such as ``this sentence is unlikely''. 
 We also prove a negative result: while our analogue works like a truth predicate, we must assign zero probability to the sentence saying it works like a truth predicate.
 %TODO decide whether to include other results here.
 \end{abstract}
@@ -131,7 +130,7 @@ A truth predicate $TRUE$, if possible, would `reflect' truth in a theory:
 \begin{equation}\label{truth-reflection}
 	\vp \iff \Tq{\vp}.
 \end{equation}
-But, given such a predicate, we could construct the liar's sentence $\vp\iff\neg\Tq{\vp}$ (``This sentence is false.''), which cannot be assigned a consistent truth value.
+But, given such a predicate, we could construct the \emph{liar's sentence} $\vp\iff\neg\Tq{\vp}$ (``This sentence is false.''), which cannot be assigned a consistent truth value.
 We conclude that truth predicates are inconsistent in classical two-valued logic; however, they may yet be salvaged by moving to a more expressive framework and relaxing some constraints on how they work.
 We investigate an approach to this in the framework of probabilistic logic.
 
@@ -148,7 +147,6 @@ The approach we take is to convert the biconditional to an implication and to al
 \begin{equation}\label{reflection-preview}
 	\forall \vp \in L' \; \forall a, b \in \mathbb{Q} : \inOpen{\Po{\vp}} \Longrightarrow \Po{\inOpen{\Pq{\vp}}} = 1 .\\
 \end{equation}
-
 
 \subsection{Background and previous work}
 %TODO [intro-sec-norms] Check the norms for splitting intros into such sections.
