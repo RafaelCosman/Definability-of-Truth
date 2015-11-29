@@ -40,8 +40,8 @@
 \newcommand{\Pow}[1]{\mathcal{P}\of{#1}}
 \newcommand{\comp}[2]{\left\{ #1 \; \middle\vert \; #2\right\}}
 \newcommand{\st}{\; : \;}
-\newcommand{\Tq}[1]{\TRUE\left(\q{#1}\right)}
-\newcommand{\To}[1]{\TRUE\left(#1\right)}
+\newcommand{\Tq}[1]{TRUE\left(\q{#1}\right)}
+\newcommand{\To}[1]{TRUE\left(#1\right)}
 \newcommand{\PP}{\mathbb{P}}
 \newcommand{\Pc}[2]{\PP\left(#1\;\middle\vert\;#2\right)}
 \newcommand{\Po}[1]{\PP\left(#1\right)}
@@ -118,11 +118,10 @@ Truth predicates are inconsistent due to liar's sentences such as ``this sentenc
 Rather than constructing a \emph{truth} predicate and then assigning \emph{truth values} to sentences, we construct a \emph{probabilistic analogue} to a truth predicate and then assign \emph{probabilities} to sentences, including those that refer to the probabilities of other sentences. 
 Unlike the standard truth predicate construction, our analogue is consistent and consistently deals with probabilistic generalizations of liar's sentences such as ``this sentence is unlikely''. 
 We also prove a negative result: while our analogue works like a truth predicate, we must assign zero probability to the sentence saying it works like a truth predicate.
-%TODO decide whether to include other results here.
 \end{abstract}
 \setcounter{section}{-1}
 \section{Introduction}
-
+%%fakesubsection 0.0 actual intro bit
 In English, we encounter sentences of the form ``X is true.'' 
 To model these in a mathematical theory, we would like a predicate $TRUE$ such that the English sentence from before could be written $TRUE(X)$.
 
@@ -149,12 +148,8 @@ The approach we take is to convert the biconditional to an implication and to al
 \end{equation}
 
 \subsection{Background and previous work}
-%TODO [intro-sec-norms] Check the norms for splitting intros into such sections.
 
-%TODO do something with this: Hajek has shown that an analogue of this is true in the context of fuzzy logic \cite{hajek98}.
-
-To put our work in context, we will use the following two factor %TODO maybe change
-classification scheme for theories: Theories have an \emph{outer} notion of \emph{truth}, \emph{probability}, or \emph{both}.
+To put our work in context, we will use the following two-factor classification scheme for theories: Theories have an \emph{outer} notion of \emph{truth}, \emph{probability}, or \emph{both}.
 Theories have an \emph{inner truth predicate}, \emph{inner probability function}, \emph{both}, or \emph{neither}.
 
 Most of the work of mathematics involves theories that have an \emph{outer} notion of \emph{truth} and \emph{neither} a truth predicate nor an inner probability function.
@@ -215,15 +210,9 @@ In section~\ref{further-work}, we argue for weakening the reflection principle a
 
 \section{The Reflection Principle for Probabilistic Logic}
 \label{refl-cons}
-
-% TODO before finishing structural edits for this section
-%TODO [prob-log] Finish probabilistic stuff from [prob-log] 
-
 %%fakesubsection
 
 %TODO rewrite pre-intuitions part to be more sensible and motivated for average reader. Talk about how we dont really want to talk about truth here, but rather about probabilistic valuation. This is how/why eq \ref{truth-predicate-reflection} makes sense as the first thing to try.
-%TODO It seems like this requires the probabilistic research from the previous section
-%TODO [prob-log] Finish probabilistic stuff from [prob-log] 
 
 Remember that just like how a truth predicate $True$ would reflect the notion of truth in the theory, we want a function symbol in the language, $P$, to reflect the values of our outer probability distribution $\PP$.
 This section will begin by showing why the obvious reflection principles fail before defining our reflection principle in~\ref{refl-def}.
