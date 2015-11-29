@@ -40,8 +40,8 @@
 \newcommand{\Pow}[1]{\mathcal{P}\of{#1}}
 \newcommand{\comp}[2]{\left\{ #1 \; \middle\vert \; #2\right\}}
 \newcommand{\st}{\; : \;}
-\newcommand{\Tq}[1]{\True\left(\q{#1}\right)}
-\newcommand{\To}[1]{\True\left(#1\right)}
+\newcommand{\Tq}[1]{\TRUE\left(\q{#1}\right)}
+\newcommand{\To}[1]{\TRUE\left(#1\right)}
 \newcommand{\PP}{\mathbb{P}}
 \newcommand{\Pc}[2]{\PP\left(#1\;\middle\vert\;#2\right)}
 \newcommand{\Po}[1]{\PP\left(#1\right)}
@@ -124,25 +124,31 @@ We also prove a negative result: while our analogue works like a truth predicate
 \setcounter{section}{-1}
 \section{Introduction}
 
-A truth predicate, if possible, would `reflect' truth in a theory:
-%TODO dont like. Something about how it isnt the usual terminology and also how it isnt immediately clear what is going on.
+In English, we encounter sentences of the form ``X is true.'' 
+To model these in a mathematical theory, we would like a predicate $TRUE$ such that the English sentence from before could be written $TRUE(X)$.
+
+A truth predicate $TRUE$, if possible, would `reflect' truth in a theory:
 \begin{equation}\label{truth-reflection}
 	\vp \iff \Tq{\vp}.
 \end{equation}
+But, given such a predicate, we could construct the liar's sentence $\vp\iff\neg\Tq{\vp}$ (``This sentence is false.''), which cannot be assigned a consistent truth value.
+We conclude that truth predicates are inconsistent in classical two-valued logic; however, they may yet be salvaged by moving to a more expressive framework and relaxing some constraints on how they work.
+We investigate an approach to this in the framework of probabilistic logic.
 
-%TODO Phrasing and cadence fixes here!!!
-Let $\PP$ be a probability distribution over sentences. We think of $\PP$ as a probabilistic analogue to truth. $\PP$ has an opinion about each sentence in the language, even those sentences independent of the theory.
-%TODO finish these edits from tablet markups. Also, so CLUNKY!
-We will refer to a theory over which such a probability distribution $\PP$ is defined as a theory with a notion of \emph{outer probability} in addition to its normal notion of truth.
-
-Let $P$ be a function symbol in the language which exhibits a property analogous to (\ref{truth-reflection}). We think of $P$ as a probabilistic analogue of a truth predicate. We will refer to functions $P$ that exhibit such a property as \emph{inner probability functions}.
-For example we might want,
-
+We want a probabilistic analogue of truth over our language, a function $\PP$ in the metalanguage which assigns probabilities to sentences in the language, even those sentences independent of the theory.
+We notate our probabilistic truth predicate with $P$, a function symbol in the language, and require $P$ to reflect $\PP$, probabilistic truth in the theory.
+For example, we might want the following \emph{reflection principle} to hold:
 \begin{equation}\label{truth-predicate-reflection}
-\PP(\vp)=p \iff \PP(\Pq{\vp}=p) = 1 
+	\PP(\vp)=p \iff \PP(\Pq{\vp}=p) = 1 
+\end{equation}
+Unfortunately, given this reflection principle, we can construct the liar's sentence $\vp \iff \Pq{\vp} < 0.5$ (``This sentence is unlikely''), which cannot be assigned a consistent probability.
+We need to weaken this principle considerably before we arrive at a non-contradictory construction.
+
+The approach we take is to convert the biconditional to an implication and to allow $P$ to \emph{approximate} $\PP$ rather than requiring it to equal $\PP$ exactly, arriving at the following reflection principle:
+\begin{equation}\label{reflection-preview}
+	\forall \vp \in L' \; \forall a, b \in \mathbb{Q} : \inOpen{\Po{\vp}} \Longrightarrow \Po{\inOpen{\Pq{\vp}}} = 1 .\\
 \end{equation}
 
-Unfortunately, reflection principles of this strength fail to liar's sentences such as $\vp \iff \Pq{\vp} < 0.5$ (``This sentence is unlikely''). In order to achieve consistency, we need to weaken this reflection principle in some way. We take the approach of allowing $P$ to \emph{approximate} $\PP$ rather than equal $\PP$ exactly, as well as weakening the biconditional to a one directional implication.
 
 \subsection{Background and previous work}
 %TODO [intro-sec-norms] Check the norms for splitting intros into such sections.
