@@ -769,7 +769,7 @@ Intuitively, the following theorem says that even though the system is certain t
 For all $n\in\NN$, $\PP[\vp(n)] = 0$.
 \end{theorem}
 \begin{proof}
-By the previous theorem, $\PP[\exists k>n:\vp(k)] = 1 > 1 - \epsilon_n$, and hence
+By the previous theorem, $\PP[\exists k>n:\vp(k)] = 1 > 1 - \epsilon_n$, and thus
 \[
 \PP[\vp(n)] \;\;=\;\; \PP[P[\exists k>n{:}\;\vp(k)] < 1 - \epsilon_n] \;\;=\;\; 0.
 \]
@@ -777,15 +777,14 @@ By the previous theorem, $\PP[\exists k>n:\vp(k)] = 1 > 1 - \epsilon_n$, and hen
 These two results are not contradictory: They merely imply that~$\PP$ is supported on complete theories whose (nonstandard) models believe that the button gets pressed \emph{at some nonstandard time}, just as in the procrastination paradox for logical theories.
 \section{Further Work}
 \label{further-work}
-%TODO check this section. Maybe rewrite to be more in vein of new intro. (bottleneck: [prob-log])
 
 The impossibility results of sections \ref{refl-refl} and \ref{nonstandard-models} indicate that our reflection principle may be too strong.
-Most importantly, our $\PP$'s can have only so much self knowledge.
 In order to devise a reflection principle which is simultaneously \emph{satisfied by $\PP$}
 and \emph{assigned probability $1$ by $\PP$},
-we need to weaken property~\ref{reflection}.
-One alternative reflection principle
-is an approximate verison of
+we could try to weaken property~\ref{reflection}.
+
+A possible alternative reflection principle
+is an approximate version of
 the intuitively appealing identity $\Pc{\vp}{\Pq{\vp} = p} = p$,
 which formalizes the notion of ``self-trust'' rather than ``self-knowledge.''
 For example, we could consider the relaxation
@@ -793,17 +792,18 @@ For example, we could consider the relaxation
 \forall \vp \in L' \; \forall a, b \in \mathbb{Q} \st \Po{\vp \wedge \of{\inOpen{\Pq{\vp}}}} \leq b \Po{\inClosed{\Pq{\vp}}} \\
 \forall \vp \in L' \; \forall a, b \in \mathbb{Q} \st \Po{\vp \wedge \of{\inClosed{\Pq{\vp}}}} \geq a \Po{\inOpen{\Pq{\vp}}}
 \end{gather*}
-This is strictly weaker than our proposed reflection principle,
+This is strictly weaker than the reflection principle in this paper,
 so our result implies that there exist coherent distributions satisfying this principle.
 Moreover, no obvious analog of the Liar's paradox prevents this property
 from being both satisfied by $\PP$ and having its inner language analogue assigned probability 1 by $\PP$.
+
 It remains open whether it is possible to devise a principle
-which captures the important aspects of reflective consistency,
+which captures the important aspects of reflection,
 and which can be simultaneously true of a distribution $\PP$
-and have its inner language analogue assigned probability 1 by $\PP$.
-It is also open whether an analogue of the reflection principle can be constructed that avoids the issues we have encountered with nonstandard models.
+while having its inner language analogue assigned probability 1 by $\PP$.
+Additionally, it is an open question whether a reflection principle for measures supported on standard models can satisfy the reflective properties we care about.
 \section{Acknowledgements}
-The authors would like to thank Steve Rayhawk, Nate Soares, Patrick LaVictoire, Kenny Easwaran, and Diego Caleiro for their help with this paper.
+The authors would like to thank Steve Rayhawk, Nate Soares, Patrick LaVictoire, Kenny Easwaran, Tsvi Benson-Tilsen, and Diego Caleiro for their help with this paper.
 
 %%fakesection References
 % bibtex handles this
