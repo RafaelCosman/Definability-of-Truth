@@ -149,17 +149,21 @@ The approach we take is to convert the biconditional to an implication and to al
 
 \subsection{Background and previous work}
 
-To put our work in context, we use a two-factor classification scheme for theories: Theories have an \emph{outer} notion of \emph{truth}, \emph{probability}, or \emph{both}.
-Theories have an \emph{inner truth predicate}, \emph{inner probability function}, \emph{both}, or \emph{neither}.
+To put our work in context, we use a two-factor classification scheme: a theory can have an \emph{outer} notion of \emph{truth}, \emph{probability}, or \emph{both};
+and it can have an \emph{inner truth predicate}, \emph{inner probability function},
+%TODO change the terminology of inner probability function to something saner and more meaningful and less confusing
+%TODO talk to Steve about this section especially. And to others with relevant expertise. [already emailed Patrick]
+\emph{both}, or \emph{neither}.
 
 Most of the work of mathematics involves theories that have an outer notion of truth and neither a truth predicate nor an inner probability function. 
 Leitgeb\cite{leitgeb12a} presents a theory that has an outer notion of truth and an inner truth predicate.
 Leitgeb\cite{leitgeb12b} and Campbell-Moore\cite{campbell14} present theories with outer truth and an inner truth predicate \emph{and} an inner probability function.
 Leitgeb\cite{leitgeb08} defines a theory with inner and outer notions of truth and an outer notion of probability which assigns the same value to $\varphi$ and $True(\ulcorner\vp\urcorner)$.
-%TODO huh?? \footnote{Note that Leitgeb's axioms tie together his inner notions of truth and probability in a manner that makes it difficult to create from his theories a theory with just an inner probability function.}% quote his reflection principle
-Our work is novel in having outer notions of truth and probability as well as an inner probability function.
+Our work is novel in having outer notions 
+of truth and probability as well as an inner probability function
 
-Much work has already been done on developing outer probability distributions. In 1964, Gaifman\cite{gaifman64} introduced a set of three conditions that imply all of the properties one would expect of a probability distribution:
+Much work has already been done on developing outer probability distributions.
+Gaifman\cite{gaifman64} introduced a set of three conditions for a function from sentences to the reals that are sufficient for the function to be a probability distribution:
 \footnote{Gaifman's original formulation was:
 \begin{enumerate}
 \item If $\vdash \vp$ and $\vdash \psi$ then $\PP(\vp)=\PP(\vp)$
@@ -168,43 +172,27 @@ Much work has already been done on developing outer probability distributions. I
 \end{enumerate}
 It is easy to see that these three conditions are equivalent to those we state.
 }
-\begin{definition} A \emph{coherent} probability distribution $\PP$ is one that satisfies the following:
+\begin{definition} A probability distribution $\PP$ is \emph{coherent} if:
 \begin{center}
 \begin{tabular}{l r}
 1. $\forall \vp: \PP(\vp) \in [0,1]$ & probabilities range from 0 to 1 \\
-2. $\PP(\top) = 1$ & the probability of any $\vp$ in the theory is 1 \\
+2. $\forall\vp\in T:\PP(\vp) = 1$ & the probability of any $\vp$ in the theory is 1 \\
 3. $\forall \vp \forall \psi: \PP(\vp) = \PP(\vp \wedge \psi) + \PP(\vp \wedge \neg \psi)$ & (because $\vp$ or $\neg \vp$ but not both)
 \end{tabular}
 \end{center}
 \end{definition}
-%TODO Nate commented that a good way to do this is to pick two things and contrast more specifically, then to note that similar work to A, B, C, etc.
 
-% Final structure will look like
-% 
-% We build off of Gaifman's work on this (present Gaifman coherence)
-% Thing one to investigate deeply (probably Gaifman bounded reasoning)
-% Thing two (Leitgeb? Campbell-Moore?)
-% Also these guys were important\dots
-%        [end of subsection]
-
-%TODO [deeper-refs] pick two papers and more deeply investigate their connection to our paper; write the paragraphs for the background section.
-
-Our notion of outer probability follows these coherence conditions.
-
-%TODO Do we include this??? Unclear if we want it
-%Our work can also be situated in the context of autonomous agents. Agents which can model their own reasoning systems may be necessary as a step towards fully self-modifying reasoners (such as those discussed in Soares et al.\cite{soares14}).
-%Inner probability functions that approximate the agent's outer probabilities sufficiently well may allow an agent to do just this. For example, an agent that reasons using the outer probability function $\PP$ might be able to prove useful things about its own reasoning system by proving things about $P$.
-%As Gaifman\cite{gaifman04} points out, the Gaifman coherence conditions can be relaxed, making them useful for modeling bounded probabilistic agents. This gives a clear path forward for a future extension of our work to the bounded case.
+The notion of outer probability that we construct is coherent.
 
 \subsection{Structure of the Paper}
-%TODO [intro-sec-norms] check if a norm or not (note: Campbell-moore seems to do this, but she may not be representative)
-In section~\ref{refl-cons} we define a reflection principle and then prove that it is consistent. 
+In section~\ref{refl-cons}, we define a reflection principle and prove it consistent. 
 
-In section~\ref{refl-refl} we show that our principle satisfies weak versions of some meta-reflective desiderata. We also prove some impossibility results.
+In section~\ref{refl-refl}, we prove some impossibility results and show that our principle satisfies only weak versions of some meta-reflective desiderata.
 
-In section~\ref{refl-exp}, we derive a version of our reflection principle for expectations. Along the way, we prove an alternate characterization of coherence, which makes many new tools available to us. 
+In section~\ref{refl-exp}, we prove %TODO word!!!!
+an alternate characterization of coherence and then use the tools this makes available to derive a reflection principle for expectations.
 
-In section~\ref{nonstandard-models}, we show that our outer probability distribution is supported on nonstandard theories; we demonstrate a result that tells why this is worrisome. We also prove the existence of a finitely additive measure that fulfills most of our desiderata and is supported on standard theories. 
+In section~\ref{nonstandard-models}, we show that our outer probability distribution assigns probability zero to standard theories. We prove that there exists a finitely additive measure that fulfills our desiderata and is supported on standard theories. 
 
 In section~\ref{further-work}, we argue for weakening the reflection principle and mention some open problems. 
 
@@ -212,28 +200,45 @@ In section~\ref{further-work}, we argue for weakening the reflection principle a
 \label{refl-cons}
 %%fakesubsection
 
-%TODO rewrite pre-intuitions part to be more sensible and motivated for average reader. Talk about how we dont really want to talk about truth here, but rather about probabilistic valuation. This is how/why eq \ref{truth-predicate-reflection} makes sense as the first thing to try.
+In analogy to how the proposed predicate $True$ reflects the notion of truth in the theory, we want a function $P$, in the language, to reflect the outer probability distribution $\PP$.
+In this section, we show why the obvious reflection principles fail, define our reflection principle in~\ref{refl-def}, and prove it is consistent in~\ref{ref-cons-pf}.
 
-Remember that just like how a truth predicate $True$ would reflect the notion of truth in the theory, we want a function symbol in the language, $P$, to reflect the values of our outer probability distribution $\PP$.
-This section will begin by showing why the obvious reflection principles fail before defining our reflection principle in~\ref{refl-def}.
-
-Like how the predicate $True$ attempted to satisfy the reflection principle
+$True$ attempted to satisfy the reflection principle
 
 \begin{equation}
-\vp \iff True(\q{\vp}),
+\vp \iff True(\q{\vp}).
 \end{equation}
 
-we might analogously want the function symbol $P$ to satisfy the reflection principle
+We might want $P$ to satisfy
 
-\begin{equation}\label{truth-predicate-reflection}
+\begin{equation}\label{truth-predicate-reflection-2}
 \PP(\vp)=p \iff \PP(\Pq{\vp}=p) = 1 .
 \end{equation}
 
-But this falls immediately to the liar's sentence $\vp \iff \Pq{\vp} < 0.5$ (``This sentence is unlikely'').
+But, this falls immediately to the liar's sentence $G \leftrightarrow \Pq{G} < 0.5$ (``This sentence is unlikely'')\footnote{A sketch of the proof that satisfying \ref{truth-predicate-reflection} leads to contradiction:
 
-We deal with the liar's paradox by loosening our reflection principle: not requiring $P$ to so closely reflect $\PP$.
-This is a flexibility that the probabilistic framework affords us. Pure truth would not.
-Our approach is similar to Hajek's \cite{hajek98}: we deny $P$ access to the exact values of $\PP$ but instead let $P$ have \emph{arbitrarily precise} information about $\PP$.
+Assume $\PP(\vp)=p \iff \PP(\Pq{\vp}=p) = 1$.
+Then, we can use the diagonal lemma to construct the sentence (in the language) $G \leftrightarrow \Pq{G} < 0.5$.
+We show that $\PP(G)=0.5$ with a double proof by contradiction:
+
+Say $\PP(G)<0.5$. 
+By reflection, we have $\PP(\Pq{G}<0.5)=1$.
+But, (by coherence) this is equivalent to $\PP(G)=1$, a contradiction.
+
+A similar argument proves that $\PP(G)$ cannot be greater than $0.5$.
+
+Thus, $\PP(G)=0.5$.
+Then, $\PP(\Pq{G}=0.5)=1$.
+Applying the liar's sentence, we get that $\PP(G)=0$, a contradiction.
+}. 
+
+We might try to deal with the liar's paradox by weakening our reflection principle and replacing the biconditional with an implication:
+
+\begin{equation}\label{one-direction-truth-predicate-reflection}
+\PP(\vp)=p \Rightarrow \PP(\Pq{\vp}=p) = 1.
+\end{equation}
+
+However, this falls to the same liar's sentence as before. Instead of letting $P$ exactly reflect $\PP$, we might let it have arbitrarily precise information about $\PP$.
 For any open interval $(a, b)$ containing $\Po{\vp}$,
 a sufficiently accurate approximation to $\Po{\vp}$
 would let us conclude $\Po{\vp} \in (a, b)$.
@@ -243,144 +248,124 @@ In this vein we might consider the following reflection principle:
 \forall a, b \in \mathbb{Q} : \inOpen{\PP(\vp)} \iff \PP(\inOpen{\Pq{\vp}}) = 1 .
 \end{equation}
 
-But this unfortunately falls to the same liar's sentence ($\vp \iff \Pq{\vp} < 0.5$). The issue with (\ref{literal-reflection}) turns out to be its biconditional nature. Replacing the biconditional with a one directional implication yields a reflection principle that we will prove is consistent.\footnote{Replacing the biconditional with a conditional in our reflection principle mirrors Scharp's distinction between ascending and descending truth\cite{scharp13}.}
-
-%TODO add bit about how to get to next stage
+But, this again falls to the same liar's sentence. However, combining the two attempts and to get a one directional, approximate reflection principle is sufficient to construct a reflection principle which avoids the issues we just encountered.
 
 \begin{definition}
 \label{refl-def}
 \definitionsOfLsAndTFirst
-Let $\PP$ be a coherent probability distribution over $L'$. We say that $\PP$ is \emph{reflective} iff it satisfies the following reflection principle:
+Let $\PP$ be a coherent probability distribution over $L'$. $\PP$ is \emph{reflective} if
 \begin{equation}\label{reflection}
 \forall \vp \in L' \; \forall a, b \in \mathbb{Q} : \inOpen{\Po{\vp}} \Longrightarrow \Po{\inOpen{\Pq{\vp}}} = 1 .\\
-~\footnote{Note that the reverse implication is necessarily false (by the arguments above against biconditionals); however, by applying the contrapositive twice, it can be shown that condition~\ref{reflection} is equivalent to
-$$\forall \vp \in L' \; \forall a, b \in \mathbb{Q} : \inClosed{\Po{\vp}} \Longleftarrow \Po{\inClosed{\Pq{\vp}}} > 0$$
-Note that this is almost the reverse implication, except for the fact that it uses closed instead of open intervals and ends with $>0$ instead of $=1$.
-}
 \end{equation}
 \end{definition}
 
-Our goal is to show that starting from any (rich enough\footnote{That is, it admits a G\"odel numbering.}) consistent theory $T$
-we can obtain a \emph{coherent}, \emph{reflective} $\PP$.
+Note that the reverse implication is necessarily false (as otherwise we would have a biconditional); however, it is easy to see that condition~\ref{reflection} is equivalent to
+$$\forall \vp \in L' \; \forall a, b \in \mathbb{Q} : \inClosed{\Po{\vp}} \Longleftarrow \Po{\inClosed{\Pq{\vp}}} > 0.$$ We use this formulation in some of the proofs in section~\ref{refl-refl}.
 
-The intuition behind the name ``reflective''
-is that there is a relation, which corresponds to a restricted version of the intuitive concept of belief, such that reflective $\PP$s are exactly those $\PP$s that `believe' in themselves.
-This is analogous to the standard view of truth
-as a fixed point of a certain revision operation, as in Kripke's landmark paper\cite{kripke75}.
-Indeed, we show that reflective $\PP$s exist
-by constructing the belief relation and appealing
-to Kakutani's fixed point theorem.
-\begin{theorem} \emph{Consistency of the Reflection Principle}: 
+Given a theory $T$, we would like to obtain a coherent, reflective $\PP$ over $T$.
+
+\begin{theorem} \emph{Consistency of the Reflection Principle}:
+\label{ref-cons-pf}
 \definitionsOfLsAndT
-There exists a coherent $\PP$ which satisfies the reflection principle:
+There exists a coherent probability distribution $\PP$ which satisfies the reflection principle:
 $$\qquad \qquad \forall \vp \in L' \ \forall a,b\in \mathbb{Q}: \inOpen{\Po{\vp}} \Rightarrow \PP(\inOpen{\Pq{\vp}})=1.$$
 \end{theorem}
 \begin{proof}
-Let us define a relation $R$ which will correspond to the notion that a probability distribution $x$ is `believed' by another probability distribution $y$.
+Take the set $\mathcal{A}$ of all coherent probability distributions over $L'$ which assign probability one to all sentences in $T$ and consider it as a subset of $[0,1]^{L'}$ with the product topology.
+Define a relation $R\subset \mathcal{A}^2$ as
 $$xRy \iff \forall \vp \in L' \ \forall a, b \in \mathbb{Q}: \inOpen{x(\vp)} \Rightarrow y(\inOpen{\Pq{\vp}})=1$$
-Intuitively, a reflective $\PP$ is just a $\PP$ that 'believes' in itself. That is, an $\PP$ such that $\PP R \PP$.
-By definition of $R$, a probability distribution $\PP$ satisfies the reflection principle if and only if $\PP R \PP$.
-We will show that such a probability distribution exists using Kakutani's fixed point theorem.
+$\PP$ satisfies the reflection principle if and only if $\PP R \PP$.
+To prove reflective distributions exist, we use Kakutani's fixed point theorem.
+
 Kakutani's fixed point theorem states that there exists $x \in \mathcal{A}$ such that $xRx$, given that the following hold\cite{kakutani41}:
 \begin{enumerate}
+\item \emph{$\mathcal{A}$ is a subset of a locally convex Hausdorff topological vector space.}
 \item \emph{$\mathcal{A}$ is nonempty}.
 \item \emph{$\mathcal{A}$ is compact.}
 \item \emph{$\mathcal{A}$ is convex.}
-\item \emph{$\mathcal{A}$ is a subset of a locally convex Hausdorff space.}
 \item \emph{$R$ has a closed graph.}
-\item \emph{$\forall x \exists y$ s.t. $xRy$.}
-\item \emph{$\forall x$ the set $\{y \in \mathcal{A}: xRy\}$ is convex.}
+\item \emph{$\forall p\in\mathcal{A} \exists q\in\mathcal{A}: pRq$.}
+\item \emph{$\forall p\in\mathcal{A}: \{q \in \mathcal{A}: pRq\}$ is convex.}
 \end{enumerate}
 \begin{enumerate}
+%TODO decide the signaling/clarity tradeoff
+
+\item \emph{$\mathcal{A}$ is a subset of a locally convex Hausdorff topological vector space.}
+$\mathcal{A}\subset [0, 1]^{L'}\subset R^{L'}$ which is a locally convex Hausdorff topological vector space.
 
 \item \emph{$\mathcal{A}$ is nonempty}.
-Because $T$ is consistent we can exhibit elements in $\mathcal{A}$.
-Let $T^{*}$ be a completion of $T$.
+$T$ is consistent, so we construct a completion $T^{*}$.
 Every sentence is either true or false in $T^{*}$.
 Let $\PP(\vp) = 1$ for all $\vp$ in $T^{*}$ and $\PP(\vp) = 0$ otherwise.
-It is easy to see that $x$ is coherent and thus an element of $\mathcal{A}$.
-
-Thus we have shown that $\mathcal{A}$ is non-empty. Specifically, there is an element for each completion of $T$. Note that each model of $T$ gives a completion $T^{*}$. However, also note that there may be elements that don't correspond to completions of $T$.
+$\PP$ is coherent, thus $\PP\in\mathcal{A}$.
 
 \item \emph{$\mathcal{A}$ is compact.}
-$[0,1]$ is compact by the Bolzano-Weierstrass theorem.
-Tychonoff's theorem states that the product of any collection of compact topological spaces is compact with respect to the product topology.
-Thus, $[0,1]^{L'}$ is compact.
-Now, a closed subset of a compact space is compact.
-$\mathcal{A}\subset [0,1]^{L'}$, so we need only show that $\mathcal{A}$ is closed.
-Let $x$ be in $\bar{\mathcal{A}}$.
-Every neighborhood of $x$ contains a point of $\mathcal{A}$.
-(Note that $\mathcal{A}$ is first-countable because it is a subspace of $[0, 1]^{L'}$ which is first-countable because it is a countable product of a first-countable space.)
+$[0,1]$ is compact by the Bolzano-Weierstrass theorem; its product, $[0,1]^{L'}$, is compact by Tychonoff's theorem.
+A closed subset of a compact space is compact and $\mathcal{A}\subset [0,1]^{L'}$, so we need only show that $\mathcal{A}$ is closed.
+Let $p$ be in $\bar{\mathcal{A}}$.
+Every neighborhood of $p$ contains a point of $\mathcal{A}$.
 
-We can form a sequence of points $x_i$ converging to $x$ where all $x_i$ are in $\mathcal{A}$.
-Note that convergence is equivalent to convergence with respect to every individual $\vp$ because we are in the product topology.
-We will now prove that $x$ is also in $\mathcal{A}$ by showing that $x$ must satisfy the Gaifman conditions with respect to any $\vp$. 
-Fix a $\vp$.
-We take the sequence of reals $x_i(\vp)$.
+We form a sequence in $\mathcal{A}$ of points $p_i$ converging to $p$, which we can do, due to the first-countability of $\mathcal{A}$ (it is a subspace of a countable product of first-countable spaces, $[0,1]^{L'}$).
+Since we are in the product topology, convergence in $\mathcal{A}$ is equivalent to convergence of $p_i(\vp)$ in $[0,1]$ for every $\vp$.
+To prove $p\in\mathcal{A}$, we show that $p$ satisfies the Gaifman conditions.
+
+Fix a $\vp,\psi\in L'$.
 \begin{itemize}
-\item \emph{$x(\vp)\in [0,1]$.}
-Note that $x_i(\vp)$ is a sequence of real numbers all in the interval $[0, 1]$.
-Thus they must converge to a real number within that interval, so $x(\vp)\in[0,1]$.
-\item \emph{If $\vp$ is logically valid from $T$, then $x(\vp)=1$.}
-This condition only applies if $\vp$ is logically valid in $T$, so assume that that is true.
-Since every $x_i$ is coherent, this implies that $x_i(\vp)$ are all $1$. Thus they converge to $1$.
-\item $\forall \psi: x(\vp) -x(\vp\wedge\psi)-x(\vp\wedge\neg\psi)=0$.
-(Note that we have rewritten the condition to make this part clearer.)
-Fix a $\psi$.
-Since the $x_i$'s are all coherent, $\forall i\forall \psi: x_i(\vp) -x_i(\vp\wedge\psi)-x_i(\vp\wedge\neg\psi)=0.$
-This is a sequence of zeroes, so it must converge to zero, so $x$ fulfills this condition.
+\item \emph{$p(\vp)\in [0,1]$.}
+$p_i(\vp)$ is a convergent sequence of real numbers in $[0, 1]$.
+Thus they converge within $[0,1]$, so $p(\vp)\in[0,1]$.
+\item \emph{If $\vp\in T$, then $p(\vp)=1$.}
+Every $p_i$ is coherent, so $p_i(\vp)=1$ for all $i$. Thus $p_i$ converges to one.
+\item $p(\vp)-p(\vp\wedge\psi)-p(\vp\wedge\neg\psi)=0$.
+(We have rewritten the condition to make this part clearer.)
+Since every $p_i$ is coherent, $p_i(\vp) -p_i(\vp\wedge\psi)-p_i(\vp\wedge\neg\psi)=0.$
+This is a sequence of zeroes, so it converges to zero.
 \end{itemize}
-Note that our choices of $\vp$ and $\psi$ were arbitrary. Thus the conditions hold for all $\vp$ and $\psi$. This implies that the limit $x$ is coherent and therefore $\mathcal{A}$ is closed.
-Thus $\mathcal{A}$ is compact.
+Thus, $p$ is coherent. Therefore, $\mathcal{A}$ is closed and thus compact.
+
+%TODO KAYACONTINUE
 
 \item \emph{$\mathcal{A}$ is convex.}
-Given any $x,z\in\mathcal{A}$, we will show that if $y$ is a linear combination of $x$ and $z$, then $y$ is coherent and therefore is in $\mathcal{A}$.
+Given any $p,r\in\mathcal{A}$, we will show that if $q$ is a convex combination of $p$ and $r$, then $q$ is coherent and therefore is in $\mathcal{A}$.
 Like in the proof for the previous condition of Kakutani's theorem, we start by fixing a $\vp$, and run the proof for our equivalent conditions.
 \begin{itemize}
-\item \emph{$y(\vp) \in [0, 1]$}
-We know that $x(\vp) \in [0,1]$ and $z(\psi) \in [0,1]$.
+\item \emph{$q(\vp) \in [0, 1]$}
+We know that $p(\vp) \in [0,1]$ and $r(\psi) \in [0,1]$.
 Thus a linear combination of the two must be in $[0,1]$.
-\item \emph{If $\vp$ is logically valid from $T$, then $y(\vp)=1$.}
+\item \emph{If $\vp$ is logically valid from $T$, then $qp(\vp)=1$.}
 Assume $\vp$ is logically valid from $T$.
-Then, $x(\vp)=1$ and $z(\vp)=1$, so any convex combination of ones must be one.
-Thus, $y(\vp) = 1$.
-\item \emph{$\forall \psi: z(\vp) -z(\vp\wedge\psi)-z(\vp\wedge\neg\psi)=0$.}
-The condition holds for $x(\vp)$ and $z(\vp)$.
-Since convex combinations of zeroes are zero, $y(\vp)=0$.
+Then, $p(\vp)=1$ and $r(\vp)=1$, so any convex combination of ones must be one.
+Thus, $q(\vp) = 1$.
+\item \emph{$\forall \psi: r(\vp) -r(\vp\wedge\psi)-r(\vp\wedge\neg\psi)=0$.}
+The condition holds for $p(\vp)$ and $r(\vp)$.
+Since convex combinations of zeroes are zero, $q(\vp)=0$.
 \end{itemize}
-Thus convex combinations of $x$ and $y$ satisfy all the Gaifman conditions. Thus they are in $\mathcal{A}$. Thus $\mathcal{A}$ is convex.
-Therefore, convex combinations of coherent probability distributions are coherent.
-
-\item \emph{$\mathcal{A}$ is a subset of a locally convex Hausdorff space.}
-$\mathcal{A}$ is a subset of $[0, 1]^{L'}$ which is a subspace of $R^{L'}$ which is locally convex and Hausdorff.
+Therefore $r\in\mathcal{A}$, so $\mathcal{A}$ is convex.
 
 \item \emph{$R$ has a closed graph.}
-Consider a convergent infinite sequence $(x_i,y_i)$ such that $\forall i:x_iRy_i$. Say it converges to $(x,y)$.
-We will show that $xRy$.
-Fix $\vp, a, b$ such that $\inOpen{x(\vp)}$.
-Since $x_i$ converges to $x$, $\exists n \forall i > n: \inOpen{x_i(\vp)}$.
-Since $x_iRy_i$, we have by definition that $\forall i>n: y_i(\inOpen{\Pq{\vp}}) = 1$
-This implies that $y(\inOpen{\Pq{\vp}}) = 1$, or equivalently, $xRy$.
-Thus $R$ has a closed graph.
+Consider a convergent infinite sequence $(p_i,q_i)$ such that $\forall i:p_iRq_i$ which converges to $(p,q)$.
+We show that $pRq$.
+Fix $\vp, a, b$ such that $\inOpen{p(\vp)}$.
+Since $p_i$ converges to $p$, $\exists N \forall i > N: \inOpen{p_i(\vp)}$.
+By definition, $\forall i>N: q_i(\inOpen{\Pq{\vp}}) = 1$, so $q(\inOpen{\Pq{\vp}}) = 1$, that is, $pRq$.
+Thus, $R$ has a closed graph.
 
-\item \emph{$\forall x \exists y: xRy$.}
-Given an $x\in\mathcal{A}$ we can construct a $y$ such that $xRy$.
-Take a completion $T^*$ of the theory $T$ which includes all statements of the form $\inOpen{\Pq{\vp}}$, where $\inOpen{x(\vp)}$.
-Since $x$ is coherent, this theory is consistent.
-Let $y$ assign $1$ to all statements in $T^*$ and $0$ to all statements not in $T^*$.
-This $y$ satisfies $xRy$ and is coherent.
+\item \emph{$\forall p\in\mathcal{A} \exists q\in\mathcal{A}: pRq$.}
+Fix a $p$. Take a completion $T^*$ which, whenever $\inOpen{p(\vp)}$, includes the statement $\inOpen{\Pq{\vp}}$.
+Let $q$ assign $1$ to all statements in $T^*$ and $0$ to all others.
+Then $q$ is coherent and $pRq$.
 
-\item \emph{$\forall x$ the set $\{y \in \mathcal{A}: xRy\}$ is convex.}
-Let $y_0, y_2$ be elements of the set $\{y \in A: xRy\}$, and let $y_1$ be any convex combination of $y_0$ and $y_2$.
-We will show that $xRy_1$ and therefore $y_1$ is in the set $\{y \in A: xRy\}$
-Choose $\vp, a, b$ such that $\inOpen{x(\vp)}$.
-Because $xRy_0$ and $xRy_2$, we know that $y_0(\inOpen{\Pq{\vp}}) = 1$ and $y_2(\inOpen{\Pq{\vp}}) = 1$.
-Thus $y_1(\inOpen{\Pq{\vp}}) = 1$.
-By convexity of $\mathcal{A}$ we have that $y_1$ is in $\mathcal{A}$, so $xRy_1$.
-Therefore, $\{y \in A: xRy\}$ is convex.
+\item \emph{$\forall p\in\mathcal{A}: \{q \in \mathcal{A}: pRq\}$ is convex.}
+Let $q_0, q_2\in\{q \in A: pRq\}$, and let $q_1$ be any convex combination of $q_0$ and $q_2$.
+We show that $pRq_1$, and therefore $q_1\in\{q \in A: pRq\}$
+Choose $\vp, a, b$ such that $\inOpen{p(\vp)}$.
+Because $pRq_0$ and $pRq_2$, we have that $q_0(\inOpen{\Pq{\vp}}) = 1$ and $q_2(\inOpen{\Pq{\vp}}) = 1$.
+Thus $q_1(\inOpen{\Pq{\vp}}) = 1$
+Since $\mathcal{A}$ is convex, $q_1\in\mathcal{A}$, so $pRq_1$.
+Therefore, $\{q \in A: pRq\}$ is convex.
 \end{enumerate}
 
-Therefore, by Kakutani's fixed point theorem, $R$ has a fixed point, which is, by definition, a coherent distribution that satisfies the reflection principle.
+Thus, by Kakutani's fixed point theorem, $R$ has a fixed point, which is, by definition, a coherent, reflective distribution.
 \end{proof}
 
 
@@ -388,66 +373,78 @@ Therefore, by Kakutani's fixed point theorem, $R$ has a fixed point, which is, b
 \label{refl-refl}
 %%fakesubsection
 
-The reflection principle for truth predicates is a statement in the \emph{metalanguage}:
+The reflection principle for truth predicates is a statement in the metalanguage:
 $$\vp \iff \Tq{\vp}.$$
-If one had a working truth predicate, a natural next desidaratum is for the theory to \emph{know} that the truth predicate works as a truth predicate. Specifically, we might want the theory to prove
+If truth predicates worked, a natural next desideratum would be for the theory to prove that the truth predicate works. Specifically, we might want the theory to prove
 $$\vp \leftrightarrow \Tq{\vp}.$$
 Note the difference between $\leftrightarrow$, the biconditional in the language, and $\iff$, the biconditional in the metalanguage.
 
-Analogously, now that we have proven that $P$ works like a truth predicate, we might additionally want $\PP$ to \emph{believe} that $P$ works like a truth predicate. That is, we would like $\PP$ to assign high probability to the statement that $P$ is reflective and coherent.
-
-We will show that, unfortunately, no reflective, coherent~$\PP$ believes that $P$ is reflective and that any coherent~$\PP$ which does believe that $P$ is reflective is not itself reflective.
+Analogously, now that we have proven that $P$ reflects $\PP$, we might additionally want $\PP$ to assign high probability to the statement that $P$ is reflective and coherent. We show that no reflective, coherent~$\PP$ believes that $P$ is reflective, and that any coherent~$\PP$ which does believe that $P$ is reflective is not itself reflective. We do show that $\PP$ can assign high probability to $P$ being coherent, thus preserving some of the structure of $\PP$ in $P$.
 
 \subsection{The Inner Reflection Principle}
 The reflection principle is stated in the metalanguage, and is a 
 \emph{statement which is true about $\PP$},
 not an axiom in $T$ to which $\PP$ assigns probability 1.
 In contrast to this principle, which we can think of as an \emph{outer reflection principle}, we might also want $\PP$ to assign probability 1 to $P$'s reflective consistency.
-To this end, define the \emph{inner reflection principle} as:
-$$\forall\vp\in L' \ \forall a,b\in\mathbb{Q}:\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1.~\footnote{Note that the quantification here is in the metalanguage. An even stronger inner reflection principle would have the quantification on the inside i.e.
-$$\forall\vp\in L' : \PP(\forall a,b\in\mathbb{Q} : \Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$
-Or even
-$$\PP(\forall\q{\vp} \ \forall a,b\in\mathbb{Q} : \Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$ (where $\forall \q{\vp}$ is quantifying over all (valid) encodings in the language, which might be, for example, $\mathbb{N}$.) The impossibility results in this section are proved for the weak version, so carry for these two stronger versions trivially.}}$$
-We will first prove that there exist \emph{coherent} inner reflective $\PP$s, but we then prove that these inner reflective $\PP$s cannot also be outer reflective.
+To this end, define the \emph{inner reflection principle} as~\footnote{Note that the quantification here is in the metalanguage.
+    An even stronger inner reflection principle would have the quantification on the inside. That is,
+    $$\forall\vp\in L' : \PP(\forall a,b\in\mathbb{Q} : \Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$
+    Or even
+    $$\PP(\forall\q{\vp} \ \forall a,b\in\mathbb{Q} : \Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$
+    (where 
+    $\forall \q{\vp}$
+    is quantifying over all (valid) encodings in the language, which might be, for example, 
+    $\mathbb{N}$.) The impossibility results in this section are proved for the weak version, and so carry for these two stronger versions trivially.}:
+
+$$\forall\vp\in L' \ \forall a,b\in\mathbb{Q}:\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1.$$
+We prove that there exist \emph{coherent} inner reflective $\PP$s, but no coherent, inner reflective $\PP$ can also be outer reflective.
 
 \begin{proposition} \emph{Existence of an Inner Reflective $\PP$.}
-\definitionsOfLsAndT Then there exists a coherent $\PP$ which satisfies the inner reflection principle:
+\definitionsOfLsAndT Then there exists a coherent probability distribution $\PP$ which satisfies the inner reflection principle:
 $$\forall\vp\in L' \ \forall a,b\in\mathbb{Q}:\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$
 \end{proposition}
 \begin{proof}
-This follows from an easy modification of the definition of the relation $R$ in the proof of consistency of the reflection principle. The proof proceeds almost identically other than this one modification.
+This follows from an easy modification of the definition of the relation $R$ in the proof of consistency of the reflection principle. The proof proceeds almost identically otherwise.
 %TODO MATH - I don't think that this is true. At all. Can you provide the alternate R that works here?
 \end{proof}
 
 \begin{proposition} \emph{Impossibility of Satisfying both Inner and Outer Reflection}
 \definitionsOfLsAndT
-Then there exists no coherent $\PP$ which assigns probability one to every sentence in $T$ and satisfies both the inner and outer reflection principles. In fact, any coherent, reflective $\PP$ must assign probability $0$ to inner reflection.
+There exists no coherent probability distribution $\PP$ which assigns probability one to every sentence in $T$ and satisfies both the inner and outer reflection principles. In fact, any coherent, reflective probability distribution $\PP$ must assign probability $0$ to inner reflection.
 \end{proposition}
 \begin{proof}
-Assume that there exists a reflective $\PP$ which satisfies
+We proceed with a proof by contradiction.
+Assume there exists a coherent, reflective probability distribution $\PP$ which satisfies
 $$\forall a,b\in\mathbb{Q}\forall\vp\in L':\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1.$$
 
 % TODO MATH - fix this proof
 
 Choose a $\vp$ such that $\Po{\inClosed{\Pq{\vp}}} > 0$.
 
-Then by the outer reflection principle we have that $\Po{\Pq{\inClosed{\Pq{\vp}}} > 0} = 1$
+By the outer reflection principle we have $\Po{\Pq{\inClosed{\Pq{\vp}}} > 0} = 1.$
 
-Then by applying the reverse inner reflection principle we have that $\Po{\inClosed{\Pq{\vp}}} = 1$
+Applying the reverse inner reflection principle
+\footnote{
+The reverse inner reflection principle is 
+...
+It is derived analogously to the reverse outer reflection principle (...).
+%TODO MATH
+}
+obtains $\Po{\inClosed{\Pq{\vp}}} = 1$
 
 %This is a contradiction, as $\PP$ must assign the same value to inner reflection and its contrapositive.
-This is now a decider, a $\PP$ which assigns $0$ or $1$ to every sentence, thereby acting as a truth predicate. Which is a contradiction.
-
+This is  now a decider, a $\PP$ which assigns $0$ or $1$ to every sentence, thereby acting as a truth predicate. Which is a contradiction.
 % TODO MATH - fix the above paragraph
 
 A similar argument shows that any coherent, reflective $\PP$ must assign probability $0$ to inner reflection.
 \end{proof}
-Not all is lost. We can show that every coherent, reflective $\PP$ satisfies a weaker version of the inner reflection principle.
+Not all is lost. Every coherent, reflective probability distribution $\PP$ satisfies a weaker version of the inner reflection principle.
 \begin{proposition} \emph{Weaker Inner Reflection.}
-Every coherent, reflective $\PP$ satisfies
+Every coherent, reflective probability distribution $\PP$ satisfies
 $$\forall\vp\in L' \ \forall a,b,\varepsilon > 0 \in\mathbb{Q}:\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}>1-\varepsilon)=1.$$
 \end{proposition}
 \begin{proof}
+%TODO MATH fix this proof
 Assume that $\Pq{\vp}\in (a,b)$ is a theorem.
 %TODO Then, $\PP(\vp)\in(a,b)$.
 By the contrapositive of the reflection principle, we have that
@@ -459,23 +456,25 @@ $$\Pq{\vp}\in (a,b)\rightarrow\Pq{\inOpen{\Pq{\vp}}}>1-\varepsilon.$$
 Since $\PP$ assigns probability one to theorems of the theory, this is sufficient to prove the proposition.
 \end{proof}
 \subsection{Reflective Coherence}
-We would also like $\PP$ to assign probability $1$ to $P$ being coherent. Here, the situation is much better. We will prove that there exist $\PP$'s which do exactly this.
-Let $Coh(P)$ be the sentence stating that $P$ is coherent. Specifically, $Coh(P)$ is
+We would also like $\PP$ to assign probability $1$ to $P$ being coherent.
+Let $Coh(P)$ be the sentence stating that $P$ is coherent:
 $$\forall \vp: (\Pq{\vp} \in [0, 1]) \wedge (\vp \rightarrow \Pq{\vp}=1) \wedge (\forall \psi: \Pq{\vp} = \Pq{\vp \wedge \psi} + \Pq{\vp \wedge \neg \psi})$$
 \begin{proposition}
-There exists a coherent, reflective $\PP$ such that $\PP(Coh(P))=1$.
+There exists a coherent, reflective probability distribution $\PP$ such that $\PP(Coh(P))=1$.
 \end{proposition}
 \begin{proof}
 This follows from some simple modifications to the consistency of the reflection principle proof.
 %TODO MATH actually check this. Or write a full proof of this result
-%TODO MATH sidenote: all the proofs seem to follow the same way. Can we look at the space of all things that we can prove in this way in this framework? What is the maximum result strength?
+%TODO MATH sidenote: all the proofs seem to follow the same way. Can we look at the space of all things that we can prove in this way in this framework? What is the maximum result strength? reverse math it or something??
 \end{proof}
 We would like to combine this result with the inner reflection principle, but this is impossible. No $\PP$ can assign positive probability to both its $Coh(P)$ and its inner reflection principle.
 \begin{proposition}
-There does not exist a coherent, reflective $\PP$ and an $\varepsilon$ such that
+There does not exist a coherent, reflective probability distribution $\PP$ and an $\varepsilon\in\mathbb{R}$ such that
 $$\forall a,b \in\mathbb{Q}\forall\vp\in L':\PP(Coh(P)\wedge(\Pq{\vp}\in[a,b]\rightarrow\Pq{\Pq{\vp}\in(a,b))}=1)>\varepsilon$$
 \end{proposition}
 \begin{proof}
+%TODO MATH fix this to not be bs
+We proceed with a proof by contradiction.
 Suppose such a coherent $\PP$ and $\varepsilon$ exist.
 Let $\vp$ be the following liar's sentence:
 $$\vp \iff \Pq{\vp}<1-\varepsilon$$
@@ -488,10 +487,10 @@ $$\PP(\Pq{\vp}<1-\epsilon\wedge IRP\wedge\Pq{\Pq{\vp}<1-\varepsilon}=1)>0$$
 Due to $IRP$ implying $Coh(P)$ which implies $$\Pq{\vp}=\Pq{\Pq{\vp}<1 - \varepsilon}$$
 $$\PP(\Pq{\vp}<1-\varepsilon\wedge IRP\wedge \Pq{\vp}=1)>0$$
 $$\PP(\bot)>0$$
-which contradicts $\PP$’s coherence. Therefore, we must have $\PP(\Pq{\vp}<1-\varepsilon\wedge IRP)=0$.
+%TODO MATH fix notation and motivate steps better
+which contradicts $\PP$’s coherence. Therefore, $\PP(\Pq{\vp}<1-\varepsilon\wedge IRP)=0$.
 Since $\PP(IRP)>\varepsilon$, it follows that $\PP(\Pq{\vp}<1-\varepsilon)<1-\varepsilon$. Equivalently, $\PP(\vp)<1-\varepsilon$. By the outer reflection principle, $\PP(\Pq{\vp}<1-\epsilon)=1$, or equivalently $\PP(\vp)=1$, which is a contradiction when combined with $\PP(\vp)<1-\varepsilon$.
 \end{proof}
-However, since the weakened inner reflection principle follows from the outer reflection principle and coherence, there trivially exist $\PP$'s which assign positive probability to a version of the statement in the previous proposition modified to talk about the weakened inner reflection principle.
 \section{The Reflection Principle for Expectations}
 \label{refl-exp}
 %TODO check the exposition in this section
