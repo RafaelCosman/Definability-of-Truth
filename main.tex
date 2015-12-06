@@ -1,4 +1,4 @@
-%%fakesection preamble
+ %%fakesection preamble
 \documentclass[12pt]{article}
 
 %%fakesubsection usepackage
@@ -11,7 +11,7 @@
 \usepackage{latexsym}
 \usepackage{enumerate}
 \usepackage{mathtools,cancel,verbatim,hyperref,wasysym}
-\usepackage{todonotes}
+\usepackage{comment}
 
 %%fakesubsection setlength
 \setlength{\parskip}{1pc}
@@ -76,6 +76,7 @@
 Let $L'$ be the extension of $L$ by a function symbol $P$. }
 \newcommand{\definitionsOfLsAndT}{Let $T$ be a consistent theory over some language $L$.
 Let $L'$ be the extension of $L$ by a function symbol $P$. }
+\newcommand{\Tvar}{$T$-variable}
 
 %%fakesubsection newtheorem
 \newcounter{ctr}[section]
@@ -92,6 +93,11 @@ Let $L'$ be the extension of $L$ by a function symbol $P$. }
 \newtheorem{example}[theorem]{Example}
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
+
+%%fakesubsection ifs
+\newif\ifprocrastinate
+\procrastinatefalse
+
 %%fakesubsection authors
 \begin{document}
 \title{On Reflection \\ }
@@ -123,15 +129,13 @@ We also prove a negative result: while our analogue works like a truth predicate
 \section{Introduction}
 %%fakesubsection 0.0 actual intro bit
 In English, we encounter sentences of the form ``X is true.'' 
-To model these in a mathematical theory, we would like a predicate $True$ such that the English sentence from before could be written $True(X)$.
-
-A truth predicate $True$, if possible, would `reflect' truth in a theory:
+To model these in a mathematical theory, we would like a predicate $True$ such that the English sentence from before could be written $True(X)$. Such a predicate, if possible, would `reflect' truth in a theory:
 \begin{equation}\label{truth-reflection}
 	\vp \iff \Tq{\vp}.
 \end{equation}
-But, given such a predicate, we could construct the \emph{liar's sentence} $\vp\iff\neg\Tq{\vp}$ (``This sentence is false.''), which cannot be assigned a consistent truth value.
-Thus, truth predicates are inconsistent in classical two-valued logic; however, they may yet be salvaged by moving to a more expressive framework and relaxing some constraints on how they work.
-We investigate an approach to this in the framework of probabilistic logic.
+But, given such a predicate, we could construct the \emph{liar's sentence} $\vp\leftrightarrow\neg\Tq{\vp}$ (``This sentence is false.''), which cannot be assigned a consistent truth value.
+Therefore, truth predicates are inconsistent in classical two-valued logic; however, they may yet be salvaged by moving to a more expressive framework and relaxing some constraints on how they work.
+We investigate an approach to this using probabilistic logic.
 
 We want a probabilistic analogue of truth over our language, a function $\PP$ in the metalanguage which assigns probabilities to sentences in the language, even those sentences independent of the theory.
 We notate our probabilistic truth predicate with $P$, a function symbol in the language, and require $P$ to reflect $\PP$, probabilistic truth in the theory.
@@ -139,7 +143,7 @@ For example, we might want the following \emph{reflection principle} to hold:
 \begin{equation}\label{truth-predicate-reflection}
 	\PP(\vp)=p \iff \PP(\Pq{\vp}=p) = 1 
 \end{equation}
-Unfortunately, given this reflection principle, we can construct the liar's sentence $\vp \iff \Pq{\vp} < 0.5$ (``This sentence is unlikely''), which cannot be assigned a consistent probability.
+Unfortunately, given this reflection principle, we can construct the liar's sentence $\vp \leftrightarrow \Pq{\vp} < 0.5$ (``This sentence is unlikely''), which cannot be assigned a consistent probability.
 We need to weaken this principle considerably before we arrive at a non-contradictory construction.
 
 The approach we take is to convert the biconditional to an implication and to allow $P$ to \emph{approximate} $\PP$ rather than requiring it to equal $\PP$ exactly, arriving at the following reflection principle:
@@ -151,8 +155,6 @@ The approach we take is to convert the biconditional to an implication and to al
 
 To put our work in context, we use a two-factor classification scheme: a theory can have an \emph{outer} notion of \emph{truth}, \emph{probability}, or \emph{both};
 and it can have an \emph{inner truth predicate}, \emph{inner probability function},
-%TODO change the terminology of inner probability function to something saner and more meaningful and less confusing
-%TODO talk to Steve about this section especially. And to others with relevant expertise. [already emailed Patrick]
 \emph{both}, or \emph{neither}.
 
 Most of the work of mathematics involves theories that have an outer notion of truth and neither a truth predicate nor an inner probability function. 
@@ -189,7 +191,7 @@ In section~\ref{refl-cons}, we define a reflection principle and prove it consis
 
 In section~\ref{refl-refl}, we prove some impossibility results and show that our principle satisfies only weak versions of some meta-reflective desiderata.
 
-In section~\ref{refl-exp}, we prove %TODO word!!!!
+In section~\ref{refl-exp}, we prove 
 an alternate characterization of coherence and then use the tools this makes available to derive a reflection principle for expectations.
 
 In section~\ref{nonstandard-models}, we show that our outer probability distribution assigns probability zero to standard theories. We prove that there exists a finitely additive measure that fulfills our desiderata and is supported on standard theories. 
@@ -262,7 +264,7 @@ Note that the reverse implication is necessarily false (as otherwise we would ha
 \begin{equation}\label{reverse-reflection}
 \forall \vp \in L' \; \forall a, b \in \mathbb{Q} : \inClosed{\Po{\vp}} \Longleftarrow \Po{\inClosed{\Pq{\vp}}} > 0.
 \end{equation}
-We use this \emph{reverse reflection principle} in some of the proofs in section~\ref{refl-refl}.
+Note the reverse implication, the closed intervals, and that it is greater than zero rather than an equal to one. We use this \emph{reverse reflection principle} in some of the proofs in section~\ref{refl-refl}.
 
 Given a theory $T$, we would like to obtain a coherent, reflective $\PP$ over $T$.
 
@@ -275,43 +277,39 @@ $$\qquad \qquad \forall \vp \in L' \ \forall a,b\in \mathbb{Q}: \inOpen{\Po{\vp}
 \begin{proof}
 Take the set $\mathcal{A}$ of all coherent probability distributions over $L'$ which assign probability one to all sentences in $T$ and consider it as a subset of $[0,1]^{L'}$ with the product topology.
 Define a relation $R\subset \mathcal{A}^2$ as
-$$xRy \iff \forall \vp \in L' \ \forall a, b \in \mathbb{Q}: \inOpen{x(\vp)} \Rightarrow y(\inOpen{\Pq{\vp}})=1$$
+$$pRq \iff \forall \vp \in\cL\;\forall a,b\in\mathbb{Q}:\inOpen{p(\vp)}\Rightarrow q(\inOpen{\Pq{\vp}})=1$$
 $\PP$ satisfies the reflection principle if and only if $\PP R \PP$.
 To prove reflective distributions exist, we use Kakutani's fixed point theorem.
 
-Kakutani's fixed point theorem states that there exists $x \in \mathcal{A}$ such that $xRx$, given that the following hold\cite{kakutani41}:
+Kakutani's fixed point theorem states that there exists $p \in \mathcal{A}$ such that $pRp$, given that the following hold\cite{kakutani41}:
 \begin{enumerate}
 \item \emph{$\mathcal{A}$ is a subset of a locally convex Hausdorff topological vector space.}
 \item \emph{$\mathcal{A}$ is nonempty}.
 \item \emph{$\mathcal{A}$ is compact.}
 \item \emph{$\mathcal{A}$ is convex.}
-\item \emph{$R$ has a closed graph.}
+\item \emph{$R$ has a closed graph (i.e. $R$ is a closed subset of $\cA^2$).}
 \item \emph{$\forall p\in\mathcal{A} \exists q\in\mathcal{A}: pRq$.}
 \item \emph{$\forall p\in\mathcal{A}: \{q \in \mathcal{A}: pRq\}$ is convex.}
 \end{enumerate}
 \begin{enumerate}
-%TODO decide the signaling/clarity tradeoff
 
 \item \emph{$\mathcal{A}$ is a subset of a locally convex Hausdorff topological vector space.}
 $\mathcal{A}\subset [0, 1]^{L'}\subset R^{L'}$ which is a locally convex Hausdorff topological vector space.
 
 \item \emph{$\mathcal{A}$ is nonempty}.
-$T$ is consistent, so we construct a completion $T^{*}$.
-Every sentence is either true or false in $T^{*}$.
+$T$ is consistent, so we construct a completion $T^{*}$ in the language $\cL$.
 Let $\PP(\vp) = 1$ for all $\vp$ in $T^{*}$ and $\PP(\vp) = 0$ otherwise.
 $\PP$ is coherent, thus $\PP\in\mathcal{A}$.
 
 \item \emph{$\mathcal{A}$ is compact.}
-$[0,1]$ is compact by the Bolzano-Weierstrass theorem; its product, $[0,1]^{L'}$, is compact by Tychonoff's theorem.
-A closed subset of a compact space is compact and $\mathcal{A}\subset [0,1]^{L'}$, so we need only show that $\mathcal{A}$ is closed.
-Let $p$ be in $\bar{\mathcal{A}}$.
-Every neighborhood of $p$ contains a point of $\mathcal{A}$.
+$\cA$ is a subset of the compact space $[0,1]^{L'}$, so it suffices to show that $\mathcal{A}$ is closed.
 
-We form a sequence in $\mathcal{A}$ of points $p_i$ converging to $p$, which we can do, due to the first-countability of $\mathcal{A}$ (it is a subspace of a countable product of first-countable spaces, $[0,1]^{L'}$).
+Let $p$ be in the closure of $\mathcal{A}$.
+Take a sequence in $\mathcal{A}$ of points $p_i$ converging to $p$.
 Since we are in the product topology, convergence in $\mathcal{A}$ is equivalent to convergence of $p_i(\vp)$ in $[0,1]$ for every $\vp$.
 To prove $p\in\mathcal{A}$, we show that $p$ satisfies the Gaifman conditions.
 
-Fix a $\vp,\psi\in L'$.
+Fix sentences $\vp,\psi$.
 \begin{itemize}
 \item \emph{$p(\vp)\in [0,1]$.}
 $p_i(\vp)$ is a convergent sequence of real numbers in $[0, 1]$.
@@ -326,13 +324,13 @@ This is a sequence of zeroes, so it converges to zero.
 Thus, $p$ is coherent. Therefore, $\mathcal{A}$ is closed and thus compact.
 \item \emph{$\mathcal{A}$ is convex.}
 Given any $p,r\in\mathcal{A}$, we will show that if $q$ is a convex combination of $p$ and $r$, then $q$ is coherent and therefore is in $\mathcal{A}$.
-Like in the proof for the previous condition of Kakutani's theorem, we start by fixing a $\vp$, and run the proof for our equivalent conditions.
+Fix a sentence $\vp$.
 \begin{itemize}
-\item \emph{$q(\vp) \in [0, 1]$}
+\item \emph{$q(\vp) \in [0, 1]$}.
 We know that $p(\vp) \in [0,1]$ and $r(\psi) \in [0,1]$.
 Thus a linear combination of the two must be in $[0,1]$.
-\item \emph{If $\vp$ is logically valid from $T$, then $qp(\vp)=1$.}
-Assume $\vp$ is logically valid from $T$.
+\item \emph{If $\vp\in T$, then $p(\vp)=1$.}
+Assume $\vp\in T$.
 Then, $p(\vp)=1$ and $r(\vp)=1$, so any convex combination of ones must be one.
 Thus, $q(\vp) = 1$.
 \item \emph{$\forall \psi: r(\vp) -r(\vp\wedge\psi)-r(\vp\wedge\neg\psi)=0$.}
@@ -350,13 +348,14 @@ By definition, $\forall i>N: q_i(\inOpen{\Pq{\vp}}) = 1$, so $q(\inOpen{\Pq{\vp}
 Thus, $R$ has a closed graph.
 
 \item \emph{$\forall p\in\mathcal{A} \exists q\in\mathcal{A}: pRq$.}
-Fix a $p$. Take a completion $T^*$ which, whenever $\inOpen{p(\vp)}$, includes the statement $\inOpen{\Pq{\vp}}$.
+Fix a $p$. Take a completion $T^*$ of $T +$ the schema of statements $\inOpen{\Pq{\vp}}$ where $\inOpen{p(\vp)}$.
+This completion is consistent because $p$ is coherent.
 Let $q$ assign $1$ to all statements in $T^*$ and $0$ to all others.
 Then $q$ is coherent and $pRq$.
 
 \item \emph{$\forall p\in\mathcal{A}: \{q \in \mathcal{A}: pRq\}$ is convex.}
 Let $q_0, q_2\in\{q \in A: pRq\}$, and let $q_1$ be any convex combination of $q_0$ and $q_2$.
-We show that $pRq_1$, and therefore $q_1\in\{q \in A: pRq\}$
+We show that $pRq_1$, and therefore $q_1\in\{q \in A: pRq\}$.
 Choose $\vp, a, b$ such that $\inOpen{p(\vp)}$.
 Because $pRq_0$ and $pRq_2$, we have that $q_0(\inOpen{\Pq{\vp}}) = 1$ and $q_2(\inOpen{\Pq{\vp}}) = 1$.
 Thus $q_1(\inOpen{\Pq{\vp}}) = 1$
@@ -392,8 +391,9 @@ To this end, define the \emph{inner reflection principle} as~\footnote{Note that
     $\forall \q{\vp}$
     is quantifying over all (valid) encodings in the language, which might be, for example, 
     $\mathbb{N}$.) The impossibility results in this section are proved for the weak version, and so carry for these two stronger versions trivially.}:
-
 $$\forall\vp\in L' \ \forall a,b\in\mathbb{Q}:\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1.$$
+Note that this is just the outer reflection principle with $\PP$s converted to $P$s and wrapped inside of $\PP(\dots)=1$.
+
 We prove that there exist \emph{coherent} inner reflective $\PP$s, but no coherent, inner reflective $\PP$ can also be outer reflective.
 
 \begin{proposition} \emph{Existence of an Inner Reflective $\PP$.}
@@ -424,8 +424,8 @@ Applying the reverse inner reflection principle
 \footnote{
 The reverse inner reflection principle is 
 $$\forall \vp \in L' \; \forall a, b \in \mathbb{Q} : \inClosed{\Pq{\vp}} \leftarrow \Pq{\inClosed{\Pq{\vp}}} > 0.$$
-It is derived analogously to the reverse outer reflection principle (\ref{reverse-reflection}).
-%TODO MATH
+Note the reverse implication, the closed intervals, and the `greater than zero' in place of the usual `equals one'.
+This reverse principle is derived analogously to the reverse outer reflection principle (principle~\ref{reverse-reflection} in section~\ref{refl-cons}).
 }
 obtains $\Po{\inClosed{\Pq{\vp}}} = 1$
 
@@ -439,16 +439,18 @@ Not all is lost. Every coherent, reflective probability distribution $\PP$ satis
 \begin{proposition} \emph{Weaker Inner Reflection.}
 Every coherent, reflective probability distribution $\PP$ satisfies
 $$\forall\vp\in L' \ \forall a,b,\varepsilon > 0 \in\mathbb{Q}:\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}>1-\varepsilon)=1.$$
+
+Note that this is weaker entirely due to the internal `$>1-\epsilon$' in place of the usual `$=1$'.
 \end{proposition}
 \begin{proof}
 %TODO MATH fix this proof
 Assume that $\Pq{\vp}\in (a,b)$ is a theorem.
-%TODO Then, $\PP(\vp)\in(a,b)$.
+%TODO MATH Then, $\PP(\vp)\in(a,b)$.
 By the contrapositive of the reflection principle, we have that
 $$\PP(\Pq{\vp}\in(a,b))=1.$$
 We can then derive 
 $$1-\varepsilon<\PP(\inOpen{\Pq{\vp}})<1+\varepsilon.$$
-Applying the reflection principle, we get that we've proved
+Applying the reflection principle, we get that, in $T$, we've proved
 $$\Pq{\vp}\in (a,b)\rightarrow\Pq{\inOpen{\Pq{\vp}}}>1-\varepsilon.$$
 Since $\PP$ assigns probability one to theorems of the theory, this is sufficient to prove the proposition.
 \end{proof}
@@ -456,19 +458,19 @@ Since $\PP$ assigns probability one to theorems of the theory, this is sufficien
 We would also like $\PP$ to assign probability $1$ to $P$ being coherent.
 Let $Coh(P)$ be the sentence stating that $P$ is coherent:
 $$\forall \vp: (\Pq{\vp} \in [0, 1]) \wedge (\vp \rightarrow \Pq{\vp}=1) \wedge (\forall \psi: \Pq{\vp} = \Pq{\vp \wedge \psi} + \Pq{\vp \wedge \neg \psi})$$
+Note that this is just an representation of the Gaifman conditions in the language.
 \begin{proposition}
 There exists a coherent, reflective probability distribution $\PP$ such that $\PP(Coh(P))=1$.
 \end{proposition}
 \begin{proof}
 This follows from some simple modifications to the consistency of the reflection principle proof.
 %TODO MATH actually check this. Or write a full proof of this result
-%TODO MATH sidenote: all the proofs seem to follow the same way. Can we look at the space of all things that we can prove in this way in this framework? What is the maximum result strength? reverse math it or something??
 \end{proof}
 \section{The Reflection Principle for Expectations}
 \label{refl-exp}
 %%fakesubsection purpose of this section
 A natural extension of our framework is to analogues of random variables and their expectations. 
-In this section we develop one approach to this, introducing a reflection principle for expectations, ($a < \EE[X] < b \implies \PP[a < E[X] < b] = 1$).
+In this section we develop one approach to this, introducing a reflection principle for expectations.
 Along the way, we give an alternate characterization of a ``coherent probability distribution'' as a probability distribution over a Stone space of complete theories (with its associated $\sigma$-algebra), which makes many new mathematical tools available to the study of our system.
 
 Our metalanguage is $\zfc$ + the existence of a strongly inaccessible cardinal.
@@ -477,39 +479,39 @@ Let $\cL := \{\in,P\}$ be the language of set theory extended by a single consta
 Let $\cSL$ denote the Stone space of complete theories over~$\cL$; given a consistent theory~$T$, let $\cS_T\subseteq\cSL$ denote the subspace of all complete theories extending~$T$. ($\cS_T$ is itself a Stone space.) 
 
 We will sometimes simply write $\cS$ if it is clear from the context what $T$ is or which $T$ may be chosen.
-We write $\Delta(\cS)$ for the set of probability distributions over $\cS$ with its Borel-$\sigma$-algebra. We call the elements of $\Delta(\cS_T)$ the \emph{coherent probability distributions over~$T$}.
+We write $\Delta(\cS)$ for the set of probability distributions over $\cS$ with its Borel-$\sigma$-algebra.
+We call the elements of $\Delta(\cS_T)$ the \emph{coherent probability distributions over~$T$}. 
+Note that these distributions are \emph{not} functions from the language to $[0,1]$, unlike our previous definition of a coherent distribution. 
+We are justified in calling them the same thing because elements of $\Delta(\cS_T)$ correspond to Gaifman coherent distributions from the language.
 \end{definition}
 For $S\subseteq T$, we have $\cS_T\subseteq\cS_S$, and hence $\Delta(\cS_T)$ is a subset of $\Delta(\cS_S)$.
-\subsection{Definable Values and their Expectations}
+\subsection{\Tvar{}s and their Expectations}
 We construct analogues of random variables in our system and prove that their expectations are well defined.
 
-Intuitively, we choose a theory $T$ and let any formula $\vp(x)$ define a 'random variable' if $T$ can prove that there is a unique value which satisfies $\vp$. For example, consider
-
-$$\vp(x) \iff (x = 0 \wedge \psi) \vee (x = 1 \wedge \neg \psi)$$
-
+Intuitively, we choose a theory $T$ and let any formula $\vp(x)$ define a 'random variable' if $T$ can prove that there is a unique value which satisfies $\vp$.
+$$\vp(x) \leftrightarrow (x = 0 \wedge \psi) \vee (x = 1 \wedge \neg \psi)$$
 If $\psi\in T$ then $\vp(0)$, but if $\neg \psi\in T$ then $\vp(1)$. 
 However, $\psi$ may be independent of $T$, in which case $T$ can prove $\vp(0)\vee\vp(1)$, but cannot prove either of the statements in the disjunction.
-Given a distribution $\PP\in \Delta(\cSL)$, we can restrict $\PP$ to a distribution over the values satisfying $\vp$.
+Given a distribution $\nu\in \Delta(\cSL)$, we can restrict $\nu$ to a distribution over the values satisfying $\vp$.
 We think of this distribution as analogous to a random variable.
 
 \begin{definition}
 Let $T$ be a theory extending $\zfcl$. 
-A \emph{definable value}
-%TODO better name needed! (ask Patrick again?)
+A \emph{\Tvar{}}
 is given by a one-parameter formula $\vp(x)$ of $\cL$ such that $T\vdash\big(\exists!x:\vp(x)\big)\wedge\big(\forall x:\vp(x)\to x\in\RR\big)$. 
-We denote definable values with capital letters, especially $X$, since we will consider them random variables on~$\cS_T$.
+We denote a \Tvar{} with capital letters, especially $X$, since we will consider them random variables on~$\cS_T$.
 We write $T\vdash\psi(X)$ to mean $T\vdash\forall x.\;\vp(x)\to\psi(x)$.
 
-We say that ``\emph{$X\in[a,b]$ is definable}'', where $a<b\in\RR$, if $X$ is a definable value and for all $a',b'\in\QQ$ such that $a'\le a$ and $b\le b'$, we have $T\vdash\dot a'\le X\le \dot b'$.
-A definable value $X$ is \emph{bounded} if there are $a,b\in\RR$ such that $\inClosed{X}$.
+We say that ``\emph{$X\in[a,b]$ is a \Tvar{}}'', where $a<b\in\RR$, if $X$ is a \Tvar{} and for all $a',b'\in\QQ$ such that $a'\le a$ and $b\le b'$, we have $T\vdash\dot a'\le X\le \dot b'$.
+A \Tvar{} $X$ is \emph{bounded} if there are $a,b\in\RR$ such that $\inClosed{X}$.
 \end{definition}
 \begin{definition}
-If $X$ is a definable value and $S\in\cS_T$, let
+If $X$ is a \Tvar{} and $S\in\cS_T$, let
 \[X(S) \;\,:=\;\, \sup\;\{q\in\QQ \;:\; S\vdash \dot q \le X\} \;\,\in\;\, [-\infty,\infty].\]
 \end{definition}
 We consider $X(S)$ as the \emph{standard part} of the value that the theory $S$ assigns to $X$: it's possible that the actual value is nonstandard in all models of $S$ (e.g., it could be that $X(S) = 0$, but $S\vdash X>0$ or $S\vdash X<0$).
 \begin{lemma}
-If $X\in[a,b]$ is definable and $S\in\cS_T$, then $X(S)\in[a,b]$.
+If $X\in[a,b]$ is a \Tvar{} and $S\in\cS_T$, then $X(S)\in[a,b]$.
 \end{lemma}
 \begin{proof}
 %TODO MATH check this proof more thoroughly. Esp. why are there two in the section with b's and only one in the section with a's.
@@ -518,7 +520,7 @@ Then by assumption we have $T\vdash\dot X\geq a'$, and hence $S\vdash\dot X\geq 
 Similarly, if $X(S) > b$, then $X(S) > b'' > b' \ge b$ for some $b',b''\in\QQ$, whence $S\vdash X\le\dot b'$ and therefore $S\vdash X<\dot b''$, implying $X(S) \le b''$, contradiction.
 \end{proof}
 \begin{lemma}
-Suppose that $X$ is definable, and let $a<b\in\RR$. Then, the set $A := \{S\in\cS_T : a< X(S)<b\}$ is open in $\cS_T$.
+Suppose that $X$ is a \Tvar{}, and let $a<b\in\RR$. Then, the set $A := \{S\in\cS_T : a< X(S)<b\}$ is open in $\cS_T$.
 \end{lemma}
 \begin{proof}
 Let $A(a',b') := \{S : S\vdash\dot a' < X < \dot b'\}$ for $a',b'\in\QQ$. 
@@ -535,20 +537,21 @@ Suppose that $a < a' < b' < b$ and $S\in A(a',b')$.
 Then $a' \le X(S) \le b'$ and hence $a < X(S) < b$, implying $S\in A$.
 \end{proof}
 \begin{theorem}
-Suppose that $X\in[a,b]$ is definable. Then the mapping $X(\cdot)$ from $\cS_T$ to $[a,b]$ is continuous (and, in particular, Borel-measurable).
+Suppose that $X\in[a,b]$ is a \Tvar{}. Then the mapping $X(\cdot)$ from $\cS_T$ to $[a,b]$ is continuous (and, in particular, Borel-measurable).
 \end{theorem}
 \begin{proof}
 By the previous lemma, $X^{-1}((a',b'))$ is open for every open interval $(a',b')$.
 
 \end{proof}
 \begin{corollary}
-If $X\in[a,b]$ is definable and $\PP\in\Delta(\cS_T)$, then $\EE[X]\in[a,b]$, where $\EE[X] := \int X(S)\,d\PP(S)$; in particular, the expectation of bounded definable values is well-defined and has its usual properties, such as linearity.
+If $X\in[a,b]$ is a \Tvar{} and $\nu\in\Delta(\cS_T)$, then $\EE[X]\in[a,b]$, where $\EE[X] := \int X(S)\,d\nu(S)$; in particular, the expectation of bounded \Tvar{}s is well-defined and has its usual properties, such as linearity.
 \end{corollary}
 \subsection{An Alternative View of coherent Distributions} \label{An Alternative View of coherent Distributions}
 Intuitively, a coherent distributions is a measure over completions of a theory. 
 It assigns to every sentence $\psi$ a probability corresponding to the `fraction' of the completions that include $\psi$.
 
-Formally, a $\PP\in\Delta(\cS)$ assigns a probability to every sentence~$\vp$ in the language~$\cL$, by setting $\PP[\vp] := \PP(\{S\in\cS:S\vdash\vp\})$. 
+Formally, a $\nu\in\Delta(\cS)$ assigns a probability to every sentence~$\vp$ in the language~$\cL$, by setting $\PP(\vp) := \nu(\{S\in\cS:S\vdash\vp\})$. (Note that this is defines a Gaifman coherent distribution.
+)
 This defines a mapping $\iota : \Delta(\cS)\to [0,1]^\NN\subset\RR^\NN$, where we consider $\RR^\NN$ to be endowed with the product topology. 
 (The exponent~$\NN$ comes from some enumeration of the sentences of~$\cL$.)
 Intuitively, $\iota$ maps a distribution in $\Delta(\cS)$ to its assignments over $\cL$.
@@ -564,9 +567,9 @@ $\iota$ is a bijection between~$\Delta(\cS)$ and the set of finitely additive pr
 %TODO MATH check this math and then figure out how it fits so that it can be motivated better.
 \begin{proof}
 Since the standard base of $\cS$ is a Boolean algebra, it is in particular a ring of sets. Furthermore, this ring generates our $\sigma$-algebra: since the sets in the ring form a countable base of $\cS$, every open set is a countable union of base sets (so that the smallest $\sigma$-algebra containing the open sets is also the smallest $\sigma$-algebra containing the base).
-Now, a finitely additive measure~$\PP$ on a ring is already a premeasure (i.e., $\sigma$-additive on the ring) if for every descending sequence $A_n\supseteq A_{n+1}$ of elements of the ring, $\lim \PP(A_n) > 0$ implies $\textstyle\bigcap_n A_n \neq\emptyset$, and a premeasure on a ring extends uniquely to a measure on the generated $\sigma$-algebra. 
+Now, a finitely additive measure~$\nu$ on a ring is already a premeasure (i.e., $\sigma$-additive on the ring) if for every descending sequence $A_n\supseteq A_{n+1}$ of elements of the ring, $\lim \nu(A_n) > 0$ implies $\textstyle\bigcap_n A_n \neq\emptyset$, and a premeasure on a ring extends uniquely to a measure on the generated $\sigma$-algebra. 
 
-Now, by the assumption, we have $\PP(A_n) > 0$ and therefore $A_n\neq\emptyset$ for all $n\in\mathbb{N}$; since $\textstyle A_n = \bigcap_{i=1}^n A_i$, this means that the family $(A_n)$ has the finite intersection property, and so since Stone spaces are compact and each $A_n$ is clopen, the intersection of all $A_n$ is non-empty as desired.
+Now, by the assumption, we have $\nu(A_n) > 0$ and therefore $A_n\neq\emptyset$ for all $n\in\mathbb{N}$; since $\textstyle A_n = \bigcap_{i=1}^n A_i$, this means that the family $(A_n)$ has the finite intersection property, and so since Stone spaces are compact and each $A_n$ is clopen, the intersection of all $A_n$ is non-empty as desired.
 \end{proof}
 \begin{corollary}
 $\iota$ has compact range.
@@ -579,43 +582,44 @@ We consider $\Delta(\cS)$ to be endowed with the topology of \emph{weak converge
 $\iota$ is a homeomorphism.
 \end{theorem}
 \begin{proof}
-The Stone space of a Boolean algebra is metrizable if and only if the Boolean algebra is countable, so since the standard base of $\cS$ is countable, the notion of weak convergence of probability measures on our space is well-defined. One of the equivalent definitions is that $\PP_n\to\PP$ if $\liminf\PP_n(B)\ge\PP(B)$ for all open sets $B$. We want to show that this is equivalent to convergence in the product topology on $[0,1]^\NN$, which amounts to pointwise convergence of $\PP_n(A)$ to $\PP(A)$ for all $A$ in the standard base.
-Suppose first that $\PP_n(A)\to\PP(A)$ for all base sets $A$ and let $B$ be an arbitrary open set. $B$ can be written as a countable union $\textstyle\bigcup_m A_m$ of base sets; since the base is closed under Boolean operations, it follows that it can be written as a countable disjoint union (let $\textstyle A_m' := A_m\setminus\bigcup_{i=1}^{m-1}A_i)$. For any $\epsilon>0$, there is an $m\in\mathbb{N}$ such that $\textstyle\PP(B)\le\PP(\bigcup_{i=1}^m A_i)+\epsilon/2$. By pointwise convergence, for sufficiently large $n$ we have $\PP(A_i)\le\PP_n(A_i) + \epsilon/2m$ for all $i\le m$. Therefore,
+The Stone space of a Boolean algebra is metrizable if and only if the Boolean algebra is countable, so since the standard base of $\cS$ is countable, the notion of weak convergence of probability measures on our space is well-defined. One of the equivalent definitions is that $\nu_n\to\nu$ if $\liminf\nu_n(B)\ge\nu(B)$ for all open sets $B$. We want to show that this is equivalent to convergence in the product topology on $[0,1]^\NN$, which amounts to pointwise convergence of $\nu_n(A)$ to $\nu(A)$ for all $A$ in the standard base.
+Suppose first that $\nu_n(A)\to\nu(A)$ for all base sets $A$ and let $B$ be an arbitrary open set. $B$ can be written as a countable union $\textstyle\bigcup_m A_m$ of base sets; since the base is closed under Boolean operations, it follows that it can be written as a countable disjoint union (let $\textstyle A_m' := A_m\setminus\bigcup_{i=1}^{m-1}A_i)$. For any $\epsilon>0$, there is an $m\in\mathbb{N}$ such that $\textstyle\nu(B)\le\nu(\bigcup_{i=1}^m A_i)+\epsilon/2$. By pointwise convergence, for sufficiently large $n$ we have $\nu(A_i)\le\nu_n(A_i) + \epsilon/2m$ for all $i\le m$. Therefore,
 \[
-\textstyle\PP(B)\;\le\;\sum_{i=1}^m\PP(A_i)+\epsilon/2\;\le\;\sum_{i=1}^m\PP_n(A_i) + \epsilon\;\le\;\PP_n(B)+\epsilon.
+\textstyle\nu(B)\;\le\;\sum_{i=1}^m\nu(A_i)+\epsilon/2\;\le\;\sum_{i=1}^m\nu_n(A_i) + \epsilon\;\le\;\nu_n(B)+\epsilon.
 \]
 Since this holds for all $\epsilon$, the desired inequality follows.
-Suppose now that $\liminf\PP_n(B)\ge\PP(B)$ for all open sets $B$. We must show that for all base sets $A$, $\PP_n(A)\to\PP(A)$. But base sets are clopen, so we have both $\liminf\PP_n(A)\ge\PP(A)$ and
+Suppose now that $\liminf\nu_n(B)\ge\nu(B)$ for all open sets $B$. We must show that for all base sets $A$, $\nu_n(A)\to\nu(A)$. But base sets are clopen, so we have both $\liminf\nu_n(A)\ge\nu(A)$ and
 \[
-\limsup\PP_n(A) \;=\; 1-\liminf\PP_n(A^c) \;\le\; 1 - \PP(A^c) \;=\; \PP(A),
+\limsup\nu_n(A) \;=\; 1-\liminf\nu_n(A^c) \;\le\; 1 - \nu(A^c) \;=\; \nu(A),
 \]
-implying $\lim\PP_n(A) = \PP(A)$.
+implying $\lim\nu_n(A) = \nu(A)$.
 \end{proof}
 \subsection{The Reflection Principle for Expectations}
 \begin{definition}
-A theory $T$ in the language $\cL$ is \emph{meditative} if it is consistent and there is a Grothendieck universe $\cU$ such that for every $\PP\in\Delta(\cS_T)$, we have $(\cU,\PP)\vDash T$.
+A theory $T$ in the language $\cL$ is \emph{meditative} if it is consistent and there is a Grothendieck universe $\cU$ such that for every $\nu\in\Delta(\cS_T)$, we have $(\cU,\nu)\vDash T$.
 \end{definition}
 The proof of the following theorem is analogous to the proof of consistency of the reflection principle in theorem~\ref{ref-cons-pf}.
 We define a relation $R$ over the proper space and then appeal to Kakutani's fixed point theorem.
 \begin{theorem}
-For every meditative theory $T$, there is a $\PP\in\Delta(\cS_T)$ such that for every bounded definable value~$X$ and all $a,b\in\QQ$,
-\[a<\EE[X]<b\;\implies\;\PP[\dot a < E[X] < \dot b] = 1.\]
+For every meditative theory $T$, there is a $\nu\in\Delta(\cS_T)$ such that for every bounded \Tvar{}~$X$ and all $a,b\in\QQ$,
+\[a<\EE[X]<b\;\implies\;\PP(\dot a < E[X] < \dot b) = 1,\]
+where $\PP:=\iota(\nu)$.
 \end{theorem}
 \begin{proof}
-Let $\cA$ be the range of the embedding $\iota$. Define $R$, such that $\iota(\PP)R\iota(\PP')$ if for every bounded definable value~$X$ and all $a,b\in\QQ$ such that $a<\EE[X]<b$, we have $\PP'[\dot a < E[X] < \dot b] = 1$.
+Let $\cA$ be the range of the embedding $\iota$. Define $R$, such that $\iota(\nu)R\iota(\nu')$ if for every bounded \Tvar{}~$X$ and all $a,b\in\QQ$ such that $a<\EE[X]<b$, we have $\PP'(\dot a < E[X] < \dot b)= 1$, where $\PP':=\iota(\nu')$.
 
-We employ Kakutani's fixed point theorem to find a $\PP \in f(\PP)$. Recall that Kakutani's fixed point theorem requires that:
+We employ Kakutani's fixed point theorem to find a fixed point of $R$. Recall that Kakutani's fixed point theorem requires that:
 (1) $\mathcal{A}$ is nonempty.
 (2) $\mathcal{A}$ is compact.
 (3) $\mathcal{A}$ is convex.
 (4) $\mathcal{A}$ is a subset of a locally convex Hausdorff topological vector space.
-(5) $R$ has a closed graph.
+(5) $R$ has a closed graph (i.e. $R$ is a closed subset of $\cA$).
 (6) $\forall x\in\cA \exists y\in\cA : xRy$.
 (7) $\forall x\in\cA:\{y \in \mathcal{A}: xRy\}$ is convex.
 \cite{kakutani41}.
 
 \begin{enumerate}
-\item \emph{$\mathcal{A}$ is nonempty}. There exists a $\PP\in\Delta(\cS_T)$ since $T$ is consistent, so $\iota(\PP)\in\cA$, which is therefore non-empty.
+\item \emph{$\mathcal{A}$ is nonempty}. There exists a $\nu\in\Delta(\cS_T)$ since $T$ is consistent, so $\iota(\nu)\in\cA$, which is therefore non-empty.
 
 \item \emph{$\mathcal{A}$ is compact.} This follows from corollary 3.2.3.
 
@@ -623,17 +627,17 @@ We employ Kakutani's fixed point theorem to find a $\PP \in f(\PP)$. Recall that
 
 \item \emph{$\mathcal{A}$ is a subset of a locally convex Hausdorff topological vector space.} $\mathcal{A}$ is a compact subset of the locally convex topological vector space~$\RR^\NN$.
 
-\item \emph{$R$ has a closed graph.} Given $\PP_n,\PP'_n,\PP,\PP'\in\Delta(\cS_T)$ such that $\PP_n\to\PP$, $\PP'_n\to\PP'$, and $\forall n : \iota(\PP_n)R\iota(\PP'_n)$, we need to prove that $\iota(\PP)R\iota(\PP')$. 
-To do this, we make use of the fact that if $\PP_n$ converges weakly to $\PP$ (i.e., converges in the weak-$*$ topology that we have put on $\Delta(\cS_T)$), then $\EE_n[X]\to\EE[X]$ for every bounded, continuous function $X : \cS_T\to\RR$, and, in particular, for every bounded definable value~$X$. 
-Thus, if $a < \EE[X] < b$, then $a < \EE_n < b$ for all~$n$ greater than some~$n_0$, and hence $\PP'_n[\dot a < E[X] < \dot b] = 1$ for all $n>n_0$.
-Since $\iota(\PP'_n)$ converges pointwise to $\iota(\PP')$, this implies that $\PP'[\dot a < E[X] < \dot b] = 1$.
+\item \emph{$R$ has a closed graph.} Given $\nu_n,\nu'_n,\nu,\nu'\in\Delta(\cS_T)$ such that $\nu_n\to\nu$, $\nu'_n\to\nu'$, and $\forall n : \iota(\nu_n)R\iota(\nu'_n)$, we need to prove that $\iota(\nu)R\iota(\nu')$. 
+To do this, we make use of the fact that if $\nu_n$ converges weakly to $\nu$ (i.e., converges in the weak-$*$ topology that we have put on $\Delta(\cS_T)$), then $\EE_n[X]\to\EE[X]$ for every bounded, continuous function $X : \cS_T\to\RR$, and, in particular, for every bounded \Tvar{}~$X$. 
+Thus, if $a < \EE[X] < b$, then $a < \EE_n < b$ for all~$n$ greater than some~$n_0$, and hence $\PP'_n(\dot a < E[X] < \dot b) = 1$ for all $n>n_0$.
+Since $\iota(\nu'_n)$ converges pointwise to $\iota(\nu')$, this implies that $\PP'(\dot a < E[X] < \dot b) = 1$.
 
-\item \emph{$\forall x \exists y$ s.t. $xRy$.} Let $\delta_{T(\cU,\PP)}$ be the distribution that assigns probability~1 to~$T(\cU,\PP)$, the complete theory of the model~$(\cU,\PP)$. Then, $\iota(\PP)R\iota(\delta_{T(\cU,\PP)})$.
+\item \emph{$\forall x \exists y$ s.t. $xRy$.} Let $\delta_{T(\cU,\nu)}$ be the distribution that assigns probability~1 to~$T(\cU,\nu)$, the complete theory of the model~$(\cU,\nu)$. Then, $\iota(\nu)R\iota(\delta_{T(\cU,\nu)})$.
 
 \item \emph{$\forall x$ the set $\{y \in \mathcal{A}: xRy\}$ is convex.} $\cA$ is convex. $\{y\in\cA:xRy\}$ is the intersection of $\cA$ and each set $\{v\in\RR^\NN : v(n) = 1\}$ where $n$ is the G\"odel number of some statement of the form $\dot a < E[X]<\dot b$ which is assigned probability one.
 \end{enumerate}
 Thus, by Kakutani's fixed point theorem, there exists a $\PP\in\cA$ such that 
-$\iota(\PP)R\iota(\PP)$, so it must be reflective in the manner we desired.
+$\PP R\PP$, so it must be reflective in the manner we desired.
 
 \end{proof}
 \subsection{Enlightened theories}
@@ -650,7 +654,7 @@ If there are any enlightened theories, then there is a least enlightened theory,
 We now show that enlightened theories exist.
 Fix some Grothendieck universe $\cU$. (By our assumption that a strongly inaccessible cardinal exists, there is at least one Grothendieck universe.) Recall that $\cU$ is a model of ZFC (with~$\in$ interpreted as the standard membership relation), and that all ``small'' sets (such as $\RR$ and $\Delta(\cS_T)$) are the same in~$\cU$ as in the class~$\mathbf{V}$ of all sets.
 \begin{definition}
-Use transfinite recursion to define a sequence $\cT_\alpha$ of $\cL$-theories as follows: Let $\cT_{<\alpha} := \bigcup_{\beta<\alpha} \cT_\beta$, and set $\cT_\alpha := \bigcap_{\PP\in\Delta(\cS_{\cT_{<\alpha}})} T(\cU,\PP)$, where $T(\cU,\PP)$ denotes the complete theory of $(\cU,\PP)$, which extends~$\cU$ to a model of~$\cL$ by interpreting $P$ as $\PP$.
+Use transfinite recursion to define a sequence $\cT_\alpha$ of $\cL$-theories as follows: Let $\cT_{<\alpha} := \bigcup_{\beta<\alpha} \cT_\beta$, and set $\cT_\alpha := \bigcap_{\nu\in\Delta(\cS_{\cT_{<\alpha}})} T(\cU,\nu)$, where $T(\cU,\nu)$ denotes the complete theory of $(\cU,\nu)$, which extends~$\cU$ to a model of~$\cL$ by interpreting $P$ as $\nu$.
 Let $\cT := \bigcup_\alpha \cT_\alpha$.
 \end{definition}
 In order for $\cT_\alpha$ to be well-defined, $\cT_{<\alpha}$ must be consistent. We now show that this is the case for all~$\alpha$.
@@ -661,7 +665,7 @@ Now suppose that $\cT_{<\alpha}$ is inconsistent for some $\alpha$; let $\alpha$
 $\cT$ is an enlightened theory.
 \end{theorem}
 \begin{proof}
-First, note that if $T_{\alpha}= T_{\alpha+1}$ for any $\alpha$, then $T_{<\alpha+2} = T_{<\alpha+1}$ so $T_{\alpha+2} = T_{\alpha+1} = T_\alpha$; by induction, we see that $T_\beta = T_\alpha$ for every $\beta\ge\alpha$. But we can only have $T_{\alpha}\subsetneq T_{\alpha+1}$ for countably many $\alpha$, since there are only countably many sentences of~$\cL$. Thus, the sequence must stabilize at some countable ordinal $\alpha^*$, and we have $\cT = \cT_{\alpha^*}$. Since $\cT_{<\alpha^*}$ is consistent, there is some $\PP\in\Delta(\cS_{\cT_{<\alpha^*}})$, and therefore $(\cU,\PP)\vdash\cT$, showing that $\cT$ is meditative. By construction, it is also clear that $\cT\vdash\zfcp$ as well as $\cT\vdash P[\vp]=1$ for all $\vp\in\cT$.
+First, note that if $T_{\alpha}= T_{\alpha+1}$ for any $\alpha$, then $T_{<\alpha+2} = T_{<\alpha+1}$ so $T_{\alpha+2} = T_{\alpha+1} = T_\alpha$; by induction, we see that $T_\beta = T_\alpha$ for every $\beta\ge\alpha$. But we can only have $T_{\alpha}\subsetneq T_{\alpha+1}$ for countably many $\alpha$, since there are only countably many sentences of~$\cL$. Thus, the sequence must stabilize at some countable ordinal $\alpha^*$, and we have $\cT = \cT_{\alpha^*}$. Since $\cT_{<\alpha^*}$ is consistent, there is some $\nu\in\Delta(\cS_{\cT_{<\alpha^*}})$, and therefore $(\cU,\nu)\vdash\cT$, showing that $\cT$ is meditative. By construction, it is also clear that $\cT\vdash\zfcp$ as well as $\cT\vdash P[\vp]=1$ for all $\vp\in\cT$.
 \end{proof}
 We are now justified in making the following definition.
 \begin{definition}
@@ -690,18 +694,19 @@ Not only do such distributions not exist, but every coherent, reflective distrib
 However, there exists a restriction of $\PP$ which is a finitely additive measure supported on standard theories which satisfies an analogue of the reflection principle.
 \begin{theorem} \emph{Disbelief in Standard Theories.}
 Let $T$ be a consistent theory which extends Peano Arithmetic.
-Let $\PP\in\Delta(\mathcal{S})$.
-Then $\PP$ assigns probability zero to any set of standard theories of $T$.
+Let $\nu\in\Delta(\mathcal{S})$.
+Then $\nu$ assigns probability zero to any set of standard theories of $T$.
 \end{theorem}
 \begin{proof}
 %TODO MATH copy stuff from the forum post where I cleaned this stuff up for this and next proof
 Consider the sentence $G$ defined by $G \iff P(G) < 1$.
-Then, $\PP(G)=1$.
+Then, $\PP(G)=1$. (Recall that $\PP(\phi):=\nu({T:\phi\in T})$.)
 Applying the reflection principle, we get that 
-$$\forall\epsilon>0: \PP(\{T:1-\epsilon<P(G)<1\in T\})=1$$
+$$\forall\epsilon>0: \nu(\{T:1-\epsilon<P(G)<1\in T\})=1$$
 Now, 
-$$\{T:\forall \epsilon>0,1-\epsilon<P(G)<1\in T\}=\bigcap_{\epsilon>0}\{T:1-\epsilon<P(G)<1\in T\},$$ so we apply countable additivity and De Morgan's laws to get that $$\PP(\{T:\forall \epsilon>0,1-\epsilon<P(G)<1\in T\})=1.$$
-This means that any theory which does not have $\forall \epsilon>0,1-\epsilon<P(G)<1$ as an axiom, will be assigned probability zero by $\PP$.
+$$\{T:\forall \epsilon>0,1-\epsilon<P(G)<1\in T\}$$
+$$=\bigcap_{\epsilon>0}\{T:1-\epsilon<P(G)<1\in T\},$$ so we apply countable additivity and De Morgan's laws to get that $$\nu(\{T:\forall \epsilon>0,1-\epsilon<P(G)<1\in T\})=1.$$
+This means that any theory which does not have $\forall \epsilon>0,1-\epsilon<P(G)<1$ as an axiom, will be assigned probability zero by $\nu$.
 In particular, no standard theory can have such an axiom, as otherwise it would contain a number smaller than one which was also greater than any standard rational smaller than one.
 \end{proof}
 While this seems problematic, we can trace this disbelief in standard theories back to the countable additivity condition. We now construct a finitely additive measure which fulfills many of our desiderata and is supported on standard theories.
@@ -709,7 +714,7 @@ While this seems problematic, we can trace this disbelief in standard theories b
 Define the set $N$ to be the set of all standard theories. A subset $N_{\vp}$ of $N$ is defined as $N_{\vp}:=\{T:\vp\in T\}$.
 \end{definition}
 \begin{definition}
-Define a function $\mu(N_{\vp}):=\PP[\vp]$.
+Define a function $\mu(N_{\vp}):=\PP(\vp)$.
 \end{definition}
 \begin{definition}
 We define our base theory $T:=\bigcap N$.
@@ -720,19 +725,19 @@ $$a < \mu(S_{\vp}) < b \rightarrow \mu(S_{a < P(\ulcorner \vp \urcorner) < b}) =
 \end{theorem}
 \begin{proof}
 We first show that $\mu$ is well-defined. By consistency of the reflection principle, we have that there exists a coherent, reflective $\PP$ over our base theory $T$.
-Say that $N_{\vp}=N_{\psi}$. Then, by definition, $\vp$ and \$psi are in the same complete theories, so they must be logically equivalent. Therefore, $T$ proves $\vp\leftrightarrow\psi$, so by Gaifman coherence, $\PP[\vp]=\PP[\psi]$. Hence, $\mu$ is well defined.
-We now check that $\mu$ is a finitely additive measure. Clearly, $\mu(\vp)\in[0,1]$ and $\mu(\emptyset)=\PP[\bot]=0$.
+Say that $N_{\vp}=N_{\psi}$. Then, by definition, $\vp$ and \$psi are in the same complete theories, so they must be logically equivalent. Therefore, $T$ proves $\vp\leftrightarrow\psi$, so by Gaifman coherence, $\PP(\vp)=\PP(\psi)$. Hence, $\mu$ is well defined.
+We now check that $\mu$ is a finitely additive measure. Clearly, $\mu(\vp)\in[0,1]$ and $\mu(\emptyset)=\PP(\bot)=0$.
 We need only check it is finitely additive. 
 $$\mu(N_{\vp}\cup N_{\psi})=\mu(N_{\vp\vee\psi})=\PP(\vp\vee\psi)$$
 If $N_{\vp}\cup N_{\psi}=\emptyset$, then we must have that $T$ proves $\neg(\vp\cup\psi)$, so 
 $$\PP(\vp\vee\psi)=\PP(\vp)+\PP(\psi)$$
 By the way we defined it, $\mu$ clearly satisfies the modified reflection principle we gave.
 \end{proof}
+
+\ifprocrastinate
 \subsection{The Procrastination Paradox}
-
-%TODO motivate this as we tried the obvious paradox and it output this. Change the description to something more philosophy?
-%TODO needs intro stuff done (prob-log)
-
+% We construct a bad thing...
+% Fix the sentence to say "yes in fact this is a problem"
 The support on nonstandard theories may seem suspicious, but it is not immediately obvious whether or not it causes problems in applications of the system. In this section, we show an analogue of a result about nonstandard theories of arithmetic called the \emph{procrastination paradox}~\cite{yudkowsky13}. 
 
 Consider an immortal rational agent trying to decide whether to do a certain necessary task today, or postpone it till tomorrow; we imagine that it is very important that this task get done \emph{eventually}, but it does not matter \emph{when} the task is done. In the original form of the procrastination paradox, we imagine that our agent will do the task today \emph{unless it can prove in a certain formal system that it will do the task at a later time}, in which case our agent decides that for the moment, it can procrastinate.
@@ -755,26 +760,25 @@ Fix a definable sequence of rational numbers $\varepsilon_n > 0$ such that $\var
 
 Intuitively, the following theorem says that the agent believes for certain that it will press the button eventually.
 \begin{theorem} \emph{Procrastination}
-For all $n\in\NN$, $\PP[\exists k>n{:}\;\vp(k)] = 1$.
+For all $n\in\NN$, $\PP(\exists k>n{:}\;\vp(k)) = 1$.
 \end{theorem}
 \begin{proof}
-Suppose not. Then there is an $n_0\in\NN$ such that $\PP[\exists k>n_0{:}\;\vp(k)]$ is less than one, and therefore less than~$1 - \varepsilon_n$ for some~$n>n_0$. Since $\exists k>n_0{:}\;\vp(k)$ is implied by $\exists k>n{:}\; \vp(k)$, the former statement must be at least as probable as the latter one, i.e., $1 - \varepsilon_n \;>\; \PP[\exists k>n_0{:}\; \vp(k)] \;\ge\; \PP[\exists k>n{:}\;\vp(k)]$, and hence by the reflection principle
+Suppose not. Then there is an $n_0\in\NN$ such that $\PP(\exists k>n_0{:}\;\vp(k))$ is less than one, and therefore less than~$1 - \varepsilon_n$ for some~$n>n_0$. Since $\exists k>n_0{:}\;\vp(k)$ is implied by $\exists k>n{:}\; \vp(k)$, the former statement must be at least as probable as the latter one, i.e., $1 - \varepsilon_n \;>\; \PP(\exists k>n_0{:}\; \vp(k)) \;\ge\; \PP(\exists k>n{:}\;\vp(k))$, and hence by the reflection principle
 \[
-\PP[\vp(n)] \;\;=\;\; \PP[P[\exists k>n{:}\;\vp(k)] \,<\, 1 - \varepsilon_n] \;\;=\;\; 1.
+\PP(\vp(n)) \;\;=\;\; \PP(P(\exists k>n{:}\;\vp(k)) \,<\, 1 - \varepsilon_n) \;\;=\;\; 1.
 \]
-But this implies $\PP[\exists k>n_0{:}\;\vp(k)] = 1$, contradicting our assumption that this probability is less than one.
+But this implies $\PP(\exists k>n_0{:}\;\vp(k)) = 1$, contradicting our assumption that this probability is less than one.
 \end{proof}
 Intuitively, the following theorem says that even though the system is certain that it will eventually press the button, it does not in fact do so.
 \begin{theorem}
-For all $n\in\NN$, $\PP[\vp(n)] = 0$.
+For all $n\in\NN$, $\PP(\vp(n)) = 0$.
 \end{theorem}
 \begin{proof}
-By the previous theorem, $\PP[\exists k>n:\vp(k)] = 1 > 1 - \epsilon_n$, and thus
-\[
-\PP[\vp(n)] \;\;=\;\; \PP[P[\exists k>n{:}\;\vp(k)] < 1 - \epsilon_n] \;\;=\;\; 0.
-\]
+By the previous theorem, $\PP(\exists k>n:\vp(k)) = 1 > 1 - \epsilon_n$, and thus
+\[\PP(\vp(n)) \;\;=\;\; \PP(P(\exists k>n{:}\;\vp(k)) < 1 - \epsilon_n) \;\;=\;\; 0.\]
 \end{proof}
 These two results are not contradictory: They merely imply that~$\PP$ is supported on complete theories whose (nonstandard) models believe that the button gets pressed \emph{at some nonstandard time}, just as in the procrastination paradox for logical theories.
+\fi
 \section{Further Work}
 \label{further-work}
 
@@ -795,12 +799,12 @@ For example, we could consider the relaxation
 This is strictly weaker than the reflection principle in this paper,
 so our result implies that there exist coherent distributions satisfying this principle.
 Moreover, no obvious analog of the Liar's paradox prevents this property
-from being both satisfied by $\PP$ and having its inner language analogue assigned probability 1 by $\PP$.
+from being both satisfied by $\PP$ and having its inner language analogue assigned probability one by $\PP$.
 
 It remains open whether it is possible to devise a principle
 which captures the important aspects of reflection,
 and which can be simultaneously true of a distribution $\PP$
-while having its inner language analogue assigned probability 1 by $\PP$.
+while having its inner language analogue assigned probability one by $\PP$.
 Additionally, it is an open question whether a reflection principle for measures supported on standard models can satisfy the reflective properties we care about.
 \section{Acknowledgements}
 The authors would like to thank Steve Rayhawk, Nate Soares, Patrick LaVictoire, Kenny Easwaran, Tsvi Benson-Tilsen, and Diego Caleiro for their help with this paper.
