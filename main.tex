@@ -94,6 +94,9 @@ Let $L'$ be the extension of $L$ by a function symbol $P$. }
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
 
+\newenvironment{proofsketch}{%
+  \renewcommand{\proofname}{Proof Sketch}\proof}{\endproof}
+
 %%fakesubsection ifs
 \newif\ifprocrastinate
 \procrastinatefalse
@@ -121,7 +124,7 @@ Rafael Cosman\footnotemark[2]
 \maketitle
 \begin{abstract}
 Truth predicates are inconsistent due to liar's sentences such as ``this sentence is false''.
-Rather than constructing a \emph{truth} predicate and then assigning \emph{truth values} to sentences, we construct a \emph{probabilistic analogue} to a truth predicate and then assign \emph{probabilities} to sentences, including those that refer to the probabilities of other sentences. 
+Rather than constructing a \emph{truth} predicate and then assigning \emph{truth values} to sentences, we construct a \emph{probabilistic analogue} to a truth predicate and then assign \emph{probabilities} to sentences, including those that refer to the probabilities of other sentences. %XXX KAYA I recommend that we remove "including those that refer to the probabilities of other sentences." I find this to be confusing both because it breaks the paralell structure and also because it should be implied by the existance of a probabilistic analogue of a truth predicate. Right now it sounds like it might be some sort of property of our language independant of the probabilistic analogue of the truth predicate.
 Unlike the standard truth predicate construction, our analogue is consistent and consistently deals with probabilistic generalizations of liar's sentences such as ``this sentence is unlikely''. 
 We also prove a negative result: while our analogue works like a truth predicate, we must assign zero probability to the sentence saying it works like a truth predicate.
 \end{abstract}
@@ -129,24 +132,28 @@ We also prove a negative result: while our analogue works like a truth predicate
 \section{Introduction}
 %%fakesubsection 0.0 actual intro bit
 In English, we encounter sentences of the form ``X is true.'' 
-To model these in a mathematical theory, we would like a predicate $True$ such that the English sentence from before could be written $True(X)$. Such a predicate, if possible, would `reflect' truth in a theory:
+To model these in a mathematical theory, we would like a predicate $True$ such that the English sentence from before could be written $True(X)$. Such a predicate, if possible, would `reflect' truth in a theory\footnote{
+We take for granted that the language is sufficiently rich that we can assume the existence of a G\"odel numbering. To notate the encoding of some sentence $\vp$, we use G\"odel quotes and write $\q{\vp}$. 
+}:
 \begin{equation}\label{truth-reflection}
 	\vp \iff \Tq{\vp}.
 \end{equation}
 But, given such a predicate, we could construct the \emph{liar's sentence} $\vp\leftrightarrow\neg\Tq{\vp}$ (``This sentence is false.''), which cannot be assigned a consistent truth value.
-Therefore, truth predicates are inconsistent in classical two-valued logic; however, they may yet be salvaged by moving to a more expressive framework and relaxing some constraints on how they work.
-We investigate an approach to this using probabilistic logic.
+Therefore, truth predicates are inconsistent in classical two-valued logic. Yet they may be salvaged by moving to a more expressive framework and relaxing some constraints on how they work.
+We investigate such a framework and relaxation based on probabilistic logic.
 
-We want a probabilistic analogue of truth over our language, a function $\PP$ in the metalanguage which assigns probabilities to sentences in the language, even those sentences independent of the theory.
+We want a probabilistic analogue of truth over our language. Our analogue is a function $\PP$ in the metalanguage which assigns probabilities to sentences in the language, even those sentences independent of the theory.
+It assigns $1$ to sentences in the theory, $0$ to sentences whose negation is in the theory, and some value in $[0, 1]$ to sentences independent of the theory.
+
 We notate our probabilistic truth predicate with $P$, a function symbol in the language, and require $P$ to reflect $\PP$, probabilistic truth in the theory.
 For example, we might want the following \emph{reflection principle} to hold:
 \begin{equation}\label{truth-predicate-reflection}
 	\PP(\vp)=p \iff \PP(\Pq{\vp}=p) = 1 
 \end{equation}
 Unfortunately, given this reflection principle, we can construct the liar's sentence $\vp \leftrightarrow \Pq{\vp} < 0.5$ (``This sentence is unlikely''), which cannot be assigned a consistent probability.
-We need to weaken this principle considerably before we arrive at a non-contradictory construction.
+We need to weaken principle~(\ref{truth-predicate-reflection}) considerably before we arrive at a non-contradictory construction.
 
-The approach we take is to convert the biconditional to an implication and to allow $P$ to \emph{approximate} $\PP$ rather than requiring it to equal $\PP$ exactly, arriving at the following reflection principle:
+The approach we take is to convert the biconditional to an implication and to allow $P$ to \emph{approximate} $\PP$ rather than requiring it to equal $\PP$ exactly, arriving at the following reflection principle (where $L'$ is the language our theory is defined over):
 \begin{equation}\label{reflection-preview}
 	\forall \vp \in L' \; \forall a, b \in \mathbb{Q} : \inOpen{\Po{\vp}} \Longrightarrow \Po{\inOpen{\Pq{\vp}}} = 1 .\\
 \end{equation}
@@ -158,11 +165,16 @@ and it can have an \emph{inner truth predicate}, \emph{inner probability functio
 \emph{both}, or \emph{neither}.
 
 Most of the work of mathematics involves theories that have an outer notion of truth and neither a truth predicate nor an inner probability function. 
-Leitgeb\cite{leitgeb12a} presents a theory that has an outer notion of truth and an inner truth predicate.
-Leitgeb\cite{leitgeb12b} and Campbell-Moore\cite{campbell14} present theories with outer truth and an inner truth predicate \emph{and} an inner probability function.
-Leitgeb\cite{leitgeb08} defines a theory with inner and outer notions of truth and an outer notion of probability which assigns the same value to $\varphi$ and $True(\ulcorner\vp\urcorner)$.
-Our work is novel in having outer notions 
-of truth and probability as well as an inner probability function
+
+Campbell-Moore\cite{campbell14} presents a theory with outer truth, a (restricted) inner truth predicate, and an inner probability function. She defines the reflection principle (which she calls ``introspection'') in her system as $\Tq{\Pq{\vp}<a}\rightarrow\Pq{\Pq{\vp}<a}=1$ and deals with the major paradoxes by assigning ranges of probability to so-called ``problematic sentences.''
+
+Leitgeb\cite{leitgeb08} defines a theory with inner and outer notions of truth and an outer notion of probability which, instead of requiring that $\vp\leftrightarrow\Tq{\vp}$, weakens the truth predicate and assigns the same probability to $\varphi$ and $True(\ulcorner\vp\urcorner)$.
+In another paper, Leitgeb\cite{leitgeb12b} extends his theory to two other systems which have outer truth, an inner truth predicate and an inner probability function. These two satisfy his 'probabilistic convention T', that is, $\Pq{\Tq{\vp}}=\Pq{\vp}$. His systems can be shown to satisfy our reflection principle, but have not been extended to expectations.
+
+dispensing with an inner notion of truth lets us focus more closely on the underlying difficulties of reflection in a probabilistic logic.
+
+We work purely with inner and outer probability and outer truth; dispensing with an inner notion of truth lets us focus more closely on the underlying difficulties of reflection in a probabilistic logic.
+We also derive an extension of our probabilistic framework which can coherently talk about expectations.
 
 Much work has already been done on developing outer probability distributions.
 Gaifman\cite{gaifman64} introduced a set of three conditions for a function from sentences to the reals that are sufficient for the function to be a probability distribution:
@@ -174,7 +186,8 @@ Gaifman\cite{gaifman64} introduced a set of three conditions for a function from
 \end{enumerate}
 It is easy to see that these three conditions are equivalent to those we state.
 }
-\begin{definition} A probability distribution $\PP$ is \emph{coherent} if:
+\begin{definition} A probability distribution $\PP$ is \emph{coherent} (with respect to some theory $T$) if:
+\label{gaif-coh}
 \begin{center}
 \begin{tabular}{l r}
 1. $\forall \vp: \PP(\vp) \in [0,1]$ & probabilities range from 0 to 1 \\
@@ -184,7 +197,7 @@ It is easy to see that these three conditions are equivalent to those we state.
 \end{center}
 \end{definition}
 
-The notion of outer probability that we construct is coherent.
+The notion of outer probability that we use is coherent in this sense.
 
 \subsection{Structure of the Paper}
 In section~\ref{refl-cons}, we define a reflection principle and prove it consistent. 
@@ -205,50 +218,40 @@ In analogy to how the proposed predicate $True$ reflects the notion of truth in 
 In this section, we show why the obvious reflection principles fail, define our reflection principle in~\ref{refl-def}, and prove it is consistent in~\ref{ref-cons-pf}.
 
 $True$ attempted to satisfy the reflection principle
-
 \begin{equation}
 \vp \iff True(\q{\vp}).
 \end{equation}
-
 We might want $P$ to satisfy
-
 \begin{equation}\label{truth-predicate-reflection-2}
 \PP(\vp)=p \iff \PP(\Pq{\vp}=p) = 1 .
 \end{equation}
+But, this falls immediately to the liar's sentence $G \leftrightarrow \Pq{G} < 0.5$ (``This sentence is unlikely''). We sketch out the proof.
 
-But, this falls immediately to the liar's sentence $G \leftrightarrow \Pq{G} < 0.5$ (``This sentence is unlikely'')\footnote{A sketch of the proof that satisfying \ref{truth-predicate-reflection} leads to contradiction:
-
+\begin{proofsketch}
 Assume $\PP(\vp)=p \iff \PP(\Pq{\vp}=p) = 1$.
-Then, we can use the diagonal lemma to construct the sentence (in the language) $G \leftrightarrow \Pq{G} < 0.5$.
+Then we use the diagonal lemma to construct the sentence (in the language) $G \leftrightarrow \Pq{G} < 0.5$.
 We show that $\PP(G)=0.5$ with a double proof by contradiction:
 
 Say $\PP(G)<0.5$. 
 By reflection, we have $\PP(\Pq{G}<0.5)=1$.
-But, (by coherence) this is equivalent to $\PP(G)=1$, a contradiction.
+But, (by coherence; see definition~\ref{gaif-coh}) this is equivalent to $\PP(G)=1$, a contradiction. A similar argument proves that $\PP(G)$ cannot be greater than $0.5$.
 
-A similar argument proves that $\PP(G)$ cannot be greater than $0.5$.
-
-Thus, $\PP(G)=0.5$.
-Then, $\PP(\Pq{G}=0.5)=1$.
+Thus, $\PP(G)=0.5$, and so $\PP(\Pq{G}=0.5)=1$.
 Applying the liar's sentence, we get that $\PP(G)=0$, a contradiction.
-}. 
+\end{proofsketch}
 
 We might try to deal with the liar's paradox by weakening our reflection principle and replacing the biconditional with an implication:
-
 \begin{equation}\label{one-direction-truth-predicate-reflection}
 \PP(\vp)=p \Rightarrow \PP(\Pq{\vp}=p) = 1.
 \end{equation}
-
 However, this falls to the same liar's sentence as before. Instead of letting $P$ exactly reflect $\PP$, we might let it have arbitrarily precise information about $\PP$.
 For any open interval $(a, b)$ containing $\Po{\vp}$,
 a sufficiently accurate approximation to $\Po{\vp}$
 would let us conclude $\Po{\vp} \in (a, b)$.
 In this vein we might consider the following reflection principle:
-
 \begin{equation}\label{literal-reflection}
 \forall a, b \in \mathbb{Q} : \inOpen{\PP(\vp)} \iff \PP(\inOpen{\Pq{\vp}}) = 1 .
 \end{equation}
-
 But, this again falls to the same liar's sentence. However, combining the two attempts and to get a one directional, approximate reflection principle is sufficient to construct a reflection principle which avoids the issues we just encountered.
 
 \begin{definition}
@@ -281,16 +284,15 @@ $$pRq \iff \forall \vp \in\cL\;\forall a,b\in\mathbb{Q}:\inOpen{p(\vp)}\Rightarr
 $\PP$ satisfies the reflection principle if and only if $\PP R \PP$.
 To prove reflective distributions exist, we use Kakutani's fixed point theorem.
 
-Kakutani's fixed point theorem states that there exists $p \in \mathcal{A}$ such that $pRp$, given that the following hold\cite{kakutani41}:
-\begin{enumerate}
-\item \emph{$\mathcal{A}$ is a subset of a locally convex Hausdorff topological vector space.}
-\item \emph{$\mathcal{A}$ is nonempty}.
-\item \emph{$\mathcal{A}$ is compact.}
-\item \emph{$\mathcal{A}$ is convex.}
-\item \emph{$R$ has a closed graph (i.e. $R$ is a closed subset of $\cA^2$).}
-\item \emph{$\forall p\in\mathcal{A} \exists q\in\mathcal{A}: pRq$.}
-\item \emph{$\forall p\in\mathcal{A}: \{q \in \mathcal{A}: pRq\}$ is convex.}
-\end{enumerate}
+Kakutani's fixed point theorem states that there exists $p \in \mathcal{A}$ such that $pRp$, given that the following hold:
+(1) $\mathcal{A}$ is a subset of a locally convex Hausdorff topological vector space,
+(2) $\mathcal{A}$ is nonempty,
+(3) $\mathcal{A}$ is compact,
+(4) $\mathcal{A}$ is convex,
+(5) $R$ has a closed graph (i.e. $R$ is a closed subset of $\cA^2$),
+(6) $\forall p\in\mathcal{A}\, \exists q\in\mathcal{A}: pRq$, and
+(7) $\forall p\in\mathcal{A}: \{q \in \mathcal{A}: pRq\}$ is convex\cite{kakutani41}.
+We will show that all the above properties hold for $\cA$ and $R$.
 \begin{enumerate}
 
 \item \emph{$\mathcal{A}$ is a subset of a locally convex Hausdorff topological vector space.}
