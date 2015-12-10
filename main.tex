@@ -403,8 +403,12 @@ We prove that there exist \emph{coherent} inner reflective $\PP$s, but no cohere
 $$\forall\vp\in L' \ \forall a,b\in\mathbb{Q}:\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$
 \end{proposition}
 \begin{proof}
-This follows from an easy modification of the definition of the relation $R$ in the proof of consistency of the reflection principle. The proof proceeds almost identically otherwise.
-%TODO MATH - I don't think that this is true. At all. Can you provide the alternate R that works here?
+By the consistency of the reflection principle, there exists a coherent, reflective $\PP'$ over $T$.
+Take a completion of $T^*$ of $T+$ the schema of statements $\Pq{\vp}\in(a,b)$ where $\PP'(\vp)\in(a,b)$.
+This completion is consistent because $\PP'$ is coherent.
+Take a coherent distribution $\PP$ over $T^*$.
+
+By the way that we defined it, $\PP$ satisfies the inner reflection principle (though not necessarily the outer reflection principle).
 \end{proof}
 
 \begin{proposition} \emph{Impossibility of Satisfying both Inner and Outer Reflection}
