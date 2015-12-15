@@ -1,4 +1,4 @@
- %%fakesection preamble
+%%fakesection preamble
 \documentclass[12pt]{article}
 
 %%fakesubsection usepackage
@@ -212,7 +212,7 @@ In section~\ref{further-work} we argue for weakening the reflection principle an
 \label{refl-cons}
 %%fakesubsection
 
-Analogously to how the proposed predicate $True$ reflects the notion of truth in the theory, we want a function $P$, in the language, to reflect the outer probability distribution $\PP$.
+Analogously to the proposed predicate $True$ reflecting the notion of truth in the theory, we want a function $P$, in the language, to reflect the outer probability distribution $\PP$.
 In this section, we show why the obvious reflection principles fail, define our reflection principle in~\ref{refl-def}, and prove it is consistent in~\ref{ref-cons-pf}.
 
 $True$ attempted to satisfy the reflection principle
@@ -277,7 +277,6 @@ $$\qquad \qquad \forall \vp \in L' \ \forall a,b\in \mathbb{Q}: \inOpen{\Po{\vp}
 \end{theorem}
 \begin{proof}
 Take the set $\mathcal{A}$ of all coherent probability distributions over $L'$ which assign probability one to all sentences in $T$ and consider it a subset of $[0,1]^{L'}$ with the product topology.
-% From The American Heritage Book of English Usage: As is sometimes used superfluously to introduce the complements of verbs like consider, deem, and account: They considered it as one of the landmark decisions of the civil rights movement. The measure was deemed as unnecessary. This usage may have arisen by analogy to regard and esteem, where as is standardly used in this way: We regarded her as the best writer among us. But the use of as with verbs like consider is not sufficiently well established to be acceptable in writing.
 Define a relation $R\subset \mathcal{A}^2$ as
 $$pRq \iff \forall \vp \in\cL\;\forall a,b\in\mathbb{Q}:\inOpen{p(\vp)}\Rightarrow q(\inOpen{\Pq{\vp}})=1$$
 $\PP$ satisfies the reflection principle if and only if $\PP R \PP$.
@@ -368,7 +367,7 @@ Therefore, $\{q \in A: pRq\}$ is convex.
 Thus, by Kakutani's fixed point theorem, $R$ has a fixed point, which is, by definition, a coherent, reflective distribution.
 \end{proof}
 
-Thus we have shown that for every consistent theory $T$ over $L$ there exists a coherent, reflective $\PP$ over $L'$.
+Thus we have shown that - for every consistent theory $T$ over $L$ - there exists a coherent, reflective $\PP$ over $L'$.
 
 \section{Reflection about Reflection: an Impossibility Result}
 \label{refl-refl}
@@ -385,7 +384,7 @@ Analogously, now that we have proven that $P$ reflects $\PP$, we might additiona
 \subsection{The Inner Reflection Principle}
 The reflection principle is stated in the metalanguage, and is a 
 \emph{statement which is true about $\PP$}, not a sentence in the language.
-In contrast to this metalanguage reflection principle, which we can think of as an \emph{outer reflection principle}, we might also want $\PP$ to assign probability 1 to $P$'s reflective consistency.
+In contrast to this principle, which we can think of as an \emph{outer reflection principle}, we might also want $\PP$ to assign probability 1 to $P$'s reflective consistency.
 To this end, define the \emph{inner reflection principle} as~\footnote{Note that the quantification here is in the metalanguage.
     An even stronger inner reflection principle would have the quantification on the inside. That is,
     $$\forall\vp\in L' : \PP(\forall a,b\in\mathbb{Q} : \Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1$$
@@ -519,7 +518,7 @@ For $S\subseteq T$, we have $\cS_T\subseteq\cS_S$, and hence $\Delta(\cS_T)$ is 
 \subsection{\Tvar{}s and their Expectations}
 We construct analogues of random variables in our system and prove that their expectations are well defined.
 
-Intuitively, we choose a theory $T$ and let any formula $\vp(x)$ define a 'random variable' if $T$ can prove that there is a unique value which satisfies $\vp$. For example, one such $\vp$ is
+Intuitively, we choose a theory $T$ and let any formula $\vp(x)$ define a 'random variable' if $T$ can prove that there is a unique value which satisfies $\vp$. For example,
 $$\vp(x) \leftrightarrow (x = 0 \wedge \psi) \vee (x = 1 \wedge \neg \psi).$$
 If $\psi\in T$ then $\vp(0)$, but if $\neg \psi\in T$ then $\vp(1)$. 
 However, $\psi$ may be independent of $T$, in which case $T$ can prove $\vp(0) \nleftrightarrow \vp(1)$, but cannot prove either of the statements separately.
