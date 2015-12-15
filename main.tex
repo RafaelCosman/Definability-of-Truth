@@ -124,7 +124,7 @@ Rafael Cosman\footnotemark[2]
 \maketitle
 \begin{abstract}
 Truth predicates are inconsistent due to liar's sentences such as ``this sentence is false''.
-Rather than constructing a \emph{truth} predicate and then assigning \emph{truth values} to sentences, we construct a \emph{probabilistic analogue} to a truth predicate and then assign \emph{probabilities} to sentences, including those that refer to the probabilities of other sentences. %XXX KAYA I recommend that we remove "including those that refer to the probabilities of other sentences." I find this to be confusing both because it breaks the paralell structure and also because it should be implied by the existance of a probabilistic analogue of a truth predicate. Right now it sounds like it might be some sort of property of our language independant of the probabilistic analogue of the truth predicate.
+Rather than constructing a \emph{truth} predicate and then assigning \emph{truth values} to sentences, we construct a \emph{probabilistic analogue} to a truth predicate and then assign \emph{probabilities} to sentences, including those that refer to the probabilities of other sentences.
 Unlike the standard truth predicate construction, our analogue is consistent and consistently deals with probabilistic generalizations of liar's sentences such as ``this sentence is unlikely''. 
 We also prove a negative result: while our analogue works like a truth predicate, we must assign zero probability to the sentence saying it works like a truth predicate.
 \end{abstract}
@@ -170,8 +170,6 @@ Campbell-Moore\cite{campbell14} presents a theory with outer truth, a (restricte
 
 Leitgeb\cite{leitgeb08} defines a theory with inner and outer notions of truth and an outer notion of probability which, instead of requiring that $\vp\leftrightarrow\Tq{\vp}$, weakens the truth predicate and assigns the same probability to $\varphi$ and $True(\ulcorner\vp\urcorner)$.
 In another paper, Leitgeb\cite{leitgeb12b} extends his theory to two other systems which have outer truth, an inner truth predicate and an inner probability function. These two satisfy his 'probabilistic convention T', that is, $\Pq{\Tq{\vp}}=\Pq{\vp}$. His systems can be shown to satisfy our reflection principle, but have not been extended to expectations.
-
-dispensing with an inner notion of truth lets us focus more closely on the underlying difficulties of reflection in a probabilistic logic.
 
 We work purely with inner and outer probability and outer truth; dispensing with an inner notion of truth lets us focus more closely on the underlying difficulties of reflection in a probabilistic logic.
 We also derive an extension of our probabilistic framework which can coherently talk about expectations.
@@ -292,6 +290,7 @@ Kakutani's fixed point theorem states that there exists $p \in \mathcal{A}$ such
 (5) $R$ has a closed graph (i.e. $R$ is a closed subset of $\cA^2$),
 (6) $\forall p\in\mathcal{A}\, \exists q\in\mathcal{A}: pRq$, and
 (7) $\forall p\in\mathcal{A}: \{q \in \mathcal{A}: pRq\}$ is convex\cite{kakutani41}.
+
 We will show that all the above properties hold for $\cA$ and $R$.
 \begin{enumerate}
 
@@ -349,7 +348,7 @@ Since $p_i$ converges to $p$, $\exists N \forall i > N: \inOpen{p_i(\vp)}$.
 By definition, $\forall i>N: q_i(\inOpen{\Pq{\vp}}) = 1$, so $q(\inOpen{\Pq{\vp}}) = 1$, that is, $pRq$.
 Thus, $R$ has a closed graph.
 
-\item \emph{$\forall p\in\mathcal{A} \exists q\in\mathcal{A}: pRq$.}
+\item \emph{$\forall p\in\mathcal{A} \; \exists q\in\mathcal{A}: pRq$.}
 Fix a $p$. Take a completion $T^*$ of $T +$ the schema of statements $\inOpen{\Pq{\vp}}$ where $\inOpen{p(\vp)}$.
 This completion is consistent because $p$ is coherent.
 Let $q$ assign $1$ to all statements in $T^*$ and $0$ to all others.
@@ -404,7 +403,7 @@ $$\forall\vp\in L' \ \forall a,b\in\mathbb{Q}:\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq
 \end{proposition}
 \begin{proof}
 By the consistency of the reflection principle, there exists a coherent, reflective $\PP'$ over $T$.
-Take a completion of $T^*$ of $T+$ the schema of statements $\Pq{\vp}\in(a,b)$ where $\PP'(\vp)\in(a,b)$.
+Take a completion of $T^*$ of $T~+$ the schema of statements $\Pq{\vp}\in(a,b)$ where $\PP'(\vp)\in(a,b)$.
 This completion is consistent because $\PP'$ is coherent.
 Take a coherent distribution $\PP$ over $T^*$.
 
@@ -416,15 +415,57 @@ By the way that we defined it, $\PP$ satisfies the inner reflection principle (t
 There exists no coherent probability distribution $\PP$ which assigns probability one to every sentence in $T$ and satisfies both the inner and outer reflection principles. In fact, any coherent, reflective probability distribution $\PP$ must assign probability $0$ to inner reflection.
 \end{proposition}
 \begin{proof}
-We proceed with a proof by contradiction.
-Assume there exists a coherent, reflective probability distribution $\PP$ which satisfies
-$$\forall a,b\in\mathbb{Q}\forall\vp\in L':\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}=1)=1.$$
+We proceed with a double proof by contradiction.
+Suppose there existed a coherent, reflective $\PP$ which assigns nonzero probability to inner reflection.
+Let $\vp$ be the following liar's sentence:
+$$\vp\leftrightarrow\Pq{\vp}<1$$
+We first show that $\PP(\vp)<1$.
+Suppose $\PP(\vp)=1.$
+Then, $\PP(\Pq{\vp}<1)=1$.
+Since $\PP$ assigns nonzero probability to inner reflection, we have that $\PP(\Pq{\Pq{\vp}<1}=1)>0$, or, equivalently, $\PP(\Pq{\vp}=1)>0$.
+The sentence $\vp$ says that $\Pq{\vp}
+<1$, which contradicts the statement $\Pq{\vp}=1$.
+Therefore,
+$T\vdash \neg(\vp\wedge\Pq{\vp}=1)$.
+Thus by the coherence of $\PP$, we have that $\PP(\vp\vee\Pq{\vp}<1)>1$.
+This contradicts $\PP(\vp)\in[0,1]$.
 
-% TODO MATH - fix this proof
+Therefore, $\PP(\vp)<1$. 
+By the outer reflection principle, $\PP(\Pq{\vp}<1)=1$. Coherence of $\PP$ implies that $\PP(\Pq{\vp}<1)=\PP(\vp)$, a contradiction.
+\end{proof}
+Not all is lost. Every coherent, reflective probability distribution $\PP$ satisfies a weaker version of the inner reflection principle.
+\begin{proposition} \emph{Weaker Inner Reflection.}
+Every coherent, reflective probability distribution $\PP$ satisfies
+$$\forall\vp\in L' \ \forall a,b,\varepsilon > 0 \in\mathbb{Q}:\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in[a,b]}>1-\varepsilon)=1.$$
 
-Choose a $\vp$ such that $\Po{\inClosed{\Pq{\vp}}} > 0$.
+Note that this is weaker entirely due to the internal `$>1-\epsilon$' in place of the usual `$=1$'. Also note the closed interval in place of an open interval in the antecedent.
+\end{proposition}
+\begin{proof}
+Assume that $\PP(\Pq{\vp}\in(a,b))=1$. Then, $\PP(\Pq{\vp}\in(a,b))>1-\varepsilon$.
+Applying the reflection principle, we get that 
+$$\PP(\Pq{\inOpen{\Pq{\vp}}}>1-\varepsilon)=1.$$
+Therefore,
+$$\PP(\Pq{\vp}\in (a,b)\rightarrow\Pq{\inOpen{\Pq{\vp}}}>1-\varepsilon)=1.$$
 
-By the outer reflection principle we have $\Po{\Pq{\inClosed{\Pq{\vp}}} > 0} = 1.$
+Say that $\PP(\Pq{\vp}\in(a,b))<1$.
+
+
+$$\PP(\Pq{\vp}\not\in (a,b)\vee\Pq{\inClosed{\Pq{\vp}}}>1-\varepsilon)=1.$$
+$$\PP(\Pq{\vp}\in (a,b))=1$$
+$$\PP(\Pq{\vp}\in [0,a]\cup[b,1]\vee\Pq{\inClosed{\Pq{\vp}}}>1-\varepsilon)=1.$$
+$$=\PP(\Pq{\vp}\in [0,a]\cup[b,1])+\PP(\Pq{\inClosed{\Pq{\vp}}}>1-\varepsilon)+\PP(\neg(\Pq{\vp}\in [0,a]\cup[b,1]\wedge\Pq{\inClosed{\Pq{\vp}}}>1-\varepsilon)).$$
+
+---OLD
+%TODO MATH 2 fix this proof
+Assume that $\Pq{\vp}\in (a,b)$ is a theorem.
+%... Then, $\PP(\vp)\in(a,b)$.
+By the contrapositive of the reflection principle, we have that
+$$\PP(\Pq{\vp}\in(a,b))=1.$$
+We can then derive 
+$$1-\varepsilon<\PP(\inOpen{\Pq{\vp}})<1+\varepsilon.$$
+Applying the reflection principle, we get that, in $T$, we've proved
+$$\Pq{\vp}\in (a,b)\rightarrow\Pq{\inOpen{\Pq{\vp}}}>1-\varepsilon.$$
+Since $\PP$ assigns probability one to theorems of the theory, this is sufficient to prove the proposition.
 
 Applying the reverse inner reflection principle
 \footnote{
@@ -433,32 +474,8 @@ $$\forall \vp \in L' \; \forall a, b \in \mathbb{Q} : \inClosed{\Pq{\vp}} \lefta
 Note the reverse implication, the closed intervals, and the `greater than zero' in place of the usual `equals one'.
 This reverse principle is derived analogously to the reverse outer reflection principle (principle~\ref{reverse-reflection} in section~\ref{refl-cons}).
 }
-obtains $\Po{\inClosed{\Pq{\vp}}} = 1$
 
-%This is a contradiction, as $\PP$ must assign the same value to inner reflection and its contrapositive.
-This is  now a decider, a $\PP$ which assigns $0$ or $1$ to every sentence, thereby acting as a truth predicate. Which is a contradiction.
-% TODO MATH - fix the above paragraph
 
-A similar argument shows that any coherent, reflective $\PP$ must assign probability $0$ to inner reflection.
-\end{proof}
-Not all is lost. Every coherent, reflective probability distribution $\PP$ satisfies a weaker version of the inner reflection principle.
-\begin{proposition} \emph{Weaker Inner Reflection.}
-Every coherent, reflective probability distribution $\PP$ satisfies
-$$\forall\vp\in L' \ \forall a,b,\varepsilon > 0 \in\mathbb{Q}:\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in(a,b)}>1-\varepsilon)=1.$$
-
-Note that this is weaker entirely due to the internal `$>1-\epsilon$' in place of the usual `$=1$'.
-\end{proposition}
-\begin{proof}
-%TODO MATH fix this proof
-Assume that $\Pq{\vp}\in (a,b)$ is a theorem.
-%TODO MATH Then, $\PP(\vp)\in(a,b)$.
-By the contrapositive of the reflection principle, we have that
-$$\PP(\Pq{\vp}\in(a,b))=1.$$
-We can then derive 
-$$1-\varepsilon<\PP(\inOpen{\Pq{\vp}})<1+\varepsilon.$$
-Applying the reflection principle, we get that, in $T$, we've proved
-$$\Pq{\vp}\in (a,b)\rightarrow\Pq{\inOpen{\Pq{\vp}}}>1-\varepsilon.$$
-Since $\PP$ assigns probability one to theorems of the theory, this is sufficient to prove the proposition.
 \end{proof}
 
 We would also like $\PP$ to assign probability $1$ to $P$ being coherent.
@@ -466,11 +483,16 @@ Let $Coh(P)$ be the sentence stating that $P$ is coherent:
 $$\forall \vp: (\Pq{\vp} \in [0, 1]) \wedge (\vp \rightarrow \Pq{\vp}=1) \wedge (\forall \psi: \Pq{\vp} = \Pq{\vp \wedge \psi} + \Pq{\vp \wedge \neg \psi})$$
 Note that this is just an representation of the Gaifman conditions in the language.
 \begin{proposition}
+\definitionsOfLsAndT
 There exists a coherent, reflective probability distribution $\PP$ such that $\PP(Coh(P))=1$.
 \end{proposition}
 \begin{proof}
-This follows from some simple modifications to the consistency of the reflection principle proof.
-%TODO MATH actually check this. Or write a full proof of this result
+We prove this by modifying the proof of consistency of the reflection principle (theorem~\ref{ref-cons-pf}).
+
+Redefine $\cA$ as the space of all coherent probability distributions over $L'$ which assign probability $1$ to $Coh(P)$. Since $T$ does not constrain $P$ in any way, and since the Gaifman conditions are consistent\cite{gaifman64}, $T+Coh(P)$ is consistent.
+This implies that $\cA$ is nonempty, satisfying condition (2) of Kakutani's theorem.
+Conditions (1), (3), (4), (5), (6), (7) follow with trivial modifications.
+
 \end{proof}
 \section{The Reflection Principle for Expectations}
 \label{refl-exp}
@@ -520,7 +542,6 @@ We consider $X(S)$ as the \emph{standard part} of the value that the theory $S$ 
 If $X\in[a,b]$ is a \Tvar{} and $S\in\cS_T$, then $X(S)\in[a,b]$.
 \end{lemma}
 \begin{proof}
-%TODO MATH check this proof more thoroughly. Esp. why are there two in the section with b's and only one in the section with a's.
 If $X(S) < a$, then there is some $a'\in\QQ$ with $X(S) < a' \le a$. 
 Then by assumption we have $T\vdash\dot X\geq a'$, and hence $S\vdash\dot X\geq a'$, but this implies $X(S)\ge a'$, contradiction.
 Similarly, if $X(S) > b$, then $X(S) > b'' > b' \ge b$ for some $b',b''\in\QQ$, whence $S\vdash X\le\dot b'$ and therefore $S\vdash X<\dot b''$, implying $X(S) \le b''$, contradiction.
@@ -531,7 +552,6 @@ Suppose that $X$ is a \Tvar{}, and let $a<b\in\RR$. Then, the set $A := \{S\in\c
 \begin{proof}
 Let $A(a',b') := \{S : S\vdash\dot a' < X < \dot b'\}$ for $a',b'\in\QQ$. 
 This set is open, because for any $\vp$, the set of all theories containing $\vp$ is open. 
-%TODO MATH how does this bit work? check it and then write in some bit to maybe explain it.
 
 We show that $A$ is the union of all $A(a',b')$ with $a < a' < b' < b$, that is $\bigcup A(a',b')$.
 
@@ -570,7 +590,6 @@ Note that the standard base forms a Boolean algebra.
 \begin{theorem}
 $\iota$ is a bijection between~$\Delta(\cS)$ and the set of finitely additive probability measures on the standard base of~$\cS$.
 \end{theorem}
-%TODO MATH check this math and then figure out how it fits so that it can be motivated better.
 \begin{proof}
 Since the standard base of $\cS$ is a Boolean algebra, it is in particular a ring of sets. Furthermore, this ring generates our $\sigma$-algebra: since the sets in the ring form a countable base of $\cS$, every open set is a countable union of base sets (so that the smallest $\sigma$-algebra containing the open sets is also the smallest $\sigma$-algebra containing the base).
 Now, a finitely additive measure~$\nu$ on a ring is already a premeasure (i.e., $\sigma$-additive on the ring) if for every descending sequence $A_n\supseteq A_{n+1}$ of elements of the ring, $\lim \nu(A_n) > 0$ implies $\textstyle\bigcap_n A_n \neq\emptyset$, and a premeasure on a ring extends uniquely to a measure on the generated $\sigma$-algebra. 
@@ -692,34 +711,35 @@ Let $L'$ be the extension of the language $L$ (which itself extends the language
 A \emph{standard theory} is a complete theory over $L'$ which extends the theory of the standard model of the naturals where $P\subset\mathbb{N}$ and 
 $$\exists f : L'\rightarrow[0, 1] \text{ s.t. } \forall \vp~\forall a, b: (\ulcorner \vp \urcorner, a, b) \in P \iff f(\vp) \in (a, b).$$
 \end{definition}
-Intuitively, $P$ is a three-valued relation which approximates some function $f$ arbitrarily well. 
-We imagine $(\q{\vp},a,b)\in P$ to mean that $a<f(\vp)<b$.
+Intuitively, $P$ is a three-valued relation which approximates some function $f$ arbitrarily well. We imagine $P(\dot a,\ulcorner\varphi\urcorner,\dot b)$ to mean that $a<f(\varphi)<b$, where $f$ is the function that we require to exist above.
 
 We would like to construct coherent, reflective distributions which are supported on standard theories of Peano Arithmetic.
-Not only do such distributions not exist, but every coherent, reflective distribution must assign zero probability to any set of standard theories. 
-However, there exists a restriction of $\PP$ which is a finitely additive measure supported on standard theories which satisfies an analogue of the reflection principle.
+We prove that not only do such distributions not exist, but every coherent, reflective distribution must assign zero probability to any set of standard theories. 
 \begin{theorem} \emph{Disbelief in Standard Theories.}
 Let $T$ be a consistent theory which extends Peano Arithmetic.
 Let $\nu\in\Delta(\mathcal{S})$.
-Then $\nu$ assigns probability zero to any set of standard theories of $T$.
+Then $\nu$ assigns probability zero to any set of standard theories extending $T$.
 \end{theorem}
 \begin{proof}
-%TODO MATH copy stuff from the forum post where I cleaned this stuff up for this and next proof
-Consider the sentence $G$ defined by $G \iff P(G) < 1$.
-Then, $\PP(G)=1$. (Recall that $\PP(\phi):=\nu({T:\phi\in T})$.)
-Applying the reflection principle, we get that 
-$$\forall\epsilon>0: \nu(\{T:1-\epsilon<P(G)<1\in T\})=1$$
-Now, 
-$$\{T:\forall \epsilon>0,1-\epsilon<P(G)<1\in T\}$$
-$$=\bigcap_{\epsilon>0}\{T:1-\epsilon<P(G)<1\in T\},$$ so we apply countable additivity and De Morgan's laws to get that $$\nu(\{T:\forall \epsilon>0,1-\epsilon<P(G)<1\in T\})=1.$$
-This means that any theory which does not have $\forall \epsilon>0,1-\epsilon<P(G)<1$ as an axiom, will be assigned probability zero by $\nu$.
-In particular, no standard theory can have such an axiom, as otherwise it would contain a number smaller than one which was also greater than any standard rational smaller than one.
+Consider the sentence $G$ defined by $G \iff P(-\dot 1,\ulcorner G\urcorner,\dot 1)$. Then, $\mathbb{P}(G)=1$.
+Applying the reflection principle, we get that
+$$\forall\epsilon>0: \nu(\{T:P(\dot 1-\dot \epsilon,\ulcorner G\urcorner,\dot 1)\in T\})=\dot 1.$$
+Now,
+$$\{T:\forall \epsilon>0,P(\dot 1-\dot \epsilon,\ulcorner G\urcorner,\dot 1)\in T\}$$
+$$=\bigcap_{\epsilon>0}\{T:P(\dot 1-\dot \epsilon,\ulcorner G\urcorner,\dot 1)\in T\},$$
+so we apply countable additivity and De Morgan's laws to get that $$\nu(\{T:\forall \dot\epsilon>0,P(\dot 1-\dot \epsilon,\ulcorner G\urcorner,\dot 1)\in T\})=1.$$
+
+This means that $\nu$ assigns probability zero to any set of theories which do not prove that $\forall \epsilon>0,P(\dot 1-\dot \epsilon,\ulcorner G\urcorner,\dot 1)$. 
+In particular, no standard theory can prove this statement, as otherwise it would contain a number smaller than one which was also greater than any standard rational smaller than one.
 \end{proof}
-While this seems problematic, we can trace this disbelief in standard theories back to the countable additivity condition. We now construct a finitely additive measure which fulfills many of our desiderata and is supported on standard theories.
+We can trace the cause of the result in the last section back to the countable additivity condition. To show this, we construct a finitely additive measure which fulfills many of our desiderata and is supported on standard theories.
 \begin{definition}
-Define the set $N$ to be the set of all standard theories. A subset $N_{\vp}$ of $N$ is defined as $N_{\vp}:=\{T:\vp\in T\}$.
+Define the set $\mathcal{N}$ to be the set of all standard theories. $\mathcal{N}_{\varphi}\subset \mathcal{N}$ is defined as $\mathcal{N} _{\varphi}:=\{T:\varphi\in T\}$.
+We define the base theory $T_0$ as $T_0:=\bigcap \mathcal{N}$.
 \end{definition}
 \begin{definition}
+Define a function $\mu$ such that $\mu(\mathcal{N}_{\varphi}):=\mathbb{P}[\varphi]$.
+
 Define a function $\mu(N_{\vp}):=\PP(\vp)$.
 \end{definition}
 \begin{definition}
@@ -727,16 +747,20 @@ We define our base theory $T:=\bigcap N$.
 \end{definition}
 \begin{theorem} \emph{Existence of Finitely Additive Measure Supported on Standard Theories}
 $\mu$ is well-defined, finitely additive, and satisfies a version of the reflection principle:
-$$a < \mu(S_{\vp}) < b \rightarrow \mu(S_{a < P(\ulcorner \vp \urcorner) < b}) = 1.$$
+$$a < \mu(\mathcal{N}_{\varphi}) < b \Rightarrow \mu(\mathcal{N}_{P(\dot a, \ulcorner \varphi \urcorner,\dot b)}) = 1.$$
 \end{theorem}
 \begin{proof}
-We first show that $\mu$ is well-defined. By consistency of the reflection principle, we have that there exists a coherent, reflective $\PP$ over our base theory $T$.
-Say that $N_{\vp}=N_{\psi}$. Then, by definition, $\vp$ and \$psi are in the same complete theories, so they must be logically equivalent. Therefore, $T$ proves $\vp\leftrightarrow\psi$, so by Gaifman coherence, $\PP(\vp)=\PP(\psi)$. Hence, $\mu$ is well defined.
-We now check that $\mu$ is a finitely additive measure. Clearly, $\mu(\vp)\in[0,1]$ and $\mu(\emptyset)=\PP(\bot)=0$.
-We need only check it is finitely additive. 
-$$\mu(N_{\vp}\cup N_{\psi})=\mu(N_{\vp\vee\psi})=\PP(\vp\vee\psi)$$
-If $N_{\vp}\cup N_{\psi}=\emptyset$, then we must have that $T$ proves $\neg(\vp\cup\psi)$, so 
-$$\PP(\vp\vee\psi)=\PP(\vp)+\PP(\psi)$$
+We first show that $\mu$ is well-defined. By consistency of the reflection principle, we have that there exists a coherent, reflective $\mathbb{P}$ over our base theory $T_0$.
+
+Say that $\mathcal{N}_{\varphi}=\mathcal{N}_{\psi}$. Then, by definition, $\varphi$ and $\psi$ are in exactly the same complete theories, so $\varphi\leftrightarrow\psi$ must be logically valid. Therefore, by completeness, $T_0$ proves $\varphi\leftrightarrow\psi$, so by Gaifman coherence, $\mathbb{P}[\varphi]=\mathbb{P}[\psi]$. Hence, $\mu$ is well defined.
+
+We now check that $\mu$ is a finitely additive measure. Clearly, $\mu(\mathcal{N}_{\varphi})\in[0,1]$ and $\mu(\emptyset)=\mathbb{P}[\bot]=0$.
+We need only check that it is finitely additive.
+$$\mu(\mathcal{N}_{\varphi}\cup \mathcal{N}_{\psi})=\mu(\mathcal{N}_{\varphi\vee\psi})=\mathbb{P}(\varphi\vee\psi)$$
+
+If $\mathcal{N}_{\varphi}\cap \mathcal{N}_{\psi}=\emptyset$, then $\neg(\varphi\wedge\psi)$ is logically valid, so, by completeness, $T_0$ proves $\neg(\varphi\wedge\psi)$. Thus, by Gaifman coherence,
+$$\mathbb{P}(\varphi\vee\psi)=\mathbb{P}(\varphi)+\mathbb{P}(\psi).$$
+
 By the way we defined it, $\mu$ clearly satisfies the modified reflection principle we gave.
 \end{proof}
 
