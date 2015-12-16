@@ -98,10 +98,7 @@ Let $L'$ be the extension of $L$ by a function symbol $P$. }
   \renewcommand{\proofname}{Proof Sketch}\proof}{\endproof}
 
 %%fakesubsection ifs
-\newif\ifprocrastinate
-\procrastinatefalse
-\newif\ifweakrefl
-\weakreflfalse
+
 
 %%fakesubsection authors
 \begin{document}
@@ -438,51 +435,6 @@ Therefore, $\PP(\vp)<1$.
 By the outer reflection principle, $\PP(\Pq{\vp}<1)=1$. Coherence of $\PP$ implies that $\PP(\Pq{\vp}<1)=\PP(\vp)$, a contradiction.
 \end{proof}
 
-\ifweakrefl
-Not all is lost. Every coherent, reflective probability distribution $\PP$ satisfies a weaker version of the inner reflection principle.
-\begin{proposition} \emph{Weaker Inner Reflection.}
-Every coherent, reflective probability distribution $\PP$ satisfies
-$$\forall\vp\in L' \ \forall a,b,\varepsilon > 0 \in\mathbb{Q}:\PP(\Pq{\vp}\in(a,b)\rightarrow\Pq{\Pq{\vp}\in[a,b]}>1-\varepsilon)=1.$$
-
-Note that this is weaker entirely due to the internal `$>1-\epsilon$' in place of the usual `$=1$'. Also note the closed interval in place of an open interval in the antecedent.
-\end{proposition}
-\begin{proof}
-Assume that $\PP(\Pq{\vp}\in(a,b))=1$. Then, $\PP(\Pq{\vp}\in(a,b))>1-\varepsilon$.
-Applying the reflection principle, we get that 
-$$\PP(\Pq{\inOpen{\Pq{\vp}}}>1-\varepsilon)=1.$$
-Therefore,
-$$\PP(\Pq{\vp}\in (a,b)\rightarrow\Pq{\inOpen{\Pq{\vp}}}>1-\varepsilon)=1.$$
-
-Say that $\PP(\Pq{\vp}\in(a,b))<1$.
-
-
-$$\PP(\Pq{\vp}\not\in (a,b)\vee\Pq{\inClosed{\Pq{\vp}}}>1-\varepsilon)=1.$$
-$$\PP(\Pq{\vp}\in (a,b))=1$$
-$$\PP(\Pq{\vp}\in [0,a]\cup[b,1]\vee\Pq{\inClosed{\Pq{\vp}}}>1-\varepsilon)=1.$$
-$$=\PP(\Pq{\vp}\in [0,a]\cup[b,1])+\PP(\Pq{\inClosed{\Pq{\vp}}}>1-\varepsilon)+\PP(\neg(\Pq{\vp}\in [0,a]\cup[b,1]\wedge\Pq{\inClosed{\Pq{\vp}}}>1-\varepsilon)).$$
-
----OLD
-%TODO MATH 2 fix this proof
-Assume that $\Pq{\vp}\in (a,b)$ is a theorem.
-%... Then, $\PP(\vp)\in(a,b)$.
-By the contrapositive of the reflection principle, we have that
-$$\PP(\Pq{\vp}\in(a,b))=1.$$
-We can then derive 
-$$1-\varepsilon<\PP(\inOpen{\Pq{\vp}})<1+\varepsilon.$$
-Applying the reflection principle, we get that, in $T$, we've proved
-$$\Pq{\vp}\in (a,b)\rightarrow\Pq{\inOpen{\Pq{\vp}}}>1-\varepsilon.$$
-Since $\PP$ assigns probability one to theorems of the theory, this is sufficient to prove the proposition.
-
-Applying the reverse inner reflection principle
-\footnote{
-The reverse inner reflection principle is 
-$$\forall \vp \in L' \; \forall a, b \in \mathbb{Q} : \inClosed{\Pq{\vp}} \leftarrow \Pq{\inClosed{\Pq{\vp}}} > 0.$$
-Note the reverse implication, the closed intervals, and the `greater than zero' in place of the usual `equals one'.
-This reverse principle is derived analogously to the reverse outer reflection principle (principle~\ref{reverse-reflection} in section~\ref{refl-cons}).
-}
-\end{proof}
-\fi
-
 There exist much weaker versions of the inner reflection principle which can be proven consistent with the outer reflection principle.
 These weak inner reflection principles are not very interesting, and the proofs are easy, so we leave them out.
 
@@ -772,51 +724,6 @@ $$\mathbb{P}(\varphi\vee\psi)=\mathbb{P}(\varphi)+\mathbb{P}(\psi).$$
 By the way we defined it, $\mu$ clearly satisfies the modified reflection principle we gave.
 \end{proof}
 
-\ifprocrastinate
-\subsection{The Procrastination Paradox}
-% We construct a bad thing...
-% Fix the sentence to say "yes in fact this is a problem"
-The support on nonstandard theories may seem suspicious, but it is not immediately obvious whether or not it causes problems in applications of the system. In this section, we show an analogue of a result about nonstandard theories of arithmetic called the \emph{procrastination paradox}~\cite{yudkowsky13}. 
-
-Consider an immortal rational agent trying to decide whether to do a certain necessary task today, or postpone it till tomorrow; we imagine that it is very important that this task get done \emph{eventually}, but it does not matter \emph{when} the task is done. In the original form of the procrastination paradox, we imagine that our agent will do the task today \emph{unless it can prove in a certain formal system that it will do the task at a later time}, in which case our agent decides that for the moment, it can procrastinate.
-
-Informally, the problem arises if the agent trusts the reasoning of future versions of itself too much; then, it reasons that tomorrow, it will either press the button or show that the button gets pressed at a later time, implying that in either case the button gets pressed, and it is therefore not necessary to press the button today. The agent reasons the same way at all future times, meaning that the button never actually gets pressed.
-
-Formally, the original procrastination paradox shows that if a recursive sequence~$T_n$ of first-order theories extending Peano Arithmetic satisfies $T_n \vdash \square_{T_{n+1}}(\vp)\to\vp$ for every $n\in\NN$ and every sentence~$\vp$, where $\square_{T_{n+1}}(\vp)$ is the statement that~$\vp$ is provable in $T_{n+1}$, then all~$T_n$ have only nonstandard models.
-
-The proof uses the diagonal lemma to define a predicate~$\vp(n) :\leftrightarrow \neg\square_{T_n}\big(\exists k>n{:}\;\vp(k)\big)$, where we interpret~$\vp(n)$ to mean that the agent presses the button at time~$n$; in other words, the agent presses the button iff it cannot find an argument that in~$T_n$ that the button will get pressed at some later time.
-
-Then,~$T_n$ proves that $\vp(n+1)\vee\neg\vp(n+1)$, and that $\neg\vp(n+1)$ is equivalent to $\square_{T_{n+1}}\big(\exists k>n+1{:}\;\vp(k)\big)$, which (according to~$T_n$'s special axiom) implies~$\exists k>n+1{:}\;\vp(k)$; hence, $T_n$ proves $\vp(n+1)\vee\exists k>n+1{:}\;\vp(k)$, which immediately yields~$T_n\vdash\exists k>n{:}\;\vp(k)$. In other words, $\NN\vDash\forall n{:}\;\square_{T_n}\big(\exists k>n{:}\;\vp(k)\big)$. 
-
-But this is equivalent to $\NN\vDash\forall n{:}\;\neg\vp(n)$; in other words, all~$T_n$ are unsound on the standard model. However, the $T_n$ can nevertheless be~\emph{consistent} (see~\cite{yudkowsky13}), implying that they have \emph{nonstandard} models~$\cM_n$ which satisfy $\cM_n\vDash\exists k>n{:}\;\vp(k)$; thus, these models contain \emph{nonstandard} ``times''~$k$ at which the button does in fact get pressed.
-
-We now formulate an analogue of this argument in terms of reflective, coherent probability  distributions.
-
-\begin{definition}
-Fix a definable sequence of rational numbers $\varepsilon_n > 0$ such that $\varepsilon_n\to0$ (for example, we may set $\varepsilon_n := 2^{-n}$). Use the diagonal lemma to define a predicate~$\vp(n)$ such that $\zfc\;\vdash\;\vp(n)\,\leftrightarrow\, P[\exists k>n{:}\;\vp(k)] \,<\, 1 - \varepsilon_n$.
-\end{definition}
-
-Intuitively, the following theorem says that the agent believes for certain that it will press the button eventually.
-\begin{theorem} \emph{Procrastination}
-For all $n\in\NN$, $\PP(\exists k>n{:}\;\vp(k)) = 1$.
-\end{theorem}
-\begin{proof}
-Suppose not. Then there is an $n_0\in\NN$ such that $\PP(\exists k>n_0{:}\;\vp(k))$ is less than one, and therefore less than~$1 - \varepsilon_n$ for some~$n>n_0$. Since $\exists k>n_0{:}\;\vp(k)$ is implied by $\exists k>n{:}\; \vp(k)$, the former statement must be at least as probable as the latter one, i.e., $1 - \varepsilon_n \;>\; \PP(\exists k>n_0{:}\; \vp(k)) \;\ge\; \PP(\exists k>n{:}\;\vp(k))$, and hence by the reflection principle
-\[
-\PP(\vp(n)) \;\;=\;\; \PP(P(\exists k>n{:}\;\vp(k)) \,<\, 1 - \varepsilon_n) \;\;=\;\; 1.
-\]
-But this implies $\PP(\exists k>n_0{:}\;\vp(k)) = 1$, contradicting our assumption that this probability is less than one.
-\end{proof}
-Intuitively, the following theorem says that even though the system is certain that it will eventually press the button, it does not in fact do so.
-\begin{theorem}
-For all $n\in\NN$, $\PP(\vp(n)) = 0$.
-\end{theorem}
-\begin{proof}
-By the previous theorem, $\PP(\exists k>n:\vp(k)) = 1 > 1 - \epsilon_n$, and thus
-\[\PP(\vp(n)) \;\;=\;\; \PP(P(\exists k>n{:}\;\vp(k)) < 1 - \epsilon_n) \;\;=\;\; 0.\]
-\end{proof}
-These two results are not contradictory: They merely imply that~$\PP$ is supported on complete theories whose (nonstandard) models believe that the button gets pressed \emph{at some nonstandard time}, just as in the procrastination paradox for logical theories.
-\fi
 \section{Further Work}
 \label{further-work}
 
