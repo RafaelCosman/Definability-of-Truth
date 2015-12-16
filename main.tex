@@ -100,6 +100,8 @@ Let $L'$ be the extension of $L$ by a function symbol $P$. }
 %%fakesubsection ifs
 \newif\ifprocrastinate
 \procrastinatefalse
+\newif\ifweakrefl
+\weakreflfalse
 
 %%fakesubsection authors
 \begin{document}
@@ -381,7 +383,7 @@ Note the difference between $\leftrightarrow$, the biconditional in the language
 
 Analogously, now that we have proven that $P$ reflects $\PP$, we might additionally want $\PP$ to assign high probability to the statement that $P$ is reflective and coherent. We show that no reflective, coherent~$\PP$ believes that $P$ is reflective, and that any coherent~$\PP$ which does believe that $P$ is reflective is not itself reflective. We do show that $\PP$ can assign high probability to $P$ being coherent, thus preserving some of the structure of $\PP$ in $P$.
 
-\subsection{The Inner Reflection Principle}
+\subsection{The Inner Reflection Principle and Inner Coherence}
 The reflection principle is stated in the metalanguage, and is a 
 \emph{statement which is true about $\PP$}, not a sentence in the language.
 In contrast to this principle, which we can think of as an \emph{outer reflection principle}, we might also want $\PP$ to assign probability 1 to $P$'s reflective consistency.
@@ -435,6 +437,8 @@ This contradicts $\PP(\vp)\in[0,1]$.
 Therefore, $\PP(\vp)<1$. 
 By the outer reflection principle, $\PP(\Pq{\vp}<1)=1$. Coherence of $\PP$ implies that $\PP(\Pq{\vp}<1)=\PP(\vp)$, a contradiction.
 \end{proof}
+
+\ifweakrefl
 Not all is lost. Every coherent, reflective probability distribution $\PP$ satisfies a weaker version of the inner reflection principle.
 \begin{proposition} \emph{Weaker Inner Reflection.}
 Every coherent, reflective probability distribution $\PP$ satisfies
@@ -476,11 +480,13 @@ $$\forall \vp \in L' \; \forall a, b \in \mathbb{Q} : \inClosed{\Pq{\vp}} \lefta
 Note the reverse implication, the closed intervals, and the `greater than zero' in place of the usual `equals one'.
 This reverse principle is derived analogously to the reverse outer reflection principle (principle~\ref{reverse-reflection} in section~\ref{refl-cons}).
 }
-
-
 \end{proof}
+\fi
 
-We would also like $\PP$ to assign probability $1$ to $P$ being coherent.
+There exist much weaker versions of the inner reflection principle which can be proven consistent with the outer reflection principle.
+These weak inner reflection principles are not very interesting, and the proofs are easy, so we leave them out.
+
+Though we can't have full inner reflection, we may at the very least want inner coherence, that is, we might want $\PP$ to assign probability $1$ to $P$ being coherent.
 Let $Coh(P)$ be the sentence stating that $P$ is coherent:
 $$\forall \vp: (\Pq{\vp} \in [0, 1]) \wedge (\vp \rightarrow \Pq{\vp}=1) \wedge (\forall \psi: \Pq{\vp} = \Pq{\vp \wedge \psi} + \Pq{\vp \wedge \neg \psi})$$
 Note that this is just an representation of the Gaifman conditions in the language.
@@ -494,7 +500,6 @@ We prove this by modifying the proof of consistency of the reflection principle 
 Redefine $\cA$ as the space of all coherent probability distributions over $L'$ which assign probability $1$ to $Coh(P)$. Since $T$ does not constrain $P$ in any way, and since the Gaifman conditions are consistent\cite{gaifman64}, $T+Coh(P)$ is consistent.
 This implies that $\cA$ is nonempty, satisfying condition (2) of Kakutani's theorem.
 Conditions (1), (3), (4), (5), (6), (7) follow with trivial modifications.
-
 \end{proof}
 \section{The Reflection Principle for Expectations}
 \label{refl-exp}
@@ -532,12 +537,12 @@ is given by a one-parameter formula $\vp(x)$ of $\cL$ such that $T\vdash\big(\ex
 We denote a \Tvar{} with capital letters, especially $X$, since we will consider them random variables on~$\cS_T$.
 We write $T\vdash\psi(X)$ to mean $T\vdash\forall x.\;\vp(x)\to\psi(x)$.
 
-We say that ``\emph{$X\in[a,b]$ is a \Tvar{}}'', where $a<b\in\RR$, if $X$ is a \Tvar{} and for all $a',b'\in\QQ$ such that $a'\le a$ and $b\le b'$, we have $T\vdash\dot a'\le X\le \dot b'$.
+We say that ``\emph{$X\in[a,b]$ is a \Tvar{}}'', where $a<b\in\RR$, if $X$ is a \Tvar{} and for all $a',b'\in\QQ$ such that $a'\le a$ and $b\le b'$, we have $T\vdash a'\le X\le b'$.
 A \Tvar{} $X$ is \emph{bounded} if there are $a,b\in\RR$ such that $\inClosed{X}$.
 \end{definition}
 \begin{definition}
 If $X$ is a \Tvar{} and $S\in\cS_T$, let
-\[X(S) \;\,:=\;\, \sup\;\{q\in\QQ \;:\; S\vdash \dot q \le X\} \;\,\in\;\, [-\infty,\infty].\]
+\[X(S) \;\,:=\;\, \sup\;\{q\in\QQ \;:\; S\vdash  q \le X\} \;\,\in\;\, [-\infty,\infty].\]
 \end{definition}
 We consider $X(S)$ as the \emph{standard part} of the value that the theory $S$ assigns to $X$: it's possible that the actual value is nonstandard in all models of $S$ (e.g., it could be that $X(S) = 0$, but $S\vdash X>0$ or $S\vdash X<0$).
 \begin{lemma}
@@ -545,20 +550,20 @@ If $X\in[a,b]$ is a \Tvar{} and $S\in\cS_T$, then $X(S)\in[a,b]$.
 \end{lemma}
 \begin{proof}
 If $X(S) < a$, then there is some $a'\in\QQ$ with $X(S) < a' \le a$. 
-Then by assumption we have $T\vdash\dot X\geq a'$, and hence $S\vdash\dot X\geq a'$, but this implies $X(S)\ge a'$, contradiction.
-Similarly, if $X(S) > b$, then $X(S) > b'' > b' \ge b$ for some $b',b''\in\QQ$, whence $S\vdash X\le\dot b'$ and therefore $S\vdash X<\dot b''$, implying $X(S) \le b''$, contradiction.
+Then by assumption we have $T\vdash X\geq a'$, and hence $S\vdash X\geq a'$, but this implies $X(S)\ge a'$, contradiction.
+Similarly, if $X(S) > b$, then $X(S) > b'' > b' \ge b$ for some $b',b''\in\QQ$, whence $S\vdash X\le b'$ and therefore $S\vdash X< b''$, implying $X(S) \le b''$, contradiction.
 \end{proof}
 \begin{lemma}
 Suppose that $X$ is a \Tvar{}, and let $a<b\in\RR$. Then, the set $A := \{S\in\cS_T : a< X(S)<b\}$ is open in $\cS_T$.
 \end{lemma}
 \begin{proof}
-Let $A(a',b') := \{S : S\vdash\dot a' < X < \dot b'\}$ for $a',b'\in\QQ$. 
+Let $A(a',b') := \{S : S\vdash a' < X <  b'\}$ for $a',b'\in\QQ$. 
 This set is open, because for any $\vp$, the set of all theories containing $\vp$ is open. 
 
 We show that $A$ is the union of all $A(a',b')$ with $a < a' < b' < b$, that is $\bigcup A(a',b')$.
 
 For the inclusion $A \subseteq \bigcup A(a',b')$, suppose that $S\in A$; then $a < X(S) < b$, so there are $a',b'\in\QQ$ such that $a<a'<X(S)<b'<b$.
-Since the inequalities are strict, we can conclude $S\vdash X > \dot a'$ and $S\nvdash X > \dot b'$, i.e.\ $S\vdash\dot a' < X < \dot b'$, and thus $S\in A(a',b')$.
+Since the inequalities are strict, we can conclude $S\vdash X >  a'$ and $S\nvdash X >  b'$, i.e.\ $S\vdash a' < X <  b'$, and thus $S\in A(a',b')$.
 
 For the other direction, we show $\bigcup A(a',b')\subseteq A$. 
 Suppose that $a < a' < b' < b$ and $S\in A(a',b')$.
@@ -593,6 +598,7 @@ $\iota$ is a bijection between~$\Delta(\cS)$ and the set of finitely additive pr
 \end{theorem}
 \begin{proof}
 Since the standard base of $\cS$ is a Boolean algebra, it is in particular a ring of sets. Furthermore, this ring generates our $\sigma$-algebra: since the sets in the ring form a countable base of $\cS$, every open set is a countable union of base sets (so that the smallest $\sigma$-algebra containing the open sets is also the smallest $\sigma$-algebra containing the base).
+
 Now, a finitely additive measure~$\nu$ on a ring is already a premeasure (i.e., $\sigma$-additive on the ring) if for every descending sequence $A_n\supseteq A_{n+1}$ of elements of the ring, $\lim \nu(A_n) > 0$ implies $\textstyle\bigcap_n A_n \neq\emptyset$, and a premeasure on a ring extends uniquely to a measure on the generated $\sigma$-algebra. 
 
 Now, by the assumption, we have $\nu(A_n) > 0$ and therefore $A_n\neq\emptyset$ for all $n\in\mathbb{N}$; since $\textstyle A_n = \bigcap_{i=1}^n A_i$, this means that the family $(A_n)$ has the finite intersection property, and so since Stone spaces are compact and each $A_n$ is clopen, the intersection of all $A_n$ is non-empty as desired.
@@ -609,6 +615,7 @@ $\iota$ is a homeomorphism.
 \end{theorem}
 \begin{proof}
 The Stone space of a Boolean algebra is metrizable if and only if the Boolean algebra is countable, so since the standard base of $\cS$ is countable, the notion of weak convergence of probability measures on our space is well-defined. One of the equivalent definitions is that $\nu_n\to\nu$ if $\liminf\nu_n(B)\ge\nu(B)$ for all open sets $B$. We want to show that this is equivalent to convergence in the product topology on $[0,1]^{L'}$, which amounts to pointwise convergence of $\nu_n(A)$ to $\nu(A)$ for all $A$ in the standard base.
+
 Suppose first that $\nu_n(A)\to\nu(A)$ for all base sets $A$ and let $B$ be an arbitrary open set. $B$ can be written as a countable union $\textstyle\bigcup_m A_m$ of base sets; since the base is closed under Boolean operations, it follows that it can be written as a countable disjoint union (let $\textstyle A_m' := A_m\setminus\bigcup_{i=1}^{m-1}A_i)$. For any $\epsilon>0$, there is an $m\in\mathbb{N}$ such that $\textstyle\nu(B)\le\nu(\bigcup_{i=1}^m A_i)+\epsilon/2$. By pointwise convergence, for sufficiently large $n$ we have $\nu(A_i)\le\nu_n(A_i) + \epsilon/2m$ for all $i\le m$. Therefore,
 \[
 \textstyle\nu(B)\;\le\;\sum_{i=1}^m\nu(A_i)+\epsilon/2\;\le\;\sum_{i=1}^m\nu_n(A_i) + \epsilon\;\le\;\nu_n(B)+\epsilon.
@@ -628,11 +635,11 @@ The proof of the following theorem is analogous to the proof of consistency of t
 We define a relation $R$ over the proper space and then appeal to Kakutani's fixed point theorem.
 \begin{theorem}
 For every meditative theory $T$, there is a $\nu\in\Delta(\cS_T)$ such that for every bounded \Tvar{}~$X$ and all $a,b\in\QQ$,
-\[a<\EE[X]<b\;\implies\;\PP(\dot a < E[X] < \dot b) = 1,\]
+\[a<\EE[X]<b\;\implies\;\PP( a < E[X] <  b) = 1,\]
 where $\PP:=\iota(\nu)$.
 \end{theorem}
 \begin{proof}
-Let $\cA$ be the range of the embedding $\iota$. Define $R$, such that $\iota(\nu)R\iota(\nu')$ if for every bounded \Tvar{}~$X$ and all $a,b\in\QQ$ such that $a<\EE[X]<b$, we have $\PP'(\dot a < E[X] < \dot b)= 1$, where $\PP':=\iota(\nu')$.
+Let $\cA$ be the range of the embedding $\iota$. Define $R$, such that $\iota(\nu)R\iota(\nu')$ if for every bounded \Tvar{}~$X$ and all $a,b\in\QQ$ such that $a<\EE[X]<b$, we have $\PP'( a < E[X] <  b)= 1$, where $\PP':=\iota(\nu')$.
 
 We employ Kakutani's fixed point theorem to find a fixed point of $R$. Recall that Kakutani's fixed point theorem requires that:
 (1) $\mathcal{A}$ is nonempty.
@@ -655,12 +662,12 @@ We employ Kakutani's fixed point theorem to find a fixed point of $R$. Recall th
 
 \item \emph{$R$ has a closed graph.} Given $\nu_n,\nu'_n,\nu,\nu'\in\Delta(\cS_T)$ such that $\nu_n\to\nu$, $\nu'_n\to\nu'$, and $\forall n : \iota(\nu_n)R\iota(\nu'_n)$, we need to prove that $\iota(\nu)R\iota(\nu')$. 
 To do this, we make use of the fact that if $\nu_n$ converges weakly to $\nu$ (i.e., converges in the weak-$*$ topology that we have put on $\Delta(\cS_T)$), then $\EE_n[X]\to\EE[X]$ for every bounded, continuous function $X : \cS_T\to\RR$, and, in particular, for every bounded \Tvar{}~$X$. 
-Thus, if $a < \EE[X] < b$, then $a < \EE_n < b$ for all~$n$ greater than some~$n_0$, and hence $\PP'_n(\dot a < E[X] < \dot b) = 1$ for all $n>n_0$.
-Since $\iota(\nu'_n)$ converges pointwise to $\iota(\nu')$, this implies that $\PP'(\dot a < E[X] < \dot b) = 1$.
+Thus, if $a < \EE[X] < b$, then $a < \EE_n < b$ for all~$n$ greater than some~$n_0$, and hence $\PP'_n( a < E[X] <  b) = 1$ for all $n>n_0$.
+Since $\iota(\nu'_n)$ converges pointwise to $\iota(\nu')$, this implies that $\PP'( a < E[X] <  b) = 1$.
 
 \item \emph{$\forall x \exists y$ s.t. $xRy$.} Let $\delta_{T(\cU,\nu)}$ be the distribution that assigns probability~1 to~$T(\cU,\nu)$, the complete theory of the model~$(\cU,\nu)$. Then, $\iota(\nu)R\iota(\delta_{T(\cU,\nu)})$.
 
-\item \emph{$\forall x$ the set $\{y \in \mathcal{A}: xRy\}$ is convex.} $\cA$ is convex. $\{y\in\cA:xRy\}$ is the intersection of $\cA$ and each set $\{v\in\RR^{L'} : v(n) = 1\}$ where $n$ is the G\"odel number of some statement of the form $\dot a < E[X]<\dot b$ which is assigned probability one.
+\item \emph{$\forall x$ the set $\{y \in \mathcal{A}: xRy\}$ is convex.} $\cA$ is convex. $\{y\in\cA:xRy\}$ is the intersection of $\cA$ and each set $\{v\in\RR^{L'} : v(n) = 1\}$ where $n$ is the G\"odel number of some statement of the form $ a < E[X]< b$ which is assigned probability one.
 \end{enumerate}
 Thus, by Kakutani's fixed point theorem, there exists a $\PP\in\cA$ such that 
 $\PP R\PP$, so it must be reflective in the manner we desired.
@@ -712,7 +719,7 @@ Let $L'$ be the extension of the language $L$ (which itself extends the language
 A \emph{standard theory} is a complete theory over $L'$ which extends the theory of the standard model of the naturals where $P\subset\mathbb{N}$ and 
 $$\exists f : L'\rightarrow[0, 1] \text{ s.t. } \forall \vp~\forall a, b: (\ulcorner \vp \urcorner, a, b) \in P \iff f(\vp) \in (a, b).$$
 \end{definition}
-Intuitively, $P$ is a three-valued relation which approximates some function $f$ arbitrarily well. We imagine $P(\dot a,\ulcorner\varphi\urcorner,\dot b)$ to mean that $a<f(\varphi)<b$, where $f$ is the function that we require to exist above.
+Intuitively, $P$ is a three-valued relation which approximates some function $f$ arbitrarily well. We imagine $P( a,\ulcorner\varphi\urcorner, b)$ to mean that $a<f(\varphi)<b$, where $f$ is the function that we require to exist above.
 
 We would like to construct coherent, reflective distributions which are supported on standard theories of Peano Arithmetic.
 We prove that not only do such distributions not exist, but every coherent, reflective distribution must assign zero probability to any set of standard theories. 
@@ -722,15 +729,15 @@ Let $\nu\in\Delta(\mathcal{S})$.
 Then $\nu$ assigns probability zero to any set of standard theories extending $T$.
 \end{theorem}
 \begin{proof}
-Consider the sentence $G$ defined by $G \iff P(-\dot 1,\ulcorner G\urcorner,\dot 1)$. Then, $\mathbb{P}(G)=1$.
+Consider the sentence $G$ defined by $G \iff P(- 1,\ulcorner G\urcorner, 1)$. Then, $\mathbb{P}(G)=1$.
 Applying the reflection principle, we get that
-$$\forall\epsilon>0: \nu(\{T:P(\dot 1-\dot \epsilon,\ulcorner G\urcorner,\dot 1)\in T\})=\dot 1.$$
+$$\forall\epsilon>0: \nu(\{T:P( 1- \epsilon,\ulcorner G\urcorner, 1)\in T\})= 1.$$
 Now,
-$$\{T:\forall \epsilon>0,P(\dot 1-\dot \epsilon,\ulcorner G\urcorner,\dot 1)\in T\}$$
-$$=\bigcap_{\epsilon>0}\{T:P(\dot 1-\dot \epsilon,\ulcorner G\urcorner,\dot 1)\in T\},$$
-so we apply countable additivity and De Morgan's laws to get that $$\nu(\{T:\forall \dot\epsilon>0,P(\dot 1-\dot \epsilon,\ulcorner G\urcorner,\dot 1)\in T\})=1.$$
+$$\{T:\forall \epsilon>0,P( 1- \epsilon,\ulcorner G\urcorner, 1)\in T\}$$
+$$=\bigcap_{\epsilon>0}\{T:P( 1- \epsilon,\ulcorner G\urcorner, 1)\in T\},$$
+so we apply countable additivity and De Morgan's laws to get that $$\nu(\{T:\forall \epsilon>0,P( 1- \epsilon,\ulcorner G\urcorner, 1)\in T\})=1.$$
 
-This means that $\nu$ assigns probability zero to any set of theories which do not prove that $\forall \epsilon>0,P(\dot 1-\dot \epsilon,\ulcorner G\urcorner,\dot 1)$. 
+This means that $\nu$ assigns probability zero to any set of theories which do not prove that $\forall \epsilon>0,P( 1- \epsilon,\ulcorner G\urcorner, 1)$. 
 In particular, no standard theory can prove this statement, as otherwise it would contain a number smaller than one which was also greater than any standard rational smaller than one.
 \end{proof}
 We can trace the cause of the result in the last section back to the countable additivity condition. To show this, we construct a finitely additive measure which fulfills many of our desiderata and is supported on standard theories.
@@ -748,7 +755,7 @@ We define our base theory $T:=\bigcap N$.
 \end{definition}
 \begin{theorem} \emph{Existence of Finitely Additive Measure Supported on Standard Theories}
 $\mu$ is well-defined, finitely additive, and satisfies a version of the reflection principle:
-$$a < \mu(\mathcal{N}_{\varphi}) < b \Rightarrow \mu(\mathcal{N}_{P(\dot a, \ulcorner \varphi \urcorner,\dot b)}) = 1.$$
+$$a < \mu(\mathcal{N}_{\varphi}) < b \Rightarrow \mu(\mathcal{N}_{P( a, \ulcorner \varphi \urcorner, b)}) = 1.$$
 \end{theorem}
 \begin{proof}
 We first show that $\mu$ is well-defined. By consistency of the reflection principle, we have that there exists a coherent, reflective $\mathbb{P}$ over our base theory $T_0$.
